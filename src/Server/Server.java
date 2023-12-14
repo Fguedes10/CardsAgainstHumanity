@@ -2,6 +2,7 @@ package Server;
 
 
 import Client.Client;
+import Messages.Message;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -85,30 +86,30 @@ public class Server {
         }
 
         private void askClientName() throws IOException {
-            writeMessage("Input your username: ");
+            writeMessage(Message.INPUT_NAME);
             name = in.readLine();
             if(name == null){
-                writeMessage("Write a valid username");
+                writeMessage(Message.NULL_NAME);
                 askClientName();
             }
             if(!checkUsedUsernames(name)){
-                writeMessage("Username already taken, please choose another");
+                writeMessage(Message.REAPEATED_NAME);
                 askClientName();
             }
         }
 
         private void askClientAge() throws IOException {
-            writeMessage("Input your age: ");
+            writeMessage(Message.INPUT_AGE);
             String answerAge = in.readLine();
             if(answerAge == null){
-                writeMessage("Please insert a valid number");
+                writeMessage(Message.NULL_AGE);
                 askClientAge();
             }
             try{
                 Integer i = Integer.parseInt(answerAge);
 
             } catch (NumberFormatException nfe){
-                writeMessage("That isn't a valid number");
+                writeMessage(Message.NOT_A_NUMBER);
                 askClientAge();
             }
         }
