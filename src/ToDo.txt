@@ -1,0 +1,26 @@
+List of commands:
+
+Before game start:
+
+/change_name
+/listplayers
+/start (number of players)
+/chat geral
+/whisper player
+
+NOT_FOUND (lists of commands)
+
+After game start:
+
+/playcard (number of the card)
+
+NOT_FOUND (lists of commands)
+
+After game end:
+
+/newgame (same clients)
+/quit
+
+
+
+
