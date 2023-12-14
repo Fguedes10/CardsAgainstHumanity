@@ -19,11 +19,6 @@ public class Client {
         this.voteState = false;
     }
 
-
-    public void requestHand() {
-    }
-
-    public synchronized void fillHand() {
     public void requestHand() {   //
     }
     public synchronized void fillHand(List<String> newCards) {
@@ -33,21 +28,11 @@ public class Client {
         }
     }
 
-    public void requestHand() {   //
-    }
-    public synchronized void fillHand(List<String> newCards) {
-        // Verify if the number of cards in hand and fill hand
-        if (cards.size() < 4) {
-            cards.addAll(newCards);
-        }
-    }
-
 
     public synchronized void pickCard(String card) {
         // Pick a card from hand to play
         if (cards.contains(card)) {
             cards.remove(card);
-        }
             // Implement logic for playing the card
         }
     }
