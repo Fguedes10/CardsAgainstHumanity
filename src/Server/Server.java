@@ -93,7 +93,7 @@ public class Server {
                 askClientName();
             }
             if(!checkUsedUsernames(name)){
-                writeMessage(Message.REAPEATED_NAME);
+                writeMessage(Message.REPEATED_NAME);
                 askClientName();
             }
         }
