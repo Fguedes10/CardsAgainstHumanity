@@ -24,31 +24,32 @@ public enum Command {
     NEW_GAME("/new_game", new NewGameHandler()),//(same clients)
     QUIT("/quit", new QuitHandler()),
 
-}
 
-private String description;
-private CommandHandler handler;
+    private String description;
+    private CommandHandler handler;
 
-void Command(String description, CommandHandler handler) {
-    this.description = description;
-    this.handler = handler;
-}
-
-public static Command getCommandFromDescription(String description) {
-    for (Command command : values()) {
-        if (description.equals(command.description)) {
-            return command;
-        }
+    public void Command(String description, CommandHandler handler) {
+        this.description = description;
+        this.handler = handler;
     }
-    return NOT_FOUND;
-}
 
-public CommandHandler getHandler() {
-    return handler;
-}
+    public static Command getCommandFromDescription(String description) {
+        for (Command command : values()) {
+            if (description.equals(command.description)) {
+                return command;
+            }
+        }
+        return NOT_FOUND;
+    }
 
-public String getDescription() {
-    return description;
-}
-public void main() {
-}
+    public CommandHandler getHandler() {
+        return handler;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void main() {
+    }
+    }
