@@ -2,6 +2,7 @@ package Server;
 
 
 import Client.Client;
+import Commands.Command;
 import Messages.Message;
 
 import java.io.*;
@@ -114,6 +115,29 @@ public class Server {
             }
         }
 
+        public void broadcast(String name, String message){
+            clients.stream()
+                    .filter(handler -> handler.getName().equals(name))
+                    .forEach(handler -> handler.send(name + ": " + message));
+        }
+
+        public void send(String message){
+            synchronized (out){
+                try {
+                    out.write(message);
+                    out.newLine();
+                    out.flush();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+
+            }
+        }
+
+        private String getName() {
+            return name;
+        }
+
 
         @Override
         public void run() {
@@ -135,10 +159,17 @@ public class Server {
         }
 
         private void sendMessage(String s) {
+            sendClientsMessage(this, message);
+        }
+
+        private void sendClientsMessage(ClientConnectionHandler sender, String message) {
+            clients.stream().filter(handler -> !handler.equals(sender)).forEach(handler -> handler.writeMessage(message));
         }
 
         private void checkForCommands(String messageFromClient) {
-            
+            String description = message.split(" ")[0];
+            Command command = Command.getCommandFromDescription(description);
+            command.getHandler().execute(Server.this, this);
         }
 
 
