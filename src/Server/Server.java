@@ -1,15 +1,12 @@
 package Server;
 
 
-import Client.Client;
 import Commands.Command;
 import Messages.Message;
-
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.List;
-import java.util.Scanner;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
@@ -42,7 +39,20 @@ public class Server {
     }
 
     private void addClient(ClientConnectionHandler clientConnectionHandler) {
+        clients.add(clientConnectionHandler);
+        clientConnectionHandler.send(Message.WELCOME.formatted(clientConnectionHandler.getName()));
+        clientConnectionHandler.send(Message.COMMANDS_LIST);
+        broadcast(clientConnectionHandler.getName(), Message.PLAYER_ENTERED_CHAT);
+    }
 
+    public void removeClient(ClientConnectionHandler clientConnectionHandler){
+        clients.remove(clientConnectionHandler);
+    }
+
+    public void broadcast(String name, String message){
+        clients.stream()
+                .filter(handler -> handler.getName().equals(name))
+                .forEach(handler -> handler.send(name + ": " + message));
     }
 
 
@@ -136,13 +146,20 @@ public class Server {
             }
         }
 
-        private String getName() {
+        public String listClients() {
+            StringBuffer buffer = new StringBuffer();
+            clients.forEach(client -> buffer.append(client.getName()).append("\n"));
+            return buffer.toString();
+        }
+
+        public String getName() {
             return name;
         }
 
 
         @Override
         public void run() {
+            addClient(this);
             try {
                 askClientName();
                 askClientAge();
