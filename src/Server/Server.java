@@ -7,11 +7,13 @@ import Messages.Messages;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
 public class Server {
@@ -28,6 +30,24 @@ public class Server {
         clients = new CopyOnWriteArrayList<>();
     }
 
+    public void broadcast(String name, String message){
+        clients.stream()
+                .filter(handler -> handler.getName().equals(name))
+                .forEach(handler -> handler.send(name + ": " + message));
+    }
+
+    public void start(int port) throws IOException{
+        clients = new LinkedList<>();
+        ServerSocket serverSocket = new ServerSocket(port);
+        ExecutorService executorService = Executors.newCachedThreadPool();
+        while(true){
+            System.out.println("Listening to Connections");
+            Socket socket = serverSocket.accept();
+            ClientConnectionHandler clientConnectionHandler = new ClientConnectionHandler(socket);
+            addClient(clientConnectionHandler);
+            executorService.submit(clientConnectionHandler);
+        }
+    }
 
     public static void main(String[] args) throws IOException {
 
@@ -36,12 +56,14 @@ public class Server {
 
         BufferedReader inClient = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         PrintWriter outClient = new PrintWriter(clientSocket.getOutputStream(), true);
-
         serverSocket.close();
     }
 
     private void addClient(ClientConnectionHandler clientConnectionHandler) {
-
+        clients.add(clientConnectionHandler);
+        clientConnectionHandler.send(Messages.WELCOME.formatted(clientConnectionHandler.getName()));
+        clientConnectionHandler.send(Messages.COMMANDS_LIST);
+        broadcast(clientConnectionHandler.getName(), Messages.PLAYER_ENTERED_CHAT);
     }
 
     public Optional<ClientConnectionHandler> getClientByName(String name) {
@@ -66,10 +88,10 @@ public class Server {
         }
 
 
-        public ClientConnectionHandler(Socket clientSocket, String name, Integer age) throws IOException {
+        public ClientConnectionHandler(Socket clientSocket) throws IOException {
             this.clientSocket = clientSocket;
-            this.name = name;
-            this.age = age;
+            this.name = null;
+            this.age = 0;
             this.out = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
             this.in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             this.isInLobby = true;
