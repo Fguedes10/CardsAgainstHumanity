@@ -1,6 +1,6 @@
 package Commands;
 
-import Messages.Message;
+import Messages.Messages;
 import Server.Server;
 
 public class QuitHandler implements CommandHandler{
@@ -9,6 +9,6 @@ public class QuitHandler implements CommandHandler{
     public void execute(Server server, Server.ClientConnectionHandler clientConnectionHandler) {
         server.removeClient(clientConnectionHandler);
         server.broadcast(clientConnectionHandler.getName(),
-                clientConnectionHandler.getName() + Message.CLIENT_DISCONNECTED);
+                clientConnectionHandler.getName() + Messages.CLIENT_DISCONNECTED);
     }
 }

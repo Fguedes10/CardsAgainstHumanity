@@ -30,6 +30,10 @@ public class Server {
         clients = new CopyOnWriteArrayList<>();
     }
 
+    public void removeClient(ClientConnectionHandler clientConnectionHandler){
+        clients.remove(clientConnectionHandler);
+    }
+
     public void broadcast(String name, String message){
         clients.stream()
                 .filter(handler -> handler.getName().equals(name))
