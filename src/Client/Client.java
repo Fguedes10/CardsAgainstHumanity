@@ -18,10 +18,28 @@ public class Client {
         this.voteState = null;
     }
 
+<<<<<<< Updated upstream
     public void requestHand() {
     }
 
     public synchronized void fillHand() {
+=======
+    public void requestHand() {   //
+    }
+    public synchronized void fillHand(List<String> newCards) {
+        // Verify if the number of cards in hand and fill hand
+        if (cards.size() < 7) {
+            cards.addAll(newCards);
+        }
+    }
+
+
+    public synchronized void pickCard(String card) {
+        // Pick a card from hand to play
+        if (cards.contains(card)) {
+            cards.remove(card);
+        }
+>>>>>>> Stashed changes
     }
 
     public void pickCard() {
