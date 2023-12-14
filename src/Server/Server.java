@@ -44,7 +44,7 @@ public class Server {
     }
 
 
-    private static class ClientConnectionHandler implements Runnable {
+    public class ClientConnectionHandler implements Runnable {
 
         private String name;
         private Integer age;
@@ -130,9 +130,6 @@ public class Server {
                     continue;
                 }
                 sendMessage(name + " : " + messageFromClient);
-
-
-
             }
         }
 
