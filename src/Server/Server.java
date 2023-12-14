@@ -2,6 +2,8 @@ package Server;
 
 
 import Client.Client;
+import Commands.Command;
+import Messages.Message;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -44,7 +46,7 @@ public class Server {
     }
 
 
-    private static class ClientConnectionHandler implements Runnable {
+    public class ClientConnectionHandler implements Runnable {
 
         private String name;
         private Integer age;
@@ -85,32 +87,55 @@ public class Server {
         }
 
         private void askClientName() throws IOException {
-            writeMessage("Input your username: ");
+            writeMessage(Message.INPUT_NAME);
             name = in.readLine();
             if(name == null){
-                writeMessage("Write a valid username");
+                writeMessage(Message.NULL_NAME);
                 askClientName();
             }
             if(!checkUsedUsernames(name)){
-                writeMessage("Username already taken, please choose another");
+                writeMessage(Message.REPEATED_NAME);
                 askClientName();
             }
         }
 
         private void askClientAge() throws IOException {
-            writeMessage("Input your age: ");
+            writeMessage(Message.INPUT_AGE);
             String answerAge = in.readLine();
             if(answerAge == null){
-                writeMessage("Please insert a valid number");
+                writeMessage(Message.NULL_AGE);
                 askClientAge();
             }
             try{
                 Integer i = Integer.parseInt(answerAge);
 
             } catch (NumberFormatException nfe){
-                writeMessage("That isn't a valid number");
+                writeMessage(Message.NOT_A_NUMBER);
                 askClientAge();
             }
+        }
+
+        public void broadcast(String name, String message){
+            clients.stream()
+                    .filter(handler -> handler.getName().equals(name))
+                    .forEach(handler -> handler.send(name + ": " + message));
+        }
+
+        public void send(String message){
+            synchronized (out){
+                try {
+                    out.write(message);
+                    out.newLine();
+                    out.flush();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+
+            }
+        }
+
+        private String getName() {
+            return name;
         }
 
 
@@ -130,17 +155,21 @@ public class Server {
                     continue;
                 }
                 sendMessage(name + " : " + messageFromClient);
-
-
-
             }
         }
 
         private void sendMessage(String s) {
+            sendClientsMessage(this, message);
+        }
+
+        private void sendClientsMessage(ClientConnectionHandler sender, String message) {
+            clients.stream().filter(handler -> !handler.equals(sender)).forEach(handler -> handler.writeMessage(message));
         }
 
         private void checkForCommands(String messageFromClient) {
-            
+            String description = message.split(" ")[0];
+            Command command = Command.getCommandFromDescription(description);
+            command.getHandler().execute(Server.this, this);
         }
 
 
