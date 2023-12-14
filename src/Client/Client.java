@@ -1,5 +1,6 @@
 package Client;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,43 +8,40 @@ public class Client {
     private String name;
     private int age;
     private int score;
-    private List<Card> cards;
-    private Object voteState;
+    private List<String> cards;
+    private boolean voteState;
 
     public Client(String name, int age) {
         this.name = name;
         this.age = age;
         this.score = 0;
         this.cards = new ArrayList<>();
-        this.voteState = null;
+        this.voteState = false;
     }
 
-    public void requestHand() {
+    public void requestHand() {   //
+    }
+    public synchronized void fillHand(List<String> newCards) {
+        // Verify if the number of cards in hand and fill hand
+        if (cards.size() < 4) {
+            cards.addAll(newCards);
+        }
     }
 
-    public synchronized void fillHand() {
+
+    public synchronized void pickCard(String card) {
+        // Pick a card from hand to play
+        if (cards.contains(card)) {
+            cards.remove(card);
+            // Implement logic for playing the card
+        }
     }
 
-    public void pickCard() {
-    }
-
-    public void voteWinningHand() {
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
+    public synchronized void voteWinningHand() {
+        // If voteState is true, choose the number of the player to vote
+        if (voteState) {
+            // Implement logic for voting
+        }
     }
 
     public int getScore() {
@@ -54,19 +52,11 @@ public class Client {
         this.score = score;
     }
 
-    public List<Card> getCards() {
-        return cards;
-    }
-
-    public void setCards(List<Card> cards) {
-        this.cards = cards;
-    }
-
-    public Object getVoteState() {
+    public boolean isVoteState() {
         return voteState;
     }
 
-    public void setVoteState(Object voteState) {
+    public void setVoteState(boolean voteState) {
         this.voteState = voteState;
     }
 }
