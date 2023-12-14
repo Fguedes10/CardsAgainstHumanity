@@ -2,7 +2,7 @@ package Messages;
 
 public abstract class Messages {
 
-    public final static String WELCOME = "Welcome to Cards Against Mindera";
+    public final static String WELCOME = "Welcome to Cards Against Humanity";
     public final static String PLAYER_ENTERED_CHAT = " joins the chat";
     public final static String WINNER = " wins the game!";
     public final static String ROUND = "Round Nº";

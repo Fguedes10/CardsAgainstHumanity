@@ -30,6 +30,7 @@ public class Server {
         clients = new CopyOnWriteArrayList<>();
     }
 
+
     public void removeClient(ClientConnectionHandler clientConnectionHandler){
         clients.remove(clientConnectionHandler);
     }
@@ -215,6 +216,12 @@ public class Server {
             String description = message.split(" ")[0];
             Command command = Command.getCommandFromDescription(description);
             command.getHandler().execute(Server.this, this);
+        }
+
+        public String listClients(){
+            StringBuffer buffer = new StringBuffer();
+            clients.forEach(client -> buffer.append(client.getName()).append("\n"));
+            return buffer.toString();
         }
 
 
