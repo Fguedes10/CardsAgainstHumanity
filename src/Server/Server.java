@@ -1,15 +1,14 @@
 package Server;
 
 
-import Client.Client;
 import Commands.Command;
-import Messages.Message;
+import Messages.Messages;
 
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.List;
-import java.util.Scanner;
+import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
@@ -45,6 +44,12 @@ public class Server {
 
     }
 
+    public Optional<ClientConnectionHandler> getClientByName(String name) {
+        return clients.stream()
+                .filter(clientConnectionHandler -> clientConnectionHandler.getName().equalsIgnoreCase(name))
+                .findFirst();
+    }
+
 
     public class ClientConnectionHandler implements Runnable {
 
@@ -55,6 +60,10 @@ public class Server {
         private final BufferedReader in;
         private String message;
         private boolean isInLobby;
+
+        public void startGame(){
+
+        }
 
 
         public ClientConnectionHandler(Socket clientSocket, String name, Integer age) throws IOException {
@@ -87,30 +96,30 @@ public class Server {
         }
 
         private void askClientName() throws IOException {
-            writeMessage(Message.INPUT_NAME);
+            writeMessage(Messages.INPUT_NAME);
             name = in.readLine();
             if(name == null){
-                writeMessage(Message.NULL_NAME);
+                writeMessage(Messages.NULL_NAME);
                 askClientName();
             }
             if(!checkUsedUsernames(name)){
-                writeMessage(Message.REPEATED_NAME);
+                writeMessage(Messages.REPEATED_NAME);
                 askClientName();
             }
         }
 
         private void askClientAge() throws IOException {
-            writeMessage(Message.INPUT_AGE);
+            writeMessage(Messages.INPUT_AGE);
             String answerAge = in.readLine();
             if(answerAge == null){
-                writeMessage(Message.NULL_AGE);
+                writeMessage(Messages.NULL_AGE);
                 askClientAge();
             } else {
                 try{
                     Integer i = Integer.parseInt(answerAge);
 
                 } catch (NumberFormatException nfe){
-                    writeMessage(Message.NOT_A_NUMBER);
+                    writeMessage(Messages.NOT_A_NUMBER);
                     askClientAge();
                 }
             }
@@ -136,7 +145,7 @@ public class Server {
             }
         }
 
-        private String getName() {
+        public String getName() {
             return name;
         }
 
@@ -183,6 +192,13 @@ public class Server {
         }
 
 
+        public String getMessage() {
+            return message;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
     }
 
 }
