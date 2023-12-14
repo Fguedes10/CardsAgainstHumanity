@@ -1,9 +1,5 @@
 package Commands;
 
-import java.awt.desktop.QuitHandler;
-
-import static java.time.chrono.JapaneseEra.values;
-
 public enum Command {
 
     //Before game starts:
@@ -18,17 +14,20 @@ public enum Command {
     //After game starts:
 
     PLAY_CARD("/play_card", new PlayCardHandler()),//(Number of cards)
-    NOT_FOUND("Command not found", new CommandNotFoundHandler()),//(lists of commands)
+
 
     //After game ends:
     NEW_GAME("/new_game", new NewGameHandler()),//(same clients)
-    QUIT("/quit", new QuitHandler()),
+    QUIT("/quit", new QuitHandler());
 
 
     private String description;
     private CommandHandler handler;
 
-    public void Command(String description, CommandHandler handler) {
+
+
+
+    Command(String description, CommandHandler handler) {
         this.description = description;
         this.handler = handler;
     }
@@ -50,6 +49,5 @@ public enum Command {
         return description;
     }
 
-    public void main() {
-    }
+
     }
