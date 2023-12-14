@@ -56,6 +56,7 @@ public class Server {
         private String message;
         private boolean isInLobby;
 
+
         public ClientConnectionHandler(Socket clientSocket, String name, Integer age) throws IOException {
             this.clientSocket = clientSocket;
             this.name = name;
@@ -71,7 +72,6 @@ public class Server {
         public String readMessage(){
             try{
              return in.readLine();
-                
             } catch (IOException e){
                 throw new RuntimeException(e);
             }
@@ -105,14 +105,16 @@ public class Server {
             if(answerAge == null){
                 writeMessage(Message.NULL_AGE);
                 askClientAge();
-            }
-            try{
-                Integer i = Integer.parseInt(answerAge);
+            } else {
+                try{
+                    Integer i = Integer.parseInt(answerAge);
 
-            } catch (NumberFormatException nfe){
-                writeMessage(Message.NOT_A_NUMBER);
-                askClientAge();
+                } catch (NumberFormatException nfe){
+                    writeMessage(Message.NOT_A_NUMBER);
+                    askClientAge();
+                }
             }
+
         }
 
         public void broadcast(String name, String message){
@@ -162,8 +164,16 @@ public class Server {
             sendClientsMessage(this, message);
         }
 
-        private void sendClientsMessage(ClientConnectionHandler sender, String message) {
-            clients.stream().filter(handler -> !handler.equals(sender)).forEach(handler -> handler.writeMessage(message));
+        private void sendClientsMessage(ClientConnectionHandler sender, String message){
+            clients.stream()
+                    .filter(handler -> !handler.equals(sender))
+                    .forEach(handler -> {
+                try {
+                    handler.writeMessage(message);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
         }
 
         private void checkForCommands(String messageFromClient) {
