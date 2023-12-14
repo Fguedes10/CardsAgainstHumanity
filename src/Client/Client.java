@@ -8,7 +8,7 @@ public class Client {
     private int age;
     private int score;
     private boolean voteState;
-    private List<Cards> hand;
+    private List<String> cards;
 
 
 
