@@ -5,13 +5,41 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="85b0c289-ee1f-4cf4-8864-43a6fb5869c1" name="Changes" comment="first documentation commit">
+      <change afterPath="$PROJECT_DIR$/src/Client/ClientConnectionHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Commands/BuildHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Commands/ListGameHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Game/Game.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Client/Client.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Client/Client.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Client/ClientLauncher.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Client/ClientLauncher.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Server/Server$ClientConnectionHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Server/Server$ClientConnectionHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Server/Server.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Server/Server.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/ChangeNameHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/ChangeNameHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/ChatGeneralHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/ChatGeneralHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/Command.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/Command.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/CommandHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/CommandHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/CommandNotFoundHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/CommandNotFoundHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/ListPlayersHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/ListPlayersHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/NewGameHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/NewGameHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/PlayCardHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/PlayCardHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/QuitHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/QuitHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/StartHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/StartHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/WhisperHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/WhisperHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Messages/Message.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Messages/Messages.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Messages/Messages.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Server/Server$ClientConnectionHandler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Server/Server.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Client/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Client/ClientLauncher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Client/ClientLauncher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Commands/ChangeNameHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/ChangeNameHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Commands/ChatGeneralHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/ChatGeneralHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Commands/Command.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/Command.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Commands/CommandHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/CommandHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Commands/CommandNotFoundHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/CommandNotFoundHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Commands/ListPlayersHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/ListPlayersHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Commands/NewGameHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/NewGameHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Commands/PlayCardHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/PlayCardHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Commands/QuitHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/QuitHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Commands/StartHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/StartHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Commands/WhisperHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/WhisperHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Messages/Messages.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Messages/Messages.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Server/Server.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -37,12 +65,15 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectCodeStyleSettingsMigration">
     <option name="version" value="2" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 4
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
   <component name="ProjectId" id="2ZZjz7htPlpc0xbkv0Mbm2HOZEf" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -51,16 +82,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "fabio3",
-    "last_opened_file_path": "C:/Users/Fabio Guedes/Documents/CardsAgainstMindera",
-    "run.code.analysis.last.selected.profile": "pProject Default"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.ClientLauncher.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ServerLauncher.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;SextaZe&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Fabio Guedes/Documents/CardsAgainstMindera&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Application.ClientLauncher">
     <configuration name="ClientLauncher" type="Application" factoryName="Application" singleton="false" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Client.ClientLauncher" />
@@ -94,6 +128,13 @@
         <item itemvalue="Application.ServerLauncher" />
       </list>
     </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-21.0.1-openjdk-21.0.1-8336523bb0d9-55c9c8bc" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -129,31 +170,5 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="first documentation commit" />
     <option name="LAST_COMMIT_MESSAGE" value="first documentation commit" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Server/Server.java</url>
-          <line>135</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Server/Server.java</url>
-          <line>136</line>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Server/Server.java</url>
-          <line>138</line>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Server/Server.java</url>
-          <line>139</line>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

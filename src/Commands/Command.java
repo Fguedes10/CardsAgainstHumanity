@@ -4,7 +4,9 @@ public enum Command {
 
     //Before game starts:
 
-    START("/start", new StartHandler()), //(number of players)
+    START("/start", new StartHandler()),
+    BUILD("/build", new BuildHandler()),//(number of players)
+    AVAILABLE_GAMES("/available_games", new ListGameHandler()),
     LIST_PLAYERS("/list_players", new ListPlayersHandler()),
     CHANGE_NAME("/change_name", new ChangeNameHandler()),
     CHAT_GENERAL("/chat_general", new ChatGeneralHandler()),

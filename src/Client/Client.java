@@ -52,7 +52,6 @@ public class Client {
                 throw new RuntimeException(e);
             }
         }).start();
-        System.out.println(this.name);
         String messageToServer = null;
         while ((messageToServer = consoleIn.readLine()) != null) {
             out.println(messageToServer);
