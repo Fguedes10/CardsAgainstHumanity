@@ -24,5 +24,4 @@ public abstract class Messages {
     public final static String PLAYER_SCORE = "Player points: ";
     public final static String CLIENT_DISCONNECTED = " has disconnected";
 
-
 }

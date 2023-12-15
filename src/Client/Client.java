@@ -19,21 +19,10 @@ public class Client {
 
     static final String SERVER_HOST = "localhost";
     static final int SERVER_PORT = 8080;
-
     static int numberOfConnections = 0;
 
-    /**
-     * Main function that starts the client connection to the server.
-     *
-     * @param  args  the command-line arguments
-     * @throws IOException  if an I/O error occurs when creating the socket
-     */
-    public static void main(String[] args) throws IOException {
-        Socket socket = new Socket(SERVER_HOST, SERVER_PORT);
-        Client client = new Client("Client" + numberOfConnections,0);
-        client.start(socket);
-        numberOfConnections++;
-    }
+
+
 
     public Client(String name, int age) {
         this.name = name;
@@ -49,20 +38,25 @@ public class Client {
      * @param  socket  the socket connection to start
      * @throws IOException  if an I/O error occurs when creating the input and output streams
      */
-    public void start(Socket socket) throws IOException{
+    public void start(Socket socket) throws IOException {
         BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        BufferedWriter out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-
-        new Thread(()->{
+        PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+        BufferedReader consoleIn = new BufferedReader(new InputStreamReader(System.in));
+        new Thread(() -> {
             String messageFromServer = null;
-            try{
-                while((messageFromServer = in.readLine()) != null){
+            try {
+                while ((messageFromServer = in.readLine()) != null) {
                     System.out.println(messageFromServer);
                 }
             } catch (IOException e) {
-                throw new RuntimeException();
+                throw new RuntimeException(e);
             }
         }).start();
+        System.out.println(this.name);
+        String messageToServer = null;
+        while ((messageToServer = consoleIn.readLine()) != null) {
+            out.println(messageToServer);
+        }
     }
 
     public void requestHand() {   //
@@ -86,7 +80,7 @@ public class Client {
      *
      * @throws IOException	if there is an I/O error while reading the vote
      */
-    public synchronized void voteWinningHand() throws IOException {
+   /* public synchronized void voteWinningHand() throws IOException {
         if (voteState) {
             int numberOfPlayers = getPlayerCount();
             int[] votes = new int[numberOfPlayers];
@@ -123,6 +117,8 @@ public class Client {
         }
     }
 
+    */
+
     /**
      * Retrieves the score.
      *
@@ -158,6 +154,14 @@ public class Client {
      */
     public void setVoteState(boolean voteState) {
         this.voteState = voteState;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 }
 
