@@ -1,10 +1,7 @@
 package Client;
 
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,17 +17,18 @@ public class Client {
     private List<String> cards;
     private boolean voteState;
 
+    private List<String> whiteDeck;
+
     static final String SERVER_HOST = "localhost";
     static final int SERVER_PORT = 8080;
     static int numberOfConnections = 0;
-
-
 
 
     public Client(String name, int age) {
         this.name = name;
         this.age = age;
         this.score = 0;
+        this.whiteDeck = new ArrayList<>();
         this.cards = new ArrayList<>();
         this.voteState = false;
     }
@@ -38,13 +36,14 @@ public class Client {
     /**
      * Starts the socket connection and initializes the input and output streams.
      *
-     * @param  socket  the socket connection to start
-     * @throws IOException  if an I/O error occurs when creating the input and output streams
+     * @param socket the socket connection to start
+     * @throws IOException if an I/O error occurs when creating the input and output streams
      */
     public void start(Socket socket) throws IOException {
         BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
         BufferedReader consoleIn = new BufferedReader(new InputStreamReader(System.in));
+        whiteDeck = retrieveWhiteDeck();
         new Thread(() -> {
             String messageFromServer = null;
             try {
@@ -62,30 +61,56 @@ public class Client {
         }
     }
 
-    public void requestHand() {   //
-    }
-    public synchronized void fillHand(List<String> newCards) {
-        if (cards.size() < 7) {
-            int cardsNeeded = 7 - cards.size();
-            List<String> cardsToAdd = newCards.subList(0, Math.min(cardsNeeded, newCards.size()));
-            cards.addAll(cardsToAdd);
+    public List<String> retrieveWhiteDeck() {
+        String filePath = "Decks/whiteDeck.txt";
+        List<String> whiteCardList = new ArrayList<>();
+
+        // Use a try-with-resources statement to automatically close the BufferedReader
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            // Read each line from the file until the end is reached
+            while ((line = br.readLine()) != null) {
+                whiteCardList.add(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+    return whiteCardList;
+    }
+
+    public void requestHand() {
+        for (int i = 0;i < 7; i = i +1) {
+            chooseWhiteCard();
+        }
+
+    }
+
+    private void chooseWhiteCard() {
+        int randomCardPosition = (int) Math.random() * (whiteDeck.size());
+        cards.add(whiteDeck.remove(randomCardPosition));
+    }
+
+    public synchronized void fillHand() {
+        while (cards.size() < 7){
+            chooseWhiteCard();
+        }
+
+
     }
 
 
-    public synchronized void pickCard(String card) {
-        // Pick a card from hand to play
-        // Implement logic for playing the card
-        cards.remove(card);
+    public synchronized String pickCard(int cardPosition) {
+        return cards.remove(cardPosition);
+
     }
     /**
      * Synchronized method to vote for the winning hand.
      *
-     * @throws IOException	if there is an I/O error while reading the vote
+     * @throws IOException    if there is an I/O error while reading the vote
      */
    /* public synchronized void voteWinningHand() throws IOException {
         if (voteState) {
-            int numberOfPlayers = getPlayeVVrCount();
+            int numberOfPlayers = ();
             int[] votes = new int[numberOfPlayers];
 
             for (int i = 0; i < numberOfPlayers; i++) {
@@ -122,6 +147,8 @@ public class Client {
 
     */
 
+
+
     /**
      * Retrieves the score.
      *
@@ -135,7 +162,7 @@ public class Client {
     /**
      * Sets the score.
      *
-     * @param  score  the new score
+     * @param score the new score
      */
     public void setScore(int score) {
         this.score = score;
@@ -144,7 +171,7 @@ public class Client {
     /**
      * Retrieves the current vote state.
      *
-     * @return  true if the vote state is active, false otherwise
+     * @return true if the vote state is active, false otherwise
      */
     public boolean isVoteState() {
         return voteState;
@@ -153,7 +180,7 @@ public class Client {
     /**
      * Sets the vote state of the object.
      *
-     * @param  voteState  the new vote state to be set
+     * @param voteState the new vote state to be set
      */
     public void setVoteState(boolean voteState) {
         this.voteState = voteState;
@@ -165,6 +192,14 @@ public class Client {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public List<String> getWhiteDeck() {
+        return whiteDeck;
+    }
+
+    public void setWhiteDeck(List<String> whiteDeck) {
+        this.whiteDeck = whiteDeck;
     }
 }
 

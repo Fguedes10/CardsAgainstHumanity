@@ -25,6 +25,8 @@ public class Server {
 
    public List<ClientConnectionHandler> clientHandlerList;
 
+
+
     void start(int port) throws IOException {
         clientHandlerList = new LinkedList<>();
         ServerSocket serverSocket = new ServerSocket(port);
