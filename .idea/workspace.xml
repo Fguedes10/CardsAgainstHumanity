@@ -6,13 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="85b0c289-ee1f-4cf4-8864-43a6fb5869c1" name="Changes" comment="first documentation commit">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Client/Client.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Client/Client.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Client/ClientLauncher.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Client/ClientLauncher.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Server/Server$ClientConnectionHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Server/Server$ClientConnectionHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Server/Server.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Server/Server.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Client/Client.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Messages/Message.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Client/ClientLauncher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Client/ClientLauncher.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Server/Server.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,11 +36,11 @@
   <component name="ProjectCodeStyleSettingsMigration">
     <option name="version" value="2" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 4
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
   <component name="ProjectId" id="2ZZjz7htPlpc0xbkv0Mbm2HOZEf" />
-  <component name="ProjectLevelVcsManager">
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectViewState">
@@ -53,16 +49,17 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.ClientLauncher.executor": "Run",
+    "Application.ServerLauncher.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "fabio3",
+    "git-widget-placeholder": "JoaoBranch",
     "last_opened_file_path": "C:/Users/Fabio Guedes/Documents/CardsAgainstMindera",
     "run.code.analysis.last.selected.profile": "pProject Default"
   }
 }]]></component>
   <component name="RunManager" selected="Application.ClientLauncher">
-    <configuration name="ClientLauncher" type="Application" factoryName="Application" singleton="false" temporary="true" nameIsGenerated="true">
+    <configuration name="ClientLauncher" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Client.ClientLauncher" />
       <module name="CardsAgainstMindera" />
       <extension name="coverage">
@@ -115,45 +112,8 @@
     <option name="localTasksCounter" value="2" />
     <servers />
   </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State />
-          </value>
-        </entry>
-      </map>
-    </option>
-  </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="first documentation commit" />
     <option name="LAST_COMMIT_MESSAGE" value="first documentation commit" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Server/Server.java</url>
-          <line>135</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Server/Server.java</url>
-          <line>136</line>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Server/Server.java</url>
-          <line>138</line>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Server/Server.java</url>
-          <line>139</line>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>
