@@ -68,9 +68,10 @@ public class Client {
     public void requestHand() {   //
     }
     public synchronized void fillHand(List<String> newCards) {
-        // Verify if the number of cards in hand and fill hand
         if (cards.size() < 7) {
-            cards.addAll(newCards);
+            int cardsNeeded = 7 - cards.size();
+            List<String> cardsToAdd = newCards.subList(0, Math.min(cardsNeeded, newCards.size()));
+            cards.addAll(cardsToAdd);
         }
     }
 
@@ -80,11 +81,45 @@ public class Client {
         // Implement logic for playing the card
         cards.remove(card);
     }
-
-    public synchronized void voteWinningHand() {
-        // If voteState is true, choose the number of the player to vote
+    /**
+     * Synchronized method to vote for the winning hand.
+     *
+     * @throws IOException	if there is an I/O error while reading the vote
+     */
+    public synchronized void voteWinningHand() throws IOException {
         if (voteState) {
-            // Implement logic for voting
+            int numberOfPlayers = getPlayerCount();
+            int[] votes = new int[numberOfPlayers];
+
+            for (int i = 0; i < numberOfPlayers; i++) {
+                int playerNumber = i + 1;
+                System.out.println("Player " + playerNumber + ", enter the number of the card from another player that " +
+                        "you think should win: ");
+
+                BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+                int vote = Integer.parseInt(reader.readLine());
+
+                if (vote < 1 || vote > numberOfPlayers || vote == playerNumber) {
+                    System.out.println("Invalid vote! Please enter a valid player number.");
+                    i--;
+                    continue;
+                }
+                votes[vote - 1]++;
+            }
+
+            int winningVote = -1;
+            int winningVoteCount = 0;
+            for (int i = 0; i < numberOfPlayers; i++) {
+                if (votes[i] > winningVoteCount) {
+                    winningVote = i + 1;
+                    winningVoteCount = votes[i];
+                }
+            }
+
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out));
+            writer.write("The winning vote is for player " + winningVote);
+            writer.newLine();
+            writer.flush();
         }
     }
 
