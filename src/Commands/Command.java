@@ -13,9 +13,13 @@ public enum Command {
     WHISPER("/whisper", new WhisperHandler()),
     NOT_FOUND("Command not found", new CommandNotFoundHandler()),//(lists of commands)
 
-    //After game starts:
 
+
+    //After game starts:
     PLAY_CARD("/play_card", new PlayCardHandler()),//(Number of cards)
+
+
+
 
 
     //After game ends:

@@ -14,7 +14,10 @@ public class ChangeNameHandler implements CommandHandler {
      */
     @Override
     public void execute(Server server, ClientConnectionHandler clientConnectionHandler) {
-        String name = clientConnectionHandler.getMessage().replace(Command.CHANGE_NAME.getDescription(), "").trim();
+        String name = clientConnectionHandler
+                .getMessage().split(" ")[1]
+                .replace(Command.CHANGE_NAME.getDescription(), "")
+                .trim();
         if (server.getClientByName(name).isPresent()){
             clientConnectionHandler.send(Messages.REPEATED_NAME);
             return;

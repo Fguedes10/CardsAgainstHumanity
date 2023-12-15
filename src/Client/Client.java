@@ -60,8 +60,10 @@ public class Client {
         }
     }
 
-    public List<String> retrieveWhiteDeck() {
-        String filePath = "Decks/whiteDeck.txt";
+
+    private List<String> retrieveWhiteDeck() {
+        String filePath = "src/Decks/whiteDeck.txt";
+
         List<String> whiteCardList = new ArrayList<>();
 
         // Use a try-with-resources statement to automatically close the BufferedReader
@@ -74,7 +76,9 @@ public class Client {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     return whiteCardList;
+
     }
 
     public void requestHand() {
@@ -89,10 +93,13 @@ public class Client {
         cards.add(whiteDeck.remove(randomCardPosition));
     }
 
-    public synchronized void fillHand() {
-        while (cards.size() < 7){
-            chooseWhiteCard();
-        }
+
+    public synchronized void fillHand(List<String> newCards) {
+        if (cards.size() < 7) {
+            int cardsNeeded = 7 - cards.size();
+            List<String> cardsToAdd = newCards.subList(0, Math.min(cardsNeeded, newCards.size()));
+            cards.addAll(cardsToAdd);
+
 
 
     }
@@ -107,9 +114,11 @@ public class Client {
      *
      * @throws IOException    if there is an I/O error while reading the vote
      */
-   /* public synchronized void voteWinningHand() throws IOException {
+    public synchronized void voteWinningHand() throws IOException {
         if (voteState) {
-            int numberOfPlayers = ();
+
+            int numberOfPlayers = 4; //TODO fetch number of players
+
             int[] votes = new int[numberOfPlayers];
 
             for (int i = 0; i < numberOfPlayers; i++) {
@@ -144,7 +153,7 @@ public class Client {
         }
     }
 
-    */
+
 
 
 

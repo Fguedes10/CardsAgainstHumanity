@@ -13,7 +13,7 @@ import java.net.Socket;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static Server.Server.RED_BOLD;
+
 import static Server.Server.clientHandlerList;
 
 public class ClientConnectionHandler implements Runnable{
@@ -22,9 +22,8 @@ public class ClientConnectionHandler implements Runnable{
     private final BufferedReader in;
     private final PrintWriter out;
     private String name;
-    private String message;
+    private String messageFromClient;
     private Game ownedGame;
-
     private Server server;
 
     public void setServer(Server server) {
@@ -46,7 +45,6 @@ public class ClientConnectionHandler implements Runnable{
     }
 
 
-
     private String readMessage() {
         try {
             return in.readLine();
@@ -61,7 +59,7 @@ public class ClientConnectionHandler implements Runnable{
 
     public void writeMessage(String message) throws IOException {
         out.println(message);
-        System.out.println("Message sent to client");
+        System.out.println(Messages.SERVER_MESSAGE_SENT);
     }
 
     public boolean checkUsedUserNames(String username){
@@ -73,19 +71,19 @@ public class ClientConnectionHandler implements Runnable{
     }
 
     public int askNumberOfPlayers() throws IOException {
-        writeMessage("Please choose number of players");
+        writeMessage(Messages.CHOOSE_N_PLAYERS);
         return Integer.parseInt(readMessage());
     }
 
     private void askClientUserName() throws IOException {
-        writeMessage("What is your username?");
+        writeMessage(Messages.INPUT_NAME);
         name = readMessage();
         if (name == null) {
-            writeMessage("Please input a valid username.");
+            writeMessage(Messages.NULL_NAME);
             askClientUserName();
         }
         if(!checkUsedUserNames(name)){
-            writeMessage("Username already taken. Please choose another.");
+            writeMessage(Messages.REPEATED_NAME);
             askClientUserName();
         }
     }
@@ -108,20 +106,22 @@ public class ClientConnectionHandler implements Runnable{
 
     }
 
+
     @Override
     public void run() {
-        System.out.println("Client Arrived");
+        System.out.println(Messages.CLIENT_CONNECTED);
         out.println(Messages.WELCOME);
-        out.println(Messages.COMMANDS_LIST);
-        String messageFromClient;
+
         try {
             askClientUserName();
             askClientAge();
+            out.println(Messages.LOBBY);
+            out.println(Messages.COMMANDS_LIST);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         while (socket.isConnected()) {
-            System.out.println("Waiting for " + name + "!");
+            System.out.println(Messages.WAITING_MESSAGE + name);
             messageFromClient = readMessage();//blocking
             if(isCommand(messageFromClient)){
                 try {
@@ -131,7 +131,6 @@ public class ClientConnectionHandler implements Runnable{
                 }
                 continue;
             }
-            System.out.println("Message from " + name + "!");
             sendMessage(name + ": " + messageFromClient);
         }
 
@@ -152,10 +151,6 @@ public class ClientConnectionHandler implements Runnable{
         out.flush();
     }
 
-
-
-
-
     public String listClients(){
         StringBuffer buffer = new StringBuffer();
         Server.clientHandlerList.forEach(client -> buffer.append(client.getName()).append("\n"));
@@ -163,7 +158,7 @@ public class ClientConnectionHandler implements Runnable{
     }
 
     public String getMessage() {
-        return message;
+        return messageFromClient;
     }
 
     public String getName() {
