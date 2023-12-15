@@ -82,7 +82,7 @@ public class Client {
      */
    /* public synchronized void voteWinningHand() throws IOException {
         if (voteState) {
-            int numberOfPlayers = getPlayerCount();
+            int numberOfPlayers = getPlayeVVrCount();
             int[] votes = new int[numberOfPlayers];
 
             for (int i = 0; i < numberOfPlayers; i++) {
