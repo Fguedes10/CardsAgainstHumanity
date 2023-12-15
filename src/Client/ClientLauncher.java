@@ -11,6 +11,7 @@ public class ClientLauncher {
         Client client = new Client("Client-" + Client.numberOfConnections++,0);
         Socket socket = new Socket(Client.SERVER_HOST, Client.SERVER_PORT);
         client.start(socket);
+
     }
 }
 

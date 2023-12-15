@@ -61,25 +61,23 @@ public class Client {
         }
     }
 
-    public List<String> retrieveWhiteDeck() {
-        String filePath = "Decks/whiteDeck.txt";
+    private List<String> retrieveWhiteDeck() {
+        String filePath = "src/Decks/whiteDeck.txt";
         List<String> whiteCardList = new ArrayList<>();
 
-        // Use a try-with-resources statement to automatically close the BufferedReader
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
-            // Read each line from the file until the end is reached
             while ((line = br.readLine()) != null) {
                 whiteCardList.add(line);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-    return whiteCardList;
+        return whiteCardList;
     }
 
     public void requestHand() {
-        for (int i = 0;i < 7; i = i +1) {
+        for (int i = 0; i < 7; i = i + 1) {
             chooseWhiteCard();
         }
 
@@ -91,7 +89,7 @@ public class Client {
     }
 
     public synchronized void fillHand() {
-        while (cards.size() < 7){
+        while (cards.size() < 7) {
             chooseWhiteCard();
         }
 
@@ -103,50 +101,33 @@ public class Client {
         return cards.remove(cardPosition);
 
     }
+
     /**
      * Synchronized method to vote for the winning hand.
      *
-     * @throws IOException    if there is an I/O error while reading the vote
+     * @throws IOException if there is an I/O error while reading the vote
      */
-   /* public synchronized void voteWinningHand() throws IOException {
+    public synchronized void voteWinningHand() throws IOException {
         if (voteState) {
-            int numberOfPlayers = ();
-            int[] votes = new int[numberOfPlayers];
+            int numberOfPlayers = 4; //TODO fetch number of players
+            int playerID = 0; //TODO necessário o próprio jogador saber o seu número para nao votar em si mesmo.
 
-            for (int i = 0; i < numberOfPlayers; i++) {
-                int playerNumber = i + 1;
-                System.out.println("Player " + playerNumber + ", enter the number of the card from another player that " +
-                        "you think should win: ");
+            System.out.println("Player " + playerID + ", enter the number of the card from another player that " +
+                    "you think should win: ");
 
-                BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-                int vote = Integer.parseInt(reader.readLine());
+            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+            int vote = Integer.parseInt(reader.readLine());
 
-                if (vote < 1 || vote > numberOfPlayers || vote == playerNumber) {
-                    System.out.println("Invalid vote! Please enter a valid player number.");
-                    i--;
-                    continue;
-                }
-                votes[vote - 1]++;
+            while (vote < 1 || vote > numberOfPlayers || vote == playerID) {
+                System.out.println("Invalid vote! Please enter a valid player number.");
+                vote = Integer.parseInt(reader.readLine());
+
             }
 
-            int winningVote = -1;
-            int winningVoteCount = 0;
-            for (int i = 0; i < numberOfPlayers; i++) {
-                if (votes[i] > winningVoteCount) {
-                    winningVote = i + 1;
-                    winningVoteCount = votes[i];
-                }
-            }
 
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out));
-            writer.write("The winning vote is for player " + winningVote);
-            writer.newLine();
-            writer.flush();
         }
+        //TODO enviar para servidor o vote
     }
-
-    */
-
 
 
     /**
@@ -202,6 +183,7 @@ public class Client {
         this.whiteDeck = whiteDeck;
     }
 }
+
 
 
 
