@@ -168,4 +168,9 @@ public class ClientConnectionHandler implements Runnable{
     public void setName(String name) {
         this.name = name;
     }
+
+    public String askNameOfGame() throws IOException {
+        writeMessage(Messages.CHOOSE_GAME_NAME);
+        return readMessage();
+    }
 }

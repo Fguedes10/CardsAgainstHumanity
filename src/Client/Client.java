@@ -1,6 +1,5 @@
 package Client;
 
-
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -24,9 +23,9 @@ public class Client {
     static int numberOfConnections = 0;
 
 
-    public Client(String name, int age) {
-        this.name = name;
-        this.age = age;
+    public Client() {
+        this.name = null;
+        this.age = 0;
         this.score = 0;
         this.whiteDeck = new ArrayList<>();
         this.cards = new ArrayList<>();
@@ -36,14 +35,13 @@ public class Client {
     /**
      * Starts the socket connection and initializes the input and output streams.
      *
-     * @param socket the socket connection to start
-     * @throws IOException if an I/O error occurs when creating the input and output streams
+     * @param  socket  the socket connection to start
+     * @throws IOException  if an I/O error occurs when creating the input and output streams
      */
     public void start(Socket socket) throws IOException {
         BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
         BufferedReader consoleIn = new BufferedReader(new InputStreamReader(System.in));
-        whiteDeck = retrieveWhiteDeck();
         new Thread(() -> {
             String messageFromServer = null;
             try {
@@ -60,10 +58,8 @@ public class Client {
         }
     }
 
-
     private List<String> retrieveWhiteDeck() {
         String filePath = "src/Decks/whiteDeck.txt";
-
         List<String> whiteCardList = new ArrayList<>();
 
         // Use a try-with-resources statement to automatically close the BufferedReader
@@ -76,16 +72,13 @@ public class Client {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-    return whiteCardList;
-
+        return whiteCardList;
     }
 
     public void requestHand() {
         for (int i = 0;i < 7; i = i +1) {
             chooseWhiteCard();
         }
-
     }
 
     private void chooseWhiteCard() {
@@ -93,15 +86,12 @@ public class Client {
         cards.add(whiteDeck.remove(randomCardPosition));
     }
 
-
     public synchronized void fillHand(List<String> newCards) {
         if (cards.size() < 7) {
             int cardsNeeded = 7 - cards.size();
             List<String> cardsToAdd = newCards.subList(0, Math.min(cardsNeeded, newCards.size()));
             cards.addAll(cardsToAdd);
-
-
-
+        }
     }
 
 
@@ -112,13 +102,11 @@ public class Client {
     /**
      * Synchronized method to vote for the winning hand.
      *
-     * @throws IOException    if there is an I/O error while reading the vote
+     * @throws IOException  if there is an I/O error while reading the vote
      */
     public synchronized void voteWinningHand() throws IOException {
         if (voteState) {
-
             int numberOfPlayers = 4; //TODO fetch number of players
-
             int[] votes = new int[numberOfPlayers];
 
             for (int i = 0; i < numberOfPlayers; i++) {
@@ -155,8 +143,6 @@ public class Client {
 
 
 
-
-
     /**
      * Retrieves the score.
      *
@@ -170,7 +156,7 @@ public class Client {
     /**
      * Sets the score.
      *
-     * @param score the new score
+     * @param  score  the new score
      */
     public void setScore(int score) {
         this.score = score;
@@ -179,7 +165,7 @@ public class Client {
     /**
      * Retrieves the current vote state.
      *
-     * @return true if the vote state is active, false otherwise
+     * @return  true if the vote state is active, false otherwise
      */
     public boolean isVoteState() {
         return voteState;
@@ -188,35 +174,11 @@ public class Client {
     /**
      * Sets the vote state of the object.
      *
-     * @param voteState the new vote state to be set
+     * @param  voteState  the new vote state to be set
      */
     public void setVoteState(boolean voteState) {
         this.voteState = voteState;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
 
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public List<String> getWhiteDeck() {
-        return whiteDeck;
-    }
-
-    public void setWhiteDeck(List<String> whiteDeck) {
-        this.whiteDeck = whiteDeck;
-    }
 }
-
-
-
-
-
-
-
-
-
-

@@ -7,6 +7,7 @@ public enum Command {
     START("/start", new StartHandler()),
     BUILD("/build", new BuildHandler()),//(number of players)
     AVAILABLE_GAMES("/available_games", new ListGameHandler()),
+    JOIN("/join", new JoinGameHandler()),
     LIST_PLAYERS("/list_players", new ListPlayersHandler()),
     CHANGE_NAME("/change_name", new ChangeNameHandler()),
     CHAT_GENERAL("/chat_general", new ChatGeneralHandler()),
