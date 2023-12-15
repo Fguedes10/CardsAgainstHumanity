@@ -1,0 +1,168 @@
+Index: src/Client/Client.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package Client;\n\n\nimport java.io.*;\nimport java.net.Socket;\nimport java.util.ArrayList;\nimport java.util.List;\n\npublic class Client {\n    private String name;\n    private int age;\n    private int score;\n    private List<String> cards;\n    private boolean voteState;\n\n    static final String SERVER_HOST = \"localhost\";\n    static final int SERVER_PORT = 8080;\n\n    static int numberOfConnections = 0;\n\n    public static void main(String[] args) throws IOException {\n        Socket socket = new Socket(SERVER_HOST, SERVER_PORT);\n        Client client = new Client(\"Client\" + numberOfConnections,0);\n        client.start(socket);\n        numberOfConnections++;\n    }\n\n    public Client(String name, int age) {\n        this.name = name;\n        this.age = age;\n        this.score = 0;\n        this.cards = new ArrayList<>();\n        this.voteState = false;\n    }\n\n    public void start(Socket socket) throws IOException{\n        BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));\n        BufferedWriter out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));\n\n        new Thread(()->{\n            String messageFromServer = null;\n            try{\n                while((messageFromServer = in.readLine()) != null){\n                    System.out.println(messageFromServer);\n                }\n            } catch (IOException e) {\n                throw new RuntimeException();\n            }\n        }).start();\n    }\n\n    public void requestHand() {   //\n    }\n    public synchronized void fillHand(List<String> newCards) {\n        // Verify if the number of cards in hand and fill hand\n        if (cards.size() < 7) {\n            cards.addAll(newCards);\n        }\n    }\n\n\n    public synchronized void pickCard(String card) {\n        // Pick a card from hand to play\n        // Implement logic for playing the card\n        cards.remove(card);\n    }\n\n    public synchronized void voteWinningHand() {\n        // If voteState is true, choose the number of the player to vote\n        if (voteState) {\n            // Implement logic for voting\n        }\n    }\n\n    public int getScore() {\n        return score;\n    }\n\n    public void setScore(int score) {\n        this.score = score;\n    }\n\n    public boolean isVoteState() {\n        return voteState;\n    }\n\n    public void setVoteState(boolean voteState) {\n        this.voteState = voteState;\n    }\n}\n\n\n\n\n\n\n\n\n\n\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/Client/Client.java b/src/Client/Client.java
+--- a/src/Client/Client.java	(revision 5a53efd44bb17a8e14012c6600a16eb0a312cc32)
++++ b/src/Client/Client.java	(date 1702629967397)
+@@ -1,8 +1,6 @@
+ package Client;
+ 
+ 
+-import java.io.*;
+-import java.net.Socket;
+ import java.util.ArrayList;
+ import java.util.List;
+ 
+@@ -13,18 +11,6 @@
+     private List<String> cards;
+     private boolean voteState;
+ 
+-    static final String SERVER_HOST = "localhost";
+-    static final int SERVER_PORT = 8080;
+-
+-    static int numberOfConnections = 0;
+-
+-    public static void main(String[] args) throws IOException {
+-        Socket socket = new Socket(SERVER_HOST, SERVER_PORT);
+-        Client client = new Client("Client" + numberOfConnections,0);
+-        client.start(socket);
+-        numberOfConnections++;
+-    }
+-
+     public Client(String name, int age) {
+         this.name = name;
+         this.age = age;
+@@ -33,22 +19,6 @@
+         this.voteState = false;
+     }
+ 
+-    public void start(Socket socket) throws IOException{
+-        BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+-        BufferedWriter out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+-
+-        new Thread(()->{
+-            String messageFromServer = null;
+-            try{
+-                while((messageFromServer = in.readLine()) != null){
+-                    System.out.println(messageFromServer);
+-                }
+-            } catch (IOException e) {
+-                throw new RuntimeException();
+-            }
+-        }).start();
+-    }
+-
+     public void requestHand() {   //
+     }
+     public synchronized void fillHand(List<String> newCards) {
+@@ -61,8 +31,10 @@
+ 
+     public synchronized void pickCard(String card) {
+         // Pick a card from hand to play
+-        // Implement logic for playing the card
+-        cards.remove(card);
++        if (cards.contains(card)) {
++            cards.remove(card);
++            // Implement logic for playing the card
++        }
+     }
+ 
+     public synchronized void voteWinningHand() {
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"AutoImportSettings\">\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\n  </component>\n  <component name=\"ChangeListManager\">\n    <list default=\"true\" id=\"85b0c289-ee1f-4cf4-8864-43a6fb5869c1\" name=\"Changes\" comment=\"\">\n      <change beforePath=\"$PROJECT_DIR$/src/Commands/QuitHandler.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/Commands/QuitHandler.java\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/src/Messages/Messages.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/Messages/Messages.java\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/src/Server/Server.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/Server/Server.java\" afterDir=\"false\" />\n    </list>\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\n  </component>\n  <component name=\"ProjectLevelVcsManager\">\n    <ConfirmationsSetting value=\"2\" id=\"Add\" />\n  </component>\n  <component name=\"PropertiesComponent\"><![CDATA[{\n  \"keyToString\": {\n    \"git-widget-placeholder\": \"main\"\n  }\n}]]></component>\n  <component name=\"TaskManager\">\n    <servers />\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 5a53efd44bb17a8e14012c6600a16eb0a312cc32)
++++ b/.idea/workspace.xml	(date 1702629967555)
+@@ -4,25 +4,72 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="85b0c289-ee1f-4cf4-8864-43a6fb5869c1" name="Changes" comment="">
+-      <change beforePath="$PROJECT_DIR$/src/Commands/QuitHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/QuitHandler.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/Messages/Messages.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Messages/Messages.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/Server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Server/Server.java" afterDir="false" />
+-    </list>
++    <list default="true" id="881e7c98-7839-40b5-ad42-48638345104a" name="Changes" comment="" />
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+     <option name="LAST_RESOLUTION" value="IGNORE" />
+   </component>
++  <component name="FileTemplateManagerImpl">
++    <option name="RECENT_TEMPLATES">
++      <list>
++        <option value="Class" />
++      </list>
++    </option>
++  </component>
++  <component name="Git.Settings">
++    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
++  </component>
++  <component name="MarkdownSettingsMigration">
++    <option name="stateVersion" value="1" />
++  </component>
++  <component name="ProjectColorInfo">{
++  &quot;associatedIndex&quot;: 1
++}</component>
++  <component name="ProjectId" id="2ZX5bNXchBDr1dr7fCIiM2Bx3aQ" />
+   <component name="ProjectLevelVcsManager">
+     <ConfirmationsSetting value="2" id="Add" />
+   </component>
+-  <component name="PropertiesComponent"><![CDATA[{
+-  "keyToString": {
+-    "git-widget-placeholder": "main"
+-  }
+-}]]></component>
++  <component name="ProjectViewState">
++    <option name="hideEmptyMiddlePackages" value="true" />
++    <option name="showLibraryContents" value="true" />
++  </component>
++  <component name="PropertiesComponent">{
++  &quot;keyToString&quot;: {
++    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
++    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
++    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
++    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
++    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;
++  }
++}</component>
++  <component name="SharedIndexes">
++    <attachedChunks>
++      <set>
++        <option value="jdk-21.0.1-openjdk-21.0.1-8336523bb0d9-55c9c8bc" />
++      </set>
++    </attachedChunks>
++  </component>
++  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+   <component name="TaskManager">
++    <task active="true" id="Default" summary="Default task">
++      <changelist id="881e7c98-7839-40b5-ad42-48638345104a" name="Changes" comment="" />
++      <created>1702555655363</created>
++      <option name="number" value="Default" />
++      <option name="presentableId" value="Default" />
++      <updated>1702555655363</updated>
++    </task>
+     <servers />
+   </component>
++  <component name="Vcs.Log.Tabs.Properties">
++    <option name="TAB_STATES">
++      <map>
++        <entry key="MAIN">
++          <value>
++            <State />
++          </value>
++        </entry>
++      </map>
++    </option>
++  </component>
+ </project>
+\ No newline at end of file
