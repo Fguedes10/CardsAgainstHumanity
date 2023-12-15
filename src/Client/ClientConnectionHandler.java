@@ -147,30 +147,6 @@ public class ClientConnectionHandler implements Runnable{
         command.getHandler().execute(this.server, this);
     }
 
-    private void checkForSettings(String messageFromClient) throws IOException {
-
-        if(messageFromClient.startsWith("/users")){
-            out.println("Online users: ");
-            listClients();
-        }
-        if(messageFromClient.startsWith("/whisper")){
-            String userToWhisper = messageFromClient.split(" ")[1];
-            out.println("Type private message to send to " + userToWhisper);
-            String privateMessage = in.readLine();
-            Server.sendWhisper(this.name, userToWhisper, privateMessage);
-
-        }
-        if(messageFromClient.equals("/")){
-            out.println(RED_BOLD + Messages.COMMANDS_LIST);
-        }
-        if(messageFromClient.equalsIgnoreCase("Close")){
-            out.println("Goodbye");
-            in.close();
-            out.close();
-            socket.close();
-        }
-    }
-
     public void send(String message){
         out.println(message);
         out.flush();
