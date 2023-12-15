@@ -22,9 +22,8 @@ public class ClientConnectionHandler implements Runnable{
     private final BufferedReader in;
     private final PrintWriter out;
     private String name;
-    private String message;
+    private String messageFromClient;
     private Game ownedGame;
-
     private Server server;
 
     public void setServer(Server server) {
@@ -107,12 +106,12 @@ public class ClientConnectionHandler implements Runnable{
 
     }
 
+
     @Override
     public void run() {
         System.out.println(Messages.CLIENT_CONNECTED);
         out.println(Messages.WELCOME);
 
-        String messageFromClient;
         try {
             askClientUserName();
             askClientAge();
@@ -159,7 +158,7 @@ public class ClientConnectionHandler implements Runnable{
     }
 
     public String getMessage() {
-        return message;
+        return messageFromClient;
     }
 
     public String getName() {

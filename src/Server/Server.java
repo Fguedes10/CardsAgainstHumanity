@@ -29,11 +29,12 @@ public class Server {
             ClientConnectionHandler clientHandler = new ClientConnectionHandler(socket);
             clientHandlerList.add(clientHandler);
             executorService.submit(clientHandler);
+
         }
 
     }
 
-    public void broadcast(String name, String message){
+    public static void broadcast(String name, String message){
         clientHandlerList.stream()
                 .filter(handler -> handler.getName().equals(name))
                 .forEach(handler -> handler.send(name + ": " + message));
