@@ -30,7 +30,6 @@ public class Client {
         this.score = 0;
         this.cards = new ArrayList<>();
         this.voteState = false;
-        numberOfConnections++;
     }
 
     /**
@@ -43,8 +42,6 @@ public class Client {
         BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
         BufferedReader consoleIn = new BufferedReader(new InputStreamReader(System.in));
-        setName(this.name);
-        setAge(this.age);
         new Thread(() -> {
             String messageFromServer = null;
             try {
