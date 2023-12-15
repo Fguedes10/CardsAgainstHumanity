@@ -16,24 +16,15 @@ import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
 public class Server {
-    public static final String ANSI_RED = "\u001B[31m";
-
-    public static final String RED_BOLD = "\033[1;31m";
-
-    public static final String YELLOW_UNDERLINED = "\033[4;33m";
 
     public static List<ClientConnectionHandler> clientHandlerList;
-
-
-
-
 
     void start(int port) throws IOException {
         clientHandlerList = new LinkedList<>();
         ServerSocket serverSocket = new ServerSocket(port);
         ExecutorService executorService = Executors.newCachedThreadPool();
-        while (true) {
-            System.out.println("Listening to connections");
+        while (serverSocket.isBound()) {
+            System.out.println(Messages.SERVER_ON);
             Socket socket = serverSocket.accept();
             ClientConnectionHandler clientHandler = new ClientConnectionHandler(socket);
             clientHandlerList.add(clientHandler);
@@ -70,16 +61,5 @@ public class Server {
         );
     }
 
-    public static void sendWhisper(String sender, String receiver, String message){
-        clientHandlerList.stream().filter(clientHandler -> clientHandler.getName()
-                .equals(receiver)).forEach(clientHandler -> {
-                    try {
-                        clientHandler.writeMessage(sender + " " + Messages.WHISPER + ": " + message);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-        );
-    }
 
 }
