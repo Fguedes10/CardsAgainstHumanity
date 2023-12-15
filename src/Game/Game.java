@@ -15,11 +15,12 @@ public class Game {
     public Game(ClientConnectionHandler owner, int numOfPlayers){
         this.owner = owner;
         this.numOfPlayers = numOfPlayers;
+        runningGames.add(this);
     }
 
-    public static String getRunningGames(ClientConnectionHandler client) throws IOException {
+    public static String getRunningGames() throws IOException {
         StringBuffer buffer = new StringBuffer();
-        runningGames.forEach(game -> buffer.append(game.numOfPlayers).append(" player game started by ").append(game.owner).append("\n"));
+        runningGames.forEach(game -> buffer.append(game.numOfPlayers).append(" player game started by ").append(game.owner.getName()).append("\n"));
         return buffer.toString();
     }
 

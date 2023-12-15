@@ -5,42 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="85b0c289-ee1f-4cf4-8864-43a6fb5869c1" name="Changes" comment="first documentation commit">
-      <change afterPath="$PROJECT_DIR$/src/Client/ClientConnectionHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Commands/BuildHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Commands/ListGameHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Game/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Client/Client.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Client/Client.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/ChangeNameHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/ChangeNameHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/ChatGeneralHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/ChatGeneralHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/Command.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/Command.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/CommandHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/CommandHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/CommandNotFoundHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/CommandNotFoundHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/ListPlayersHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/ListPlayersHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/NewGameHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/NewGameHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/PlayCardHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/PlayCardHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/QuitHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/QuitHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/StartHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/StartHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/WhisperHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/WhisperHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Messages/Message.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Messages/Messages.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Messages/Messages.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Server/Server$ClientConnectionHandler.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Server/Server.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Client/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Commands/ChangeNameHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/ChangeNameHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Commands/ChatGeneralHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/ChatGeneralHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Commands/Command.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/Command.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Commands/CommandHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/CommandHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Commands/CommandNotFoundHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/CommandNotFoundHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Commands/ListPlayersHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/ListPlayersHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Commands/NewGameHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/NewGameHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Commands/PlayCardHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/PlayCardHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Commands/QuitHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/QuitHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Commands/StartHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/StartHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Commands/WhisperHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/WhisperHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Messages/Messages.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Messages/Messages.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Server/Server.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Commands/ListGameHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/ListGameHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Game/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game/Game.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
