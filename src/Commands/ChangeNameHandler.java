@@ -1,5 +1,6 @@
 package Commands;
 
+import Client.ClientConnectionHandler;
 import Messages.Messages;
 import Server.Server;
 
@@ -12,7 +13,7 @@ public class ChangeNameHandler implements CommandHandler {
      * @param  clientConnectionHandler the client connection handler object
      */
     @Override
-    public void execute(Server server, Server.ClientConnectionHandler clientConnectionHandler) {
+    public void execute(Server server, ClientConnectionHandler clientConnectionHandler) {
         String name = clientConnectionHandler.getMessage().replace(Command.CHANGE_NAME.getDescription(), "").trim();
         if (server.getClientByName(name).isPresent()){
             clientConnectionHandler.send(Messages.REPEATED_NAME);
