@@ -4,7 +4,10 @@ import Client.ClientConnectionHandler;
 import Game.Game;
 import Messages.Messages;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.LinkedList;
@@ -18,6 +21,7 @@ import java.util.stream.Collectors;
 public class Server {
 
     public static List<ClientConnectionHandler> clientHandlerList;
+
 
     void start(int port) throws IOException {
         clientHandlerList = new LinkedList<>();
