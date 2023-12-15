@@ -1,5 +1,6 @@
 package Commands;
 
+import Messages.Messages;
 import Server.Server;
 
 public class QuitHandler implements CommandHandler{

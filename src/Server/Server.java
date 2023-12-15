@@ -1,12 +1,13 @@
 package Server;
 
 
+import Client.Client;
 import Commands.Command;
+import Messages.Messages;
 
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -14,9 +15,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
-
-
-
 
 public class Server {
 
@@ -26,12 +24,9 @@ public class Server {
 
     static List<ClientConnectionHandler> clients;
 
-    private static final int PORT = 8080;
-
     public Server() {
         clients = new CopyOnWriteArrayList<>();
     }
-
 
     public void removeClient(ClientConnectionHandler clientConnectionHandler){
         clients.remove(clientConnectionHandler);
@@ -44,33 +39,30 @@ public class Server {
     }
 
     public void start(int port) throws IOException{
-        clients = new LinkedList<>();
-        ServerSocket serverSocket = new ServerSocket(port);
-        ExecutorService executorService = Executors.newCachedThreadPool();
-        while(true){
-            System.out.println("Listening to Connections");
+        serverSocket = new ServerSocket(port);
+        executorService = Executors.newCachedThreadPool();
+        while(serverSocket.isBound()){
+            if(clients.isEmpty()){
+                System.out.println("Server is on! Currently waiting for players");
+            }
             Socket socket = serverSocket.accept();
             ClientConnectionHandler clientConnectionHandler = new ClientConnectionHandler(socket);
             addClient(clientConnectionHandler);
             executorService.submit(clientConnectionHandler);
+            clientConnectionHandler.askClientName();
+            clientConnectionHandler.askClientAge();
+            System.out.println(clientConnectionHandler.getName() + " has joined");
+
         }
-    }
-
-    public static void main(String[] args) throws IOException {
-
-        ServerSocket serverSocket = new ServerSocket(PORT);
-        Socket clientSocket = serverSocket.accept();
-
-        BufferedReader inClient = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-        PrintWriter outClient = new PrintWriter(clientSocket.getOutputStream(), true);
-        serverSocket.close();
     }
 
     private void addClient(ClientConnectionHandler clientConnectionHandler) {
         clients.add(clientConnectionHandler);
         clientConnectionHandler.send(Messages.WELCOME.formatted(clientConnectionHandler.getName()));
         clientConnectionHandler.send(Messages.COMMANDS_LIST);
-        broadcast(clientConnectionHandler.getName(), Messages.PLAYER_ENTERED_CHAT);
+        if(clients.size() > 2 ){
+            broadcast(clientConnectionHandler.getName(), Messages.PLAYER_ENTERED_CHAT);
+        }
     }
 
     public Optional<ClientConnectionHandler> getClientByName(String name) {
@@ -109,12 +101,12 @@ public class Server {
         }
         public String readMessage(){
             try{
-             return in.readLine();
+                return in.readLine();
             } catch (IOException e){
                 throw new RuntimeException(e);
             }
         }
-        
+
 
         public boolean checkUsedUsernames(String username){
             Set<String> usernameList = clients.stream().map(clientConnectionHandler -> clientConnectionHandler.name).collect(Collectors.toSet());
@@ -155,12 +147,6 @@ public class Server {
 
         }
 
-        public void broadcast(String name, String message){
-            clients.stream()
-                    .filter(handler -> handler.getName().equals(name))
-                    .forEach(handler -> handler.send(name + ": " + message));
-        }
-
         public void send(String message){
             synchronized (out){
                 try {
@@ -172,10 +158,6 @@ public class Server {
                 }
 
             }
-        }
-
-        public String getName() {
-            return name;
         }
 
 
@@ -206,12 +188,12 @@ public class Server {
             clients.stream()
                     .filter(handler -> !handler.equals(sender))
                     .forEach(handler -> {
-                try {
-                    handler.writeMessage(message);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            });
+                        try {
+                            handler.writeMessage(message);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    });
         }
 
         private void checkForCommands(String messageFromClient) {
@@ -234,6 +216,13 @@ public class Server {
         public void setName(String name) {
             this.name = name;
         }
+
+        public String getName() {
+            return name;
+        }
+
+
+
     }
 
 }
