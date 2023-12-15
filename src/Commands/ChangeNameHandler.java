@@ -1,11 +1,15 @@
 package Commands;
 
-import Messages.Messages;
 import Server.Server;
 
 public class ChangeNameHandler implements CommandHandler {
 
-
+    /**
+     * Executes the function.
+     *
+     * @param  server                 the server object
+     * @param  clientConnectionHandler the client connection handler object
+     */
     @Override
     public void execute(Server server, Server.ClientConnectionHandler clientConnectionHandler) {
         String name = clientConnectionHandler.getMessage().replace(Command.CHANGE_NAME.getDescription(), "").trim();

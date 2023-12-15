@@ -1,12 +1,16 @@
 package Commands;
 
-import Messages.Messages;
 import Server.Server;
 
 import java.util.Optional;
 
 public class WhisperHandler implements CommandHandler {
-
+    /**
+     * Executes the function by processing the given server and client connection handler.
+     *
+     * @param  server                  the server object to execute the function on
+     * @param  clientConnectionHandler the client connection handler to process
+     */
     @Override
     public void execute(Server server, Server.ClientConnectionHandler clientConnectionHandler) {
         String message = clientConnectionHandler.getMessage();
