@@ -45,27 +45,35 @@ public class Server {
                 .forEach(handler -> handler.send(name + ": " + message));
     }
 
-
-    public Optional<ClientConnectionHandler> getClientByName(String name) {
-        return clientHandlerList.stream()
-                .filter(clientConnectionHandler -> clientConnectionHandler.getName().equalsIgnoreCase(name))
-                .findFirst();
-    }
-    public void removeClient(ClientConnectionHandler clientConnectionHandler){
-        clientHandlerList.remove(clientConnectionHandler);
+    public static void broadcastInGame(String name, String message, Game game){
+        game.players.forEach(handler -> handler.send(message));
     }
 
-    public static void sendClientsMessage(ClientConnectionHandler sender, String message) {
-        clientHandlerList.stream().filter(clientHandler -> !clientHandler.equals(sender)).forEach(
-                clientHandler -> {
-                    try {
-                        clientHandler.writeMessage(message);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
+    public static void announceInGame(String message, Game game){
+        game.players.forEach(handler -> handler.send(message));
+    }
+
+
+public Optional<ClientConnectionHandler> getClientByName(String name) {
+    return clientHandlerList.stream()
+            .filter(clientConnectionHandler -> clientConnectionHandler.getName().equalsIgnoreCase(name))
+            .findFirst();
+}
+public void removeClient(ClientConnectionHandler clientConnectionHandler){
+    clientHandlerList.remove(clientConnectionHandler);
+}
+
+public static void sendClientsMessage(ClientConnectionHandler sender, String message) {
+    clientHandlerList.stream().filter(clientHandler -> !clientHandler.equals(sender)).forEach(
+            clientHandler -> {
+                try {
+                    clientHandler.writeMessage(message);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
                 }
-        );
-    }
+            }
+    );
+}
 
 
 

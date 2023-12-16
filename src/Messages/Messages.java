@@ -44,4 +44,16 @@ public abstract class Messages {
     public final static String CHOOSE_N_PLAYERS = "Please choose number of players";
     public final static String SERVER_MESSAGE_SENT = "Message sent to client";
 
+    // GAME MESSAGES
+
+    public final static String GAME_BEGINS = "Welcome to Cards Against Mindera \n" + "Here are the game rules: \n"
+            + "Each player needs to run /fill_hand to pick 7 game cards. \n"
+            + "After that, and at every new turn, the game will send out a Black Card. \n"
+            + "A Black Card is a prompt, which you will answer using one of the White Cards in your hand. \n"
+            + "Once everyone chooses their answer, you will be required to vote in your favourite (other than your own) \n"
+            + "The player whose card gets the more votes, wins a point. \n"
+            + "The game ends at 10 points, at which time a winner will be declared.";
+
+
+
 }

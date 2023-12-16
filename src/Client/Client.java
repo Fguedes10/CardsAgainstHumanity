@@ -14,9 +14,28 @@ public class Client {
     private int age;
     private int score;
     private List<String> cards;
+
+    public List<String> getCards() {
+        return cards;
+    }
+
+    private int maxHandSize = 7;
     private boolean voteState;
 
-    private List<String> whiteDeck;
+    private String playedCard;
+
+    public String getPlayedCard() {
+        return playedCard;
+    }
+
+    public void setPlayedCard(String playedCard) {
+        this.playedCard = playedCard;
+    }
+
+    private ClientConnectionHandler correspondingClientConnectionHandlers;
+
+   private boolean gameState = false;
+
 
     static final String SERVER_HOST = "localhost";
     static final int SERVER_PORT = 8080;
@@ -27,7 +46,6 @@ public class Client {
         this.name = null;
         this.age = 0;
         this.score = 0;
-        this.whiteDeck = new ArrayList<>();
         this.cards = new ArrayList<>();
         this.voteState = false;
     }
@@ -58,40 +76,25 @@ public class Client {
         }
     }
 
-    private List<String> retrieveWhiteDeck() {
-        String filePath = "src/Decks/whiteDeck.txt";
-        List<String> whiteCardList = new ArrayList<>();
+    private void chooseWhiteCard(int i) {
+      int randomCardPosition = (int) Math.random() * (correspondingClientConnectionHandlers.getPlayingGame().getWhiteDeck().size());
+        cards.add(i + " - " +  correspondingClientConnectionHandlers.getPlayingGame().getWhiteDeck().remove(randomCardPosition));
+        //return correspondingClientConnectionHandlers.getPlayingGame().getWhiteDeck().get(randomCardPosition);
+   }
 
-        // Use a try-with-resources statement to automatically close the BufferedReader
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-            String line;
-            // Read each line from the file until the end is reached
-            while ((line = br.readLine()) != null) {
-                whiteCardList.add(line);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return whiteCardList;
-    }
-
-    public void requestHand() {
-        for (int i = 0;i < 7; i = i +1) {
-            chooseWhiteCard();
-        }
-    }
-
-    private void chooseWhiteCard() {
-        int randomCardPosition = (int) Math.random() * (whiteDeck.size());
-        cards.add(whiteDeck.remove(randomCardPosition));
-    }
-
-    public synchronized void fillHand(List<String> newCards) {
+   /* public synchronized void fillHand(List<String> newCards) {
         if (cards.size() < 7) {
             int cardsNeeded = 7 - cards.size();
             List<String> cardsToAdd = newCards.subList(0, Math.min(cardsNeeded, newCards.size()));
             cards.addAll(cardsToAdd);
         }
+    }*/
+
+    public void fillHand(){
+        for (int i = 1; i <= maxHandSize; i++) {
+            chooseWhiteCard(i);
+        }
+        correspondingClientConnectionHandlers.getPlayingGame().chooseBlackCard();
     }
 
 
@@ -181,4 +184,7 @@ public class Client {
     }
 
 
+    public void setCorrespondingClientConnectionHandler(ClientConnectionHandler clientConnectionHandler) {
+        this.correspondingClientConnectionHandlers = clientConnectionHandler;
+    }
 }

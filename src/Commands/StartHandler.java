@@ -20,7 +20,8 @@ public class StartHandler implements CommandHandler {
             return;
         }
         Game game = Game.getGameByName(message.split(" ")[1]);
-        if(clientConnectionHandler.getName().toString().equals(game.owner)){
+        assert game != null;
+        if(clientConnectionHandler.getName().equals(game.owner.getName())){
             if(game != null){
                 try {
                     game.startGame(game);
@@ -31,6 +32,9 @@ public class StartHandler implements CommandHandler {
         } else {
             clientConnectionHandler.writeMessage(Messages.NOT_YOUR_GAME);
         }
+
+        game.players.forEach(player -> player.setPlayingGame(game));
+        game.players.forEach(player -> player.gameState = true);
 
 
 

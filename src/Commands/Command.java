@@ -18,7 +18,8 @@ public enum Command {
 
     //After game starts:
     PLAY_CARD("/play_card", new PlayCardHandler()),//(Number of cards)
-
+    FILL_HAND("/fill_hand", new FillHandHandler()),
+    START_TURN("/start_turn", new TurnHandler()),
 
 
 

@@ -19,12 +19,29 @@ import static Server.Server.clientHandlerList;
 public class ClientConnectionHandler implements Runnable{
 
     private Socket socket;
+    private Client correspondingClient;
     private final BufferedReader in;
     private final PrintWriter out;
     private String name;
     private String messageFromClient;
     private Game ownedGame;
+    private Game playingGame;
+
+    public Game getPlayingGame() {
+        return playingGame;
+    }
+
+    public void setPlayingGame(Game playingGame) {
+        this.playingGame = playingGame;
+    }
+
     private Server server;
+
+    public boolean gameState = false;
+
+    private void setGameState(Boolean b) {
+        this.gameState = b;
+    }
 
     public void setServer(Server server) {
         this.server = server;
@@ -42,6 +59,8 @@ public class ClientConnectionHandler implements Runnable{
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        this.correspondingClient = new Client();
+        correspondingClient.setCorrespondingClientConnectionHandler(this);
     }
 
 
@@ -121,26 +140,46 @@ public class ClientConnectionHandler implements Runnable{
             throw new RuntimeException(e);
         }
         while (socket.isConnected()) {
-            System.out.println(Messages.WAITING_MESSAGE + name);
             messageFromClient = readMessage();//blocking
-            if(isCommand(messageFromClient)){
-                try {
-                    dealWithCommand(messageFromClient);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
+            if (this.gameState) {
+                if (isCommand(messageFromClient)) {
+                    try {
+                        dealWithGameCommand(messageFromClient);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    //Aqui, os jogadores que não começam o jogo ainda conseguem enviar uma
+                    // mensagem porque o servidor já está à espera dalguma mensagem deles.
+                    // É preciso descobrir como impedir isso.
+                    return;
+                }}
+                System.out.println(Messages.WAITING_MESSAGE + name);
+                if (isCommand(messageFromClient)) {
+                    try {
+                        dealWithCommand(messageFromClient);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    continue;
                 }
-                continue;
+                sendMessage(name + ": " + messageFromClient);
             }
-            sendMessage(name + ": " + messageFromClient);
+
         }
 
-    }
+
 
     private boolean isCommand(String message) {
         return message.startsWith("/");
     }
 
     private void dealWithCommand(String message) throws IOException {
+        String description = message.split(" ")[0];
+        Command command = Command.getCommandFromDescription(description);
+        command.getHandler().execute(this.server, this);
+    }
+
+    private void dealWithGameCommand(String message) throws IOException {
         String description = message.split(" ")[0];
         Command command = Command.getCommandFromDescription(description);
         command.getHandler().execute(this.server, this);
@@ -172,5 +211,13 @@ public class ClientConnectionHandler implements Runnable{
     public String askNameOfGame() throws IOException {
         writeMessage(Messages.CHOOSE_GAME_NAME);
         return readMessage();
+    }
+
+    public Client getCorrespondingClient() {
+        return correspondingClient;
+    }
+
+    public void setCorrespondingClient(Client correspondingClient) {
+        this.correspondingClient = correspondingClient;
     }
 }
