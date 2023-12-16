@@ -153,7 +153,6 @@ public class Game {
     public void presentBlackCard(){
             chooseBlackCard();
             Server.announceInGame("This turn's Black Card is: " + blackCardInGame, this);
-
     }
 
 
@@ -179,6 +178,5 @@ public class Game {
     public void chooseBlackCard() {
         int randomCardPosition = (int) Math.random() * (blackDeck.size());
         blackCardInGame = blackDeck.get(randomCardPosition);
-        //return correspondingClientConnectionHandlers.getPlayingGame().getWhiteDeck().get(randomCardPosition);
     }
 }
