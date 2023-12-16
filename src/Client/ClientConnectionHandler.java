@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 import static Server.Server.clientHandlerList;
 
-public class ClientConnectionHandler implements Runnable{
+public class ClientConnectionHandler implements Runnable {
 
     private Socket socket;
     private Client correspondingClient;
@@ -27,6 +27,11 @@ public class ClientConnectionHandler implements Runnable{
     private Game ownedGame;
     private Game playingGame;
 
+
+    private Server server;
+
+    public boolean gameState = false;
+
     public Game getPlayingGame() {
         return playingGame;
     }
@@ -34,10 +39,6 @@ public class ClientConnectionHandler implements Runnable{
     public void setPlayingGame(Game playingGame) {
         this.playingGame = playingGame;
     }
-
-    private Server server;
-
-    public boolean gameState = false;
 
     private void setGameState(Boolean b) {
         this.gameState = b;
@@ -81,9 +82,9 @@ public class ClientConnectionHandler implements Runnable{
         System.out.println(Messages.SERVER_MESSAGE_SENT);
     }
 
-    public boolean checkUsedUserNames(String username){
+    public boolean checkUsedUserNames(String username) {
         Set<String> usernameList = clientHandlerList.stream().map(clientHandler -> clientHandler.name).collect(Collectors.toSet());
-        if(usernameList.size() < clientHandlerList.size()){
+        if (usernameList.size() < clientHandlerList.size()) {
             return false;
         }
         return true;
@@ -101,7 +102,7 @@ public class ClientConnectionHandler implements Runnable{
             writeMessage(Messages.NULL_NAME);
             askClientUserName();
         }
-        if(!checkUsedUserNames(name)){
+        if (!checkUsedUserNames(name)) {
             writeMessage(Messages.REPEATED_NAME);
             askClientUserName();
         }
@@ -110,14 +111,14 @@ public class ClientConnectionHandler implements Runnable{
     private void askClientAge() throws IOException {
         writeMessage(Messages.INPUT_AGE);
         String answerAge = in.readLine();
-        if(answerAge == null){
+        if (answerAge == null) {
             writeMessage(Messages.NULL_AGE);
             askClientAge();
         } else {
-            try{
+            try {
                 Integer i = Integer.parseInt(answerAge);
 
-            } catch (NumberFormatException nfe){
+            } catch (NumberFormatException nfe) {
                 writeMessage(Messages.NOT_A_NUMBER);
                 askClientAge();
             }
@@ -152,21 +153,21 @@ public class ClientConnectionHandler implements Runnable{
                     // mensagem porque o servidor já está à espera dalguma mensagem deles.
                     // É preciso descobrir como impedir isso.
                     return;
-                }}
-                System.out.println(Messages.WAITING_MESSAGE + name);
-                if (isCommand(messageFromClient)) {
-                    try {
-                        dealWithCommand(messageFromClient);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                    continue;
                 }
-                sendMessage(name + ": " + messageFromClient);
             }
-
+            System.out.println(Messages.WAITING_MESSAGE + name);
+            if (isCommand(messageFromClient)) {
+                try {
+                    dealWithCommand(messageFromClient);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                continue;
+            }
+            sendMessage(name + ": " + messageFromClient);
         }
 
+    }
 
 
     private boolean isCommand(String message) {
@@ -185,12 +186,12 @@ public class ClientConnectionHandler implements Runnable{
         command.getHandler().execute(this.server, this);
     }
 
-    public void send(String message){
+    public void send(String message) {
         out.println(message);
         out.flush();
     }
 
-    public String listClients(){
+    public String listClients() {
         StringBuffer buffer = new StringBuffer();
         Server.clientHandlerList.forEach(client -> buffer.append(client.getName()).append("\n"));
         return buffer.toString();
@@ -220,4 +221,6 @@ public class ClientConnectionHandler implements Runnable{
     public void setCorrespondingClient(Client correspondingClient) {
         this.correspondingClient = correspondingClient;
     }
+
+
 }

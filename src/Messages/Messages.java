@@ -18,7 +18,7 @@ public abstract class Messages {
     public final static String NOT_YOUR_GAME = "This game is not yours to start.";
     public final static String ROUND = "Round Nº";
     public final static String COMMANDS_LIST =
-             " AVAILABLE COMMANDS\n\n " + RED_BOLD + "/build - > Build a new game \n" + "/available_games - > Check available games \n" + "/join - > join available games \n" + "/start - > Start the game when all players have joined \n" + "/list_players -> List the names of online players \n" + "/change_name " +
+             "AVAILABLE COMMANDS\n\n" + RED_BOLD + "/build - > Build a new game \n" + "/available_games - > Check available games \n" + "/join - > join available games \n" + "/start - > Start the game when all players have joined \n" + "/list_players -> List the names of online players \n" + "/change_name " +
                     "-> Change username \n" + "/whisper -> send private message to other player \n" + RESET_COLOR;
 
     public final static String WHISPER_INSTRUCTIONS = "Invalid whisper use. Correct use: '/whisper <username> <message>";
@@ -38,7 +38,7 @@ public abstract class Messages {
     public final static String NOT_A_NUMBER = "That isn't a valid number";
     public final static String PLAYER_SCORE = "Player points: ";
     public final static String CLIENT_DISCONNECTED = " has disconnected";
-    public final static String LOBBY = "\n You are in chat lobby now \n";
+    public final static String LOBBY = "\n --> You are in chat lobby now <-- \n";
     public final static String CLIENT_CONNECTED = "Client connected";
     public final static String WAITING_MESSAGE = "Waiting for ";
     public final static String CHOOSE_N_PLAYERS = "Please choose number of players";

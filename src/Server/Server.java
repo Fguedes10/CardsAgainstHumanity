@@ -32,6 +32,7 @@ public class Server {
             System.out.println(Messages.SERVER_ON);
             Socket socket = serverSocket.accept();
             ClientConnectionHandler clientHandler = new ClientConnectionHandler(socket);
+            clientHandler.setServer(this);
             clientHandlerList.add(clientHandler);
             executorService.submit(clientHandler);
 

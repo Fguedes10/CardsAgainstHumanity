@@ -29,7 +29,13 @@ public class WhisperHandler implements CommandHandler {
             return;
         }
 
-        String messageToSend = message.substring(message.indexOf(" ") + 1).substring(message.indexOf(" ") + 1);
+        String[] messageArray = message.split(" ");
+        String messageToSend = "";
+
+        for(int i = 2; i < messageArray.length; i++){
+            messageToSend += messageArray[i] + " ";
+        }
+
         receiverClient.get().send(clientConnectionHandler.getName() + Messages.WHISPER +  ": " + messageToSend);
     }
 }
