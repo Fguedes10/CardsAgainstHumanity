@@ -15,11 +15,12 @@ public class FillHandHandler implements CommandHandler{
         clientConnectionHandler.writeMessage("You have now picked cards.");
         clientConnectionHandler.getCorrespondingClient().getCards().forEach(card -> {
             try {
-                clientConnectionHandler.writeMessage(card);
+                clientConnectionHandler.writeMessage(card.indexOf(card) + " - " + card);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         });
         owner.send(clientConnectionHandler.getName() + " has picked their hand!");
+        //check all players have typed fill_hand, run turnHandler.
     }
 }

@@ -13,7 +13,7 @@ public class Client {
     private String name;
     private int age;
     private int score;
-    private List<String> cards;
+    public List<String> cards;
 
     public List<String> getCards() {
         return cards;
@@ -21,6 +21,8 @@ public class Client {
 
     private int maxHandSize = 7;
     private boolean voteState;
+
+    public String playerVote = "";
 
     private String playedCard;
 
@@ -76,9 +78,9 @@ public class Client {
         }
     }
 
-    private void chooseWhiteCard(int i) {
+    private void chooseWhiteCard() {
       int randomCardPosition = (int) Math.random() * (correspondingClientConnectionHandlers.getPlayingGame().getWhiteDeck().size());
-        cards.add(i + " - " +  correspondingClientConnectionHandlers.getPlayingGame().getWhiteDeck().remove(randomCardPosition));
+        cards.add(correspondingClientConnectionHandlers.getPlayingGame().getWhiteDeck().remove(randomCardPosition));
         //return correspondingClientConnectionHandlers.getPlayingGame().getWhiteDeck().get(randomCardPosition);
    }
 
@@ -92,9 +94,9 @@ public class Client {
 
     public void fillHand(){
         for (int i = 1; i <= maxHandSize; i++) {
-            chooseWhiteCard(i);
+            chooseWhiteCard();
         }
-        correspondingClientConnectionHandlers.getPlayingGame().chooseBlackCard();
+        //correspondingClientConnectionHandlers.getPlayingGame().chooseBlackCard();
     }
 
 

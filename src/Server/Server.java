@@ -46,10 +46,6 @@ public class Server {
                 .forEach(handler -> handler.send(name + ": " + message));
     }
 
-    public static void broadcastInGame(String name, String message, Game game){
-        game.players.forEach(handler -> handler.send(message));
-    }
-
     public static void announceInGame(String message, Game game){
         game.players.forEach(handler -> handler.send(message));
     }
@@ -72,11 +68,8 @@ public static void sendClientsMessage(ClientConnectionHandler sender, String mes
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-            }
-    );
-}
-
-
-
+        }
+        );
+    }
 
 }

@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -22,7 +24,7 @@ public class ClientConnectionHandler implements Runnable {
     private Client correspondingClient;
     private final BufferedReader in;
     private final PrintWriter out;
-    private String name;
+    private String name = "";
     private String messageFromClient;
     private Game ownedGame;
     private Game playingGame;
@@ -83,11 +85,12 @@ public class ClientConnectionHandler implements Runnable {
     }
 
     public boolean checkUsedUserNames(String username) {
-        Set<String> usernameList = clientHandlerList.stream().map(clientHandler -> clientHandler.name).collect(Collectors.toSet());
-        if (usernameList.size() < clientHandlerList.size()) {
-            return false;
+        for (ClientConnectionHandler client: clientHandlerList){
+            if(client.getName().equalsIgnoreCase(username)){
+                return true;
+            }
         }
-        return true;
+        return false;
     }
 
     public int askNumberOfPlayers() throws IOException {
@@ -97,15 +100,17 @@ public class ClientConnectionHandler implements Runnable {
 
     private void askClientUserName() throws IOException {
         writeMessage(Messages.INPUT_NAME);
-        name = readMessage();
-        if (name == null) {
+        //setName(readMessage());
+        String checkName = readMessage();
+        if (checkName == null) {
             writeMessage(Messages.NULL_NAME);
             askClientUserName();
         }
-        if (!checkUsedUserNames(name)) {
+        if (checkUsedUserNames(checkName)) {
             writeMessage(Messages.REPEATED_NAME);
             askClientUserName();
         }
+        setName(checkName);
     }
 
     private void askClientAge() throws IOException {
@@ -152,7 +157,7 @@ public class ClientConnectionHandler implements Runnable {
                     //Aqui, os jogadores que não começam o jogo ainda conseguem enviar uma
                     // mensagem porque o servidor já está à espera dalguma mensagem deles.
                     // É preciso descobrir como impedir isso.
-                    return;
+                    continue;
                 }
             }
             System.out.println(Messages.WAITING_MESSAGE + name);
@@ -180,6 +185,7 @@ public class ClientConnectionHandler implements Runnable {
         command.getHandler().execute(this.server, this);
     }
 
+    //Impedir jogador de usar comandos de lobby, quando dentro do jogo.
     private void dealWithGameCommand(String message) throws IOException {
         String description = message.split(" ")[0];
         Command command = Command.getCommandFromDescription(description);

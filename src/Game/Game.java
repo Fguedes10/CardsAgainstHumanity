@@ -28,6 +28,17 @@ public class Game {
         return blackCardInGame;
     }
 
+    public List<String> cardsInGame = initializeCardsInGame();
+
+    private List<String> initializeCardsInGame() {
+        List<String> cardsInGame = new ArrayList<>();
+        return cardsInGame;
+    }
+
+    public List<String> getCardsInGame() {
+        return cardsInGame;
+    }
+
     private List<String> whiteDeck = initializeWhiteDeck();
 
     private List<String> blackDeck = initializeBlackDeck();
@@ -81,8 +92,6 @@ public class Game {
         announceStartOfGame(game);
         //Inserir lógica do jogo
         clearScreen(game);
-        clearScreen(game);
-        clearScreen(game);
         Server.announceInGame(Messages.GAME_BEGINS, game);
     }
 
@@ -132,7 +141,7 @@ public class Game {
                     throw new RuntimeException(e);
                 }
             }
-            Thread.sleep(1000);
+            //Thread.sleep(1000);
         }
     }
 
@@ -178,5 +187,9 @@ public class Game {
     public void chooseBlackCard() {
         int randomCardPosition = (int) Math.random() * (blackDeck.size());
         blackCardInGame = blackDeck.get(randomCardPosition);
+    }
+
+    public void setCardsInGame(String card) {
+        cardsInGame.add(card);
     }
 }
