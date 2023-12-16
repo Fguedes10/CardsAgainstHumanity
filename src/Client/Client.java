@@ -4,6 +4,7 @@ import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * The `Client` class represents a client with a name, age, score, cards, and vote state.
@@ -79,7 +80,8 @@ public class Client {
     }
 
     private void chooseWhiteCard() {
-      int randomCardPosition = (int) Math.random() * (correspondingClientConnectionHandlers.getPlayingGame().getWhiteDeck().size());
+        int randomCardPosition =
+                new Random().nextInt(correspondingClientConnectionHandlers.getPlayingGame().getWhiteDeck().size());
         cards.add(correspondingClientConnectionHandlers.getPlayingGame().getWhiteDeck().remove(randomCardPosition));
         //return correspondingClientConnectionHandlers.getPlayingGame().getWhiteDeck().get(randomCardPosition);
    }
@@ -102,7 +104,6 @@ public class Client {
 
     public synchronized String pickCard(int cardPosition) {
         return cards.remove(cardPosition);
-
     }
     /**
      * Synchronized method to vote for the winning hand.

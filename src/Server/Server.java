@@ -28,8 +28,8 @@ public class Server {
         clientHandlerList = new LinkedList<>();
         ServerSocket serverSocket = new ServerSocket(port);
         ExecutorService executorService = Executors.newCachedThreadPool();
+        System.out.println(Messages.SERVER_ON);
         while (serverSocket.isBound()) {
-            System.out.println(Messages.SERVER_ON);
             Socket socket = serverSocket.accept();
             ClientConnectionHandler clientHandler = new ClientConnectionHandler(socket);
             clientHandler.setServer(this);
@@ -49,6 +49,7 @@ public class Server {
     public static void announceInGame(String message, Game game){
         game.players.forEach(handler -> handler.send(message));
     }
+
 
 
 public Optional<ClientConnectionHandler> getClientByName(String name) {

@@ -2,13 +2,12 @@ package Game;
 
 import Client.ClientConnectionHandler;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
+
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
 
 import Messages.Messages;
 import Server.Server;
@@ -53,7 +52,7 @@ public class Game {
         return false;
     }
 
-    public Game(ClientConnectionHandler owner, int maxNumOfPlayers, String name){
+    public Game(ClientConnectionHandler owner, int maxNumOfPlayers, String name) throws IOException {
         this.owner = owner;
         this.name = name;
         this.MaxNumOfPlayers = maxNumOfPlayers;
@@ -95,41 +94,14 @@ public class Game {
         Server.announceInGame(Messages.GAME_BEGINS, game);
     }
 
-    public List<String> initializeWhiteDeck(){
-        String filePath = "src/Decks/whiteDeck.txt";
-        List<String> whiteCardList = new ArrayList<>();
-
-        // Use a try-with-resources statement to automatically close the BufferedReader
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-            String line;
-            // Read each line from the file until the end is reached
-            while ((line = br.readLine()) != null) {
-                whiteCardList.add(line);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return whiteCardList;
+    public List<String> initializeWhiteDeck() throws IOException {
+        Path path = Paths.get("src/Decks/whiteDeck.txt");
+        return Files.readAllLines(path);
     }
-    public List<String> initializeBlackDeck(){
-        String filePath = "src/Decks/blackDeck.txt";
-        List<String> blackCardList = new ArrayList<>();
-
-        // Use a try-with-resources statement to automatically close the BufferedReader
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-            String line;
-            // Read each line from the file until the end is reached
-            while ((line = br.readLine()) != null) {
-                blackCardList.add(line);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return blackCardList;
+    public List<String> initializeBlackDeck() throws IOException {
+        Path path = Paths.get("src/Decks/blackDeck.txt");
+        return Files.readAllLines(path);
     }
-
-
-
 
 
     public static void announceStartOfGame(Game game) throws InterruptedException {
@@ -164,10 +136,6 @@ public class Game {
             Server.announceInGame("This turn's Black Card is: " + blackCardInGame, this);
     }
 
-
-
-
-
     public List<String> getWhiteDeck() {
         return whiteDeck;
     }
@@ -185,7 +153,7 @@ public class Game {
     }
 
     public void chooseBlackCard() {
-        int randomCardPosition = (int) Math.random() * (blackDeck.size());
+        int randomCardPosition = new Random().nextInt(blackDeck.size());
         blackCardInGame = blackDeck.get(randomCardPosition);
     }
 

@@ -16,19 +16,27 @@ public class PlayCardHandler implements CommandHandler {
 
         String message = clientConnectionHandler.getMessage();
 
-        Integer playedNumber = parseInt(message.split(" ")[1]);
+        try {
+            Integer playedNumber = Integer.parseInt(message.split(" ")[1]);
+            int indexToPlay = playedNumber - 1;
 
-        String playedCard =  clientConnectionHandler.getCorrespondingClient().getCards().get(playedNumber -1);
-        System.out.println(playedCard);
+            List<String> playerCards = clientConnectionHandler.getCorrespondingClient().getCards();
 
-        owner.send(clientConnectionHandler.getName() + " has played their card!");
+            if (indexToPlay >= 0 && indexToPlay < playerCards.size()) {
+                String playedCard = playerCards.get(indexToPlay);
 
-        clientConnectionHandler.getPlayingGame().setCardsInGame(playedCard);
+                owner.send(clientConnectionHandler.getName() + " has played their card!");
 
-        System.out.println(clientConnectionHandler.getPlayingGame().cardsInGame);
+                clientConnectionHandler.getPlayingGame().setCardsInGame(playedCard);
 
-        clientConnectionHandler.getCorrespondingClient().cards.remove(playedCard);
-        System.out.println(clientConnectionHandler.getCorrespondingClient().cards);
+                System.out.println(clientConnectionHandler.getPlayingGame().cardsInGame);
 
+                playerCards.remove(playedCard);
+            } else {
+                System.out.println("Please select a valid option from your hand");
+            }
+        } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+            System.out.println("Please input a valid number. Please select an available card from your hand");
+        }
     }
 }
