@@ -15,6 +15,7 @@ public class BuildHandler implements CommandHandler{
         String name = clientConnectionHandler.askNameOfGame();
         int numOfPlayers = clientConnectionHandler.askNumberOfPlayers();
         Game game = new Game(clientConnectionHandler, numOfPlayers, name);
+        game.setNumberOfInGamePlayers(numOfPlayers);
         clientConnectionHandler.setOwnedGame(game);
         clientConnectionHandler.writeMessage(Messages.GAME_BUILT + numOfPlayers + Messages.PLAYERS_CALLED + name + ".");
     }

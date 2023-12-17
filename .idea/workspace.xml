@@ -6,12 +6,17 @@
   <component name="ChangeListManager">
     <list default="true" id="fc5d77e5-6192-43e9-8b01-6e658d2df62f" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Client/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Client/ClientConnectionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Client/ClientConnectionHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Client/ClientLauncher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Client/ClientLauncher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Client/Client.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Client/Client.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/Command.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/Command.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/FillHandHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/FillHandHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/PlayCardHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/PlayCardHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/VoteHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/VoteHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Game/Game.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Game/Game.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Messages/Messages.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Messages/Messages.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Commands/BuildHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/BuildHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Commands/Command.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/Command.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Messages/Messages.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Messages/Messages.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Commands/PlayCardHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/PlayCardHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Commands/VoteHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/VoteHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Game/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game/Game.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,7 +38,7 @@
     "git-widget-placeholder": "fabioSunday"
   }
 }]]></component>
-  <component name="RunManager" selected="Application.ClientLauncher">
+  <component name="RunManager" selected="Application.ServerLauncher">
     <configuration name="ClientLauncher" type="Application" factoryName="Application" singleton="false" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Client.ClientLauncher" />
       <module name="CardsAgainstMindera" />

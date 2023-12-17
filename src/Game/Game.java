@@ -18,7 +18,9 @@ public class Game {
     public String name;
     public int MaxNumOfPlayers;
     public ArrayList<ClientConnectionHandler> players = new ArrayList<>();
+    public List<String> roundCardsToVote;
     public ClientConnectionHandler owner;
+    public int numberOfInGamePlayers;
     public boolean state = false;
 
     private String blackCardInGame;
@@ -163,5 +165,9 @@ public class Game {
 
     public void setCardsInGame(String card) {
         cardsInGame.add(card);
+    }
+
+    public void setNumberOfInGamePlayers(int numberOfInGamePlayers) {
+        this.numberOfInGamePlayers = numberOfInGamePlayers;
     }
 }

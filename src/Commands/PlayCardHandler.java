@@ -29,12 +29,20 @@ public class PlayCardHandler implements CommandHandler {
                 String playedCard = playerCards.get(indexToPlay);
 
                 owner.send(clientConnectionHandler.getName() + Messages.PLAYER_HAS_PLAY);
-
                 clientConnectionHandler.getPlayingGame().setCardsInGame(playedCard);
-
                 System.out.println(clientConnectionHandler.getPlayingGame().cardsInGame);
-
+                owner.getPlayingGame().roundCardsToVote.add(playedCard);
                 playerCards.remove(playedCard);
+
+                System.out.println("Size of roundCardsToVote: " + owner.getPlayingGame().roundCardsToVote.size());
+                System.out.println("numberOfInGamePlayers: " + owner.getPlayingGame().numberOfInGamePlayers);
+                if(owner.getPlayingGame().roundCardsToVote.size() == owner.getPlayingGame().numberOfInGamePlayers){
+                    int index = 1;
+                    for (String card : owner.getPlayingGame().roundCardsToVote) {
+                        clientConnectionHandler.writeMessage(index + " - " + card);
+                        index++;
+                    }
+                }
             } else {
                 clientConnectionHandler.writeMessage(Messages.SELECT_A_VALID_CARD);
             }
