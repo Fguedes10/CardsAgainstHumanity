@@ -85,8 +85,8 @@ public class ClientConnectionHandler implements Runnable {
     }
 
     public boolean checkUsedUserNames(String username) {
-        for (ClientConnectionHandler client: clientHandlerList){
-            if(client.getName().equalsIgnoreCase(username)){
+        for (ClientConnectionHandler client : clientHandlerList) {
+            if (client.getName().equalsIgnoreCase(username)) {
                 return true;
             }
         }

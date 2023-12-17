@@ -1,17 +1,24 @@
 package Commands;
 
 import Client.ClientConnectionHandler;
+import Messages.Messages;
 import Server.Server;
 import java.util.List;
 
 import java.io.IOException;
 import java.util.Objects;
 
-public class VoteHandler implements CommandHandler{
+public class VoteHandler implements CommandHandler {
 
     @Override
     public void execute(Server server, ClientConnectionHandler clientConnectionHandler) throws IOException {
-
+        ClientConnectionHandler owner = clientConnectionHandler.getPlayingGame().owner;
+        clientConnectionHandler.writeMessage("Please choose the card that should win the round");
+        int index = 1;
+        for (String card : owner.getPlayingGame().roundCardsToVote) {
+            clientConnectionHandler.writeMessage(index + " - " + card);
+        }
+/*
        String playedCard =  clientConnectionHandler.getCorrespondingClient().getPlayedCard();
 
        clientConnectionHandler.getPlayingGame().getCardsInGame().stream()
@@ -32,5 +39,8 @@ public class VoteHandler implements CommandHandler{
 
 
 
+    }
+
+ */
     }
 }
