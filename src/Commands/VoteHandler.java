@@ -3,44 +3,34 @@ package Commands;
 import Client.ClientConnectionHandler;
 import Messages.Messages;
 import Server.Server;
-import java.util.List;
 
 import java.io.IOException;
-import java.util.Objects;
 
 public class VoteHandler implements CommandHandler {
 
     @Override
     public void execute(Server server, ClientConnectionHandler clientConnectionHandler) throws IOException {
         ClientConnectionHandler owner = clientConnectionHandler.getPlayingGame().owner;
-        clientConnectionHandler.writeMessage("Please choose the card that should win the round");
+        clientConnectionHandler.writeMessage("VOTING PHASE START");
+
         int index = 1;
         for (String card : owner.getPlayingGame().roundCardsToVote) {
             clientConnectionHandler.writeMessage(index + " - " + card);
+            index++;
         }
-/*
-       String playedCard =  clientConnectionHandler.getCorrespondingClient().getPlayedCard();
 
-       clientConnectionHandler.getPlayingGame().getCardsInGame().stream()
-               .filter(cards -> !cards.equalsIgnoreCase(playedCard))
-               .forEach(clientConnectionHandler::send);
+        String voteCommand = clientConnectionHandler.getMessage();
+        try {
+            int votedCardIndex = Integer.parseInt(voteCommand.split(" ")[1]) - 1;
 
-       Server.announceInGame("Here are the cards that are in game", clientConnectionHandler.getPlayingGame());
-
-        for (int i = 0; i < clientConnectionHandler.getPlayingGame().cardsInGame.size(); i++) {
-            Server.announceInGame(clientConnectionHandler.getPlayingGame().cardsInGame.get(i), clientConnectionHandler.getPlayingGame());
+            if (votedCardIndex >= 0 && votedCardIndex < owner.getPlayingGame().roundCardsToVote.size()) {
+                String votedCard = owner.getPlayingGame().roundCardsToVote.get(votedCardIndex);
+                owner.getPlayingGame().announceVoteResult(votedCard);
+            } else {
+                clientConnectionHandler.writeMessage("INVALID VOTE");
+            }
+        } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+            clientConnectionHandler.writeMessage("INVALID VOTE");
         }
-       for (String card:clientConnectionHandler.getPlayingGame().getCardsInGame()){
-           Server.announceInGame(card, clientConnectionHandler.getPlayingGame());
-       }
-       Server.announceInGame("Please vote with /vote <numberOfCard>", clientConnectionHandler.getPlayingGame());
-
-       clientConnectionHandler.getCorrespondingClient().playerVote = clientConnectionHandler.getMessage().split(" ")[1];
-
-
-
-    }
-
- */
     }
 }

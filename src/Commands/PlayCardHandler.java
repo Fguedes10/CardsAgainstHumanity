@@ -7,8 +7,6 @@ import Server.Server;
 import java.io.IOException;
 import java.util.List;
 
-import static java.lang.Integer.parseInt;
-
 public class PlayCardHandler implements CommandHandler {
 
     @Override
@@ -28,18 +26,13 @@ public class PlayCardHandler implements CommandHandler {
 
                 owner.send(clientConnectionHandler.getName() + Messages.PLAYER_HAS_PLAY);
                 clientConnectionHandler.getPlayingGame().setCardsInGame(playedCard);
-                System.out.println(clientConnectionHandler.getPlayingGame().cardsInGame);
                 owner.getPlayingGame().roundCardsToVote.add(playedCard);
                 playerCards.remove(playedCard);
 
-                System.out.println("Size of roundCardsToVote: " + owner.getPlayingGame().roundCardsToVote.size());
-                System.out.println("numberOfInGamePlayers: " + owner.getPlayingGame().numberOfInGamePlayers);
-                if(owner.getPlayingGame().roundCardsToVote.size() == owner.getPlayingGame().maxNumOfPlayers){
-                    int index = 1;
-                    for (String card : owner.getPlayingGame().roundCardsToVote) {
-                        clientConnectionHandler.writeMessage(index + " - " + card);
-                        index++;
-                    }
+                owner.getPlayingGame().incrementPlayedCardsCounter();
+
+                if (owner.getPlayingGame().allPlayersPlayedCards()) {
+                    startVotingPhase(owner);
                 }
             } else {
                 clientConnectionHandler.writeMessage(Messages.SELECT_A_VALID_CARD);
@@ -50,4 +43,22 @@ public class PlayCardHandler implements CommandHandler {
             throw new RuntimeException(e);
         }
     }
+
+    private void startVotingPhase(ClientConnectionHandler owner) throws IOException {
+        Server.announceInGame("VOTING PHASE START", owner.getPlayingGame());
+
+        int index = 1;
+        for (String card : owner.getPlayingGame().roundCardsToVote) {
+            owner.send(index + " - " + card);
+            index++;
+        }
+
+        for (ClientConnectionHandler player : owner.getPlayingGame().players) {
+            player.getCorrespondingClient().setVoteState(true);
+            player.writeMessage("VOTING INSTRUCTIONS");
+        }
+
+        Server.announceInGame("VOTE INSTRUCTION", owner.getPlayingGame());
+    }
 }
+
