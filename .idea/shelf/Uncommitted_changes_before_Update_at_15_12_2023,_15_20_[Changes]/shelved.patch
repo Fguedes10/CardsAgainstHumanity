@@ -1,0 +1,119 @@
+Index: src/Client/Client.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package Client;\n\n\nimport java.io.*;\nimport java.net.Socket;\nimport java.util.ArrayList;\nimport java.util.List;\n\n/**\n * The `Client` class represents a client with a name, age, score, cards, and vote state.\n * It also includes static fields for the server host, server port, and number of connections.\n */\npublic class Client {\n    private String name;\n    private int age;\n    private int score;\n    private List<String> cards;\n    private boolean voteState;\n\n    private List<String> whiteDeck;\n\n    static final String SERVER_HOST = \"localhost\";\n    static final int SERVER_PORT = 8080;\n    static int numberOfConnections = 0;\n\n\n    public Client(String name, int age) {\n        this.name = name;\n        this.age = age;\n        this.score = 0;\n        this.whiteDeck = new ArrayList<>();\n        this.cards = new ArrayList<>();\n        this.voteState = false;\n    }\n\n    /**\n     * Starts the socket connection and initializes the input and output streams.\n     *\n     * @param socket the socket connection to start\n     * @throws IOException if an I/O error occurs when creating the input and output streams\n     */\n    public void start(Socket socket) throws IOException {\n        BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));\n        PrintWriter out = new PrintWriter(socket.getOutputStream(), true);\n        BufferedReader consoleIn = new BufferedReader(new InputStreamReader(System.in));\n        whiteDeck = retrieveWhiteDeck();\n        new Thread(() -> {\n            String messageFromServer = null;\n            try {\n                while ((messageFromServer = in.readLine()) != null) {\n                    System.out.println(messageFromServer);\n                }\n            } catch (IOException e) {\n                throw new RuntimeException(e);\n            }\n        }).start();\n        System.out.println(this.name);\n        String messageToServer = null;\n        while ((messageToServer = consoleIn.readLine()) != null) {\n            out.println(messageToServer);\n        }\n    }\n\n    public List<String> retrieveWhiteDeck() {\n        String filePath = \"Decks/whiteDeck.txt\";\n        List<String> whiteCardList = new ArrayList<>();\n\n        // Use a try-with-resources statement to automatically close the BufferedReader\n        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {\n            String line;\n            // Read each line from the file until the end is reached\n            while ((line = br.readLine()) != null) {\n                whiteCardList.add(line);\n            }\n        } catch (IOException e) {\n            e.printStackTrace();\n        }\n    return whiteCardList;\n    }\n\n    public void requestHand() {\n        for (int i = 0;i < 7; i = i +1) {\n            chooseWhiteCard();\n        }\n\n    }\n\n    private void chooseWhiteCard() {\n        int randomCardPosition = (int) Math.random() * (whiteDeck.size());\n        cards.add(whiteDeck.remove(randomCardPosition));\n    }\n\n    public synchronized void fillHand() {\n        while (cards.size() < 7){\n            chooseWhiteCard();\n        }\n\n\n    }\n\n\n    public synchronized String pickCard(int cardPosition) {\n        return cards.remove(cardPosition);\n\n    }\n    /**\n     * Synchronized method to vote for the winning hand.\n     *\n     * @throws IOException    if there is an I/O error while reading the vote\n     */\n   /* public synchronized void voteWinningHand() throws IOException {\n        if (voteState) {\n            int numberOfPlayers = ();\n            int[] votes = new int[numberOfPlayers];\n\n            for (int i = 0; i < numberOfPlayers; i++) {\n                int playerNumber = i + 1;\n                System.out.println(\"Player \" + playerNumber + \", enter the number of the card from another player that \" +\n                        \"you think should win: \");\n\n                BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));\n                int vote = Integer.parseInt(reader.readLine());\n\n                if (vote < 1 || vote > numberOfPlayers || vote == playerNumber) {\n                    System.out.println(\"Invalid vote! Please enter a valid player number.\");\n                    i--;\n                    continue;\n                }\n                votes[vote - 1]++;\n            }\n\n            int winningVote = -1;\n            int winningVoteCount = 0;\n            for (int i = 0; i < numberOfPlayers; i++) {\n                if (votes[i] > winningVoteCount) {\n                    winningVote = i + 1;\n                    winningVoteCount = votes[i];\n                }\n            }\n\n            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out));\n            writer.write(\"The winning vote is for player \" + winningVote);\n            writer.newLine();\n            writer.flush();\n        }\n    }\n\n    */\n\n\n\n    /**\n     * Retrieves the score.\n     *\n     * @return the score value\n     */\n    public int getScore() {\n        return score;\n    }\n\n\n    /**\n     * Sets the score.\n     *\n     * @param score the new score\n     */\n    public void setScore(int score) {\n        this.score = score;\n    }\n\n    /**\n     * Retrieves the current vote state.\n     *\n     * @return true if the vote state is active, false otherwise\n     */\n    public boolean isVoteState() {\n        return voteState;\n    }\n\n    /**\n     * Sets the vote state of the object.\n     *\n     * @param voteState the new vote state to be set\n     */\n    public void setVoteState(boolean voteState) {\n        this.voteState = voteState;\n    }\n\n    public void setName(String name) {\n        this.name = name;\n    }\n\n    public void setAge(int age) {\n        this.age = age;\n    }\n\n    public List<String> getWhiteDeck() {\n        return whiteDeck;\n    }\n\n    public void setWhiteDeck(List<String> whiteDeck) {\n        this.whiteDeck = whiteDeck;\n    }\n}\n\n\n\n\n\n\n\n\n\n\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/Client/Client.java b/src/Client/Client.java
+--- a/src/Client/Client.java	(revision 4eeea7f4fba1b43fdb4a5ae0001dd2c3248bff3f)
++++ b/src/Client/Client.java	(date 1702653613511)
+@@ -61,25 +61,23 @@
+         }
+     }
+ 
+-    public List<String> retrieveWhiteDeck() {
+-        String filePath = "Decks/whiteDeck.txt";
++    private List<String> retrieveWhiteDeck() {
++        String filePath = "src/Decks/whiteDeck.txt";
+         List<String> whiteCardList = new ArrayList<>();
+ 
+-        // Use a try-with-resources statement to automatically close the BufferedReader
+         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+             String line;
+-            // Read each line from the file until the end is reached
+             while ((line = br.readLine()) != null) {
+                 whiteCardList.add(line);
+             }
+         } catch (IOException e) {
+             e.printStackTrace();
+         }
+-    return whiteCardList;
++        return whiteCardList;
+     }
+ 
+     public void requestHand() {
+-        for (int i = 0;i < 7; i = i +1) {
++        for (int i = 0; i < 7; i = i + 1) {
+             chooseWhiteCard();
+         }
+ 
+@@ -91,7 +89,7 @@
+     }
+ 
+     public synchronized void fillHand() {
+-        while (cards.size() < 7){
++        while (cards.size() < 7) {
+             chooseWhiteCard();
+         }
+ 
+@@ -103,50 +101,33 @@
+         return cards.remove(cardPosition);
+ 
+     }
++
+     /**
+      * Synchronized method to vote for the winning hand.
+      *
+-     * @throws IOException    if there is an I/O error while reading the vote
++     * @throws IOException if there is an I/O error while reading the vote
+      */
+-   /* public synchronized void voteWinningHand() throws IOException {
++    public synchronized void voteWinningHand() throws IOException {
+         if (voteState) {
+-            int numberOfPlayers = ();
+-            int[] votes = new int[numberOfPlayers];
++            int numberOfPlayers = 4; //TODO fetch number of players
++            int playerID = 0; //TODO necessário o próprio jogador saber o seu número para nao votar em si mesmo.
+ 
+-            for (int i = 0; i < numberOfPlayers; i++) {
+-                int playerNumber = i + 1;
+-                System.out.println("Player " + playerNumber + ", enter the number of the card from another player that " +
+-                        "you think should win: ");
++            System.out.println("Player " + playerID + ", enter the number of the card from another player that " +
++                    "you think should win: ");
+ 
+-                BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+-                int vote = Integer.parseInt(reader.readLine());
++            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
++            int vote = Integer.parseInt(reader.readLine());
+ 
+-                if (vote < 1 || vote > numberOfPlayers || vote == playerNumber) {
+-                    System.out.println("Invalid vote! Please enter a valid player number.");
+-                    i--;
+-                    continue;
+-                }
+-                votes[vote - 1]++;
+-            }
++            while (vote < 1 || vote > numberOfPlayers || vote == playerID) {
++                System.out.println("Invalid vote! Please enter a valid player number.");
++                vote = Integer.parseInt(reader.readLine());
+ 
+-            int winningVote = -1;
+-            int winningVoteCount = 0;
+-            for (int i = 0; i < numberOfPlayers; i++) {
+-                if (votes[i] > winningVoteCount) {
+-                    winningVote = i + 1;
+-                    winningVoteCount = votes[i];
+-                }
+             }
+ 
+-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out));
+-            writer.write("The winning vote is for player " + winningVote);
+-            writer.newLine();
+-            writer.flush();
++
+         }
++        //TODO enviar para servidor o vote
+     }
+-
+-    */
+-
+ 
+ 
+     /**
+@@ -212,3 +193,4 @@
+ 
+ 
+ 
++

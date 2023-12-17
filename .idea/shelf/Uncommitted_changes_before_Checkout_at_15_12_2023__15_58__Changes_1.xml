@@ -1,0 +1,14 @@
+<changelist name="Uncommitted_changes_before_Checkout_at_15_12_2023,_15_58_[Changes]1" date="1702655896654" recycled="true" deleted="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_15_12_2023,_15_58_[Changes]1/shelved.patch" />
+  <option name="DESCRIPTION" value="Uncommitted changes before Checkout at 15/12/2023, 15:58 [Changes]" />
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/CardsAgainstMindera/Client/Client.class" />
+    <option name="AFTER_PATH" value="out/production/CardsAgainstMindera/Client/Client.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_15_12_2023,_15_58_[Changes]1/Client.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/CardsAgainstMindera/Client/ClientLauncher.class" />
+    <option name="AFTER_PATH" value="out/production/CardsAgainstMindera/Client/ClientLauncher.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_15_12_2023,_15_58_[Changes]1/ClientLauncher.class" />
+  </binary>
+</changelist>
