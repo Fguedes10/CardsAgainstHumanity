@@ -1,5 +1,6 @@
 package Commands;
 
+import Client.ClientConnectionHandler;
 import Messages.Messages;
 import Server.Server;
 
@@ -13,7 +14,7 @@ public class WhisperHandler implements CommandHandler {
      * @param  clientConnectionHandler the client connection handler to process
      */
     @Override
-    public void execute(Server server, Server.ClientConnectionHandler clientConnectionHandler) {
+    public void execute(Server server, ClientConnectionHandler clientConnectionHandler) {
         String message = clientConnectionHandler.getMessage();
 
         if(message.split(" ").length < 3){
@@ -21,14 +22,20 @@ public class WhisperHandler implements CommandHandler {
             return;
         }
 
-        Optional<Server.ClientConnectionHandler> receiverClient = server.getClientByName(message.split(" ")[1]);
+        Optional<ClientConnectionHandler> receiverClient = server.getClientByName(message.split(" ")[1]);
 
         if(receiverClient.isEmpty()){
             clientConnectionHandler.send(Messages.NO_SUCH_CLIENT);
             return;
         }
 
-        String messageToSend = message.substring(message.indexOf(" ") + 1).substring(message.indexOf(" ") + 1);
+        String[] messageArray = message.split(" ");
+        String messageToSend = "";
+
+        for(int i = 2; i < messageArray.length; i++){
+            messageToSend += messageArray[i] + " ";
+        }
+
         receiverClient.get().send(clientConnectionHandler.getName() + Messages.WHISPER +  ": " + messageToSend);
     }
 }

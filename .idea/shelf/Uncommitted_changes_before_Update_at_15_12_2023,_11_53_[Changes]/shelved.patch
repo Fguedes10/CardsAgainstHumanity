@@ -1,0 +1,157 @@
+Index: src/Client/ClientLauncher.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package Client;\n\nimport java.io.IOException;\nimport java.net.Socket;\n\n\n/**\n * Main function that starts the client connection to the server.\n *\n * @param  args  the command-line arguments\n * @throws IOException  if an I/O error occurs when creating the socket\n */\npublic class ClientLauncher {\n\n    public static void main(String[] args) throws IOException {\n        Client client = new Client(\"Client-\",0);\n        Socket socket = new Socket(Client.SERVER_HOST, Client.SERVER_PORT);\n        client.start(socket);\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/Client/ClientLauncher.java b/src/Client/ClientLauncher.java
+--- a/src/Client/ClientLauncher.java	(revision 7fb42c5619533d2659781257cf8c5785ad0013d3)
++++ b/src/Client/ClientLauncher.java	(date 1702637638152)
+@@ -13,8 +13,8 @@
+ public class ClientLauncher {
+ 
+     public static void main(String[] args) throws IOException {
+-        Client client = new Client("Client-",0);
+         Socket socket = new Socket(Client.SERVER_HOST, Client.SERVER_PORT);
++        Client client = new Client("Client-",0);
+         client.start(socket);
+     }
+ }
+Index: .gitignore
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.gitignore b/.gitignore
+new file mode 100644
+--- /dev/null	(date 1702640331905)
++++ b/.gitignore	(date 1702640331905)
+@@ -0,0 +1,9 @@
++# Default ignored files
++/shelf/
++.idea
++*.iws
++*.iml
++*.ipr
++/out/
++.DS_Store
++src/.DS_Store
+\ No newline at end of file
+Index: src/Server/Server.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package Server;\n\n\nimport Client.Client;\nimport Commands.Command;\nimport Messages.Messages;\n\nimport java.io.*;\nimport java.net.ServerSocket;\nimport java.net.Socket;\nimport java.util.List;\nimport java.util.Optional;\nimport java.util.Set;\nimport java.util.concurrent.CopyOnWriteArrayList;\nimport java.util.concurrent.ExecutorService;\nimport java.util.concurrent.Executors;\nimport java.util.stream.Collectors;\n\npublic class Server {\n\n    private ServerSocket serverSocket;\n\n    private ExecutorService executorService;\n\n    static List<ClientConnectionHandler> clients;\n\n    public Server() {\n        clients = new CopyOnWriteArrayList<>();\n    }\n\n    public void removeClient(ClientConnectionHandler clientConnectionHandler){\n        clients.remove(clientConnectionHandler);\n    }\n\n    public void broadcast(String name, String message){\n        clients.stream()\n                .filter(handler -> handler.getName().equals(name))\n                .forEach(handler -> handler.send(name + \": \" + message));\n    }\n\n    public void start(int port) throws IOException{\n        serverSocket = new ServerSocket(port);\n        executorService = Executors.newCachedThreadPool();\n        while(serverSocket.isBound()){\n            if(clients.isEmpty()){\n                System.out.println(\"Server is on! Currently waiting for players\");\n            }\n            Socket socket = serverSocket.accept();\n            ClientConnectionHandler clientConnectionHandler = new ClientConnectionHandler(socket);\n            addClient(clientConnectionHandler);\n            executorService.submit(clientConnectionHandler);\n            clientConnectionHandler.askClientName();\n            clientConnectionHandler.askClientAge();\n            System.out.println(clientConnectionHandler.getName() + \" has joined\");\n\n        }\n    }\n\n    private void addClient(ClientConnectionHandler clientConnectionHandler) {\n        clients.add(clientConnectionHandler);\n        clientConnectionHandler.send(Messages.WELCOME.formatted(clientConnectionHandler.getName()));\n        clientConnectionHandler.send(Messages.COMMANDS_LIST);\n        if(clients.size() > 2 ){\n            broadcast(clientConnectionHandler.getName(), Messages.PLAYER_ENTERED_CHAT);\n        }\n    }\n\n    public Optional<ClientConnectionHandler> getClientByName(String name) {\n        return clients.stream()\n                .filter(clientConnectionHandler -> clientConnectionHandler.getName().equalsIgnoreCase(name))\n                .findFirst();\n    }\n\n\n    public class ClientConnectionHandler implements Runnable {\n\n        private String name;\n        private Integer age;\n        private Socket clientSocket;\n        private final BufferedWriter out;\n        private final BufferedReader in;\n        private String message;\n        private boolean isInLobby;\n\n        public void startGame(){\n\n        }\n\n\n        public ClientConnectionHandler(Socket clientSocket) throws IOException {\n            this.clientSocket = clientSocket;\n            this.name = null;\n            this.age = 0;\n            this.out = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));\n            this.in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));\n            this.isInLobby = true;\n        }\n\n        public void writeMessage(String message) throws IOException {\n            out.write(message);\n        }\n        public String readMessage(){\n            try{\n                return in.readLine();\n            } catch (IOException e){\n                throw new RuntimeException(e);\n            }\n        }\n\n\n        public boolean checkUsedUsernames(String username){\n            Set<String> usernameList = clients.stream().map(clientConnectionHandler -> clientConnectionHandler.name).collect(Collectors.toSet());\n            if(usernameList.size() < clients.size()){\n                return false;\n            }\n            return true;\n        }\n\n        private void askClientName() throws IOException {\n            writeMessage(Messages.INPUT_NAME);\n            name = in.readLine();\n            if(name == null){\n                writeMessage(Messages.NULL_NAME);\n                askClientName();\n            }\n            if(!checkUsedUsernames(name)){\n                writeMessage(Messages.REPEATED_NAME);\n                askClientName();\n            }\n        }\n\n        private void askClientAge() throws IOException {\n            writeMessage(Messages.INPUT_AGE);\n            String answerAge = in.readLine();\n            if(answerAge == null){\n                writeMessage(Messages.NULL_AGE);\n                askClientAge();\n            } else {\n                try{\n                    Integer i = Integer.parseInt(answerAge);\n\n                } catch (NumberFormatException nfe){\n                    writeMessage(Messages.NOT_A_NUMBER);\n                    askClientAge();\n                }\n            }\n\n        }\n\n        public void send(String message){\n            synchronized (out){\n                try {\n                    out.write(message);\n                    out.newLine();\n                    out.flush();\n                } catch (IOException e) {\n                    throw new RuntimeException(e);\n                }\n\n            }\n        }\n\n\n        @Override\n        public void run() {\n            try {\n                askClientName();\n                askClientAge();\n            } catch (IOException e) {\n                throw new RuntimeException(e);\n            }\n            while(clientSocket.isConnected() && isInLobby){\n                String messageFromClient;\n                messageFromClient = readMessage();\n                if(messageFromClient.startsWith(\"/\")){\n                    checkForCommands(messageFromClient);\n                    continue;\n                }\n                sendMessage(name + \" : \" + messageFromClient);\n            }\n        }\n\n        private void sendMessage(String s) {\n            sendClientsMessage(this, message);\n        }\n\n        private void sendClientsMessage(ClientConnectionHandler sender, String message){\n            clients.stream()\n                    .filter(handler -> !handler.equals(sender))\n                    .forEach(handler -> {\n                        try {\n                            handler.writeMessage(message);\n                        } catch (IOException e) {\n                            throw new RuntimeException(e);\n                        }\n                    });\n        }\n\n        private void checkForCommands(String messageFromClient) {\n            String description = message.split(\" \")[0];\n            Command command = Command.getCommandFromDescription(description);\n            command.getHandler().execute(Server.this, this);\n        }\n\n        public String listClients(){\n            StringBuffer buffer = new StringBuffer();\n            clients.forEach(client -> buffer.append(client.getName()).append(\"\\n\"));\n            return buffer.toString();\n        }\n\n\n        public String getMessage() {\n            return message;\n        }\n\n        public void setName(String name) {\n            this.name = name;\n        }\n\n        public String getName() {\n            return name;\n        }\n\n\n\n    }\n\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/Server/Server.java b/src/Server/Server.java
+--- a/src/Server/Server.java	(revision 7fb42c5619533d2659781257cf8c5785ad0013d3)
++++ b/src/Server/Server.java	(date 1702637519345)
+@@ -49,8 +49,8 @@
+             ClientConnectionHandler clientConnectionHandler = new ClientConnectionHandler(socket);
+             addClient(clientConnectionHandler);
+             executorService.submit(clientConnectionHandler);
+-            clientConnectionHandler.askClientName();
+-            clientConnectionHandler.askClientAge();
++            //clientConnectionHandler.askClientName();
++            //clientConnectionHandler.askClientAge();
+             System.out.println(clientConnectionHandler.getName() + " has joined");
+ 
+         }
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"AutoImportSettings\">\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\n  </component>\n  <component name=\"ChangeListManager\">\n    <list default=\"true\" id=\"85b0c289-ee1f-4cf4-8864-43a6fb5869c1\" name=\"Changes\" comment=\"first documentation commit\">\n      <change afterPath=\"$PROJECT_DIR$/src/Client/ClientLauncher.java\" afterDir=\"false\" />\n      <change afterPath=\"$PROJECT_DIR$/src/Server/ServerLauncher.java\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/.idea/misc.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/misc.xml\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_14_12_2023__13_43__Changes_.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_14_12_2023__13_43__Changes_.xml\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_14_12_2023__13_40__Changes_.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_14_12_2023__13_40__Changes_.xml\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_14_12_2023__13_40__Changes_1.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_14_12_2023__13_40__Changes_1.xml\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_14_12_2023__13_54__Changes_.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_14_12_2023__13_54__Changes_.xml\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_14_12_2023__14_07__Changes_.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_14_12_2023__14_07__Changes_.xml\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/src/Client/Client.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/Client/Client.java\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/src/Commands/ChangeNameHandler.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/Commands/ChangeNameHandler.java\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/src/Commands/CommandNotFoundHandler.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/Commands/CommandNotFoundHandler.java\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/src/Commands/QuitHandler.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/Commands/QuitHandler.java\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/src/Commands/WhisperHandler.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/Commands/WhisperHandler.java\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/src/Messages/Messages.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/Messages/Messages.java\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/src/Server/Server.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/Server/Server.java\" afterDir=\"false\" />\n    </list>\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\n  </component>\n  <component name=\"FileTemplateManagerImpl\">\n    <option name=\"RECENT_TEMPLATES\">\n      <list>\n        <option value=\"Class\" />\n      </list>\n    </option>\n  </component>\n  <component name=\"Git.Settings\">\n    <option name=\"RECENT_BRANCH_BY_REPOSITORY\">\n      <map>\n        <entry key=\"$PROJECT_DIR$\" value=\"main\" />\n      </map>\n    </option>\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\n  </component>\n  <component name=\"MarkdownSettingsMigration\">\n    <option name=\"stateVersion\" value=\"1\" />\n  </component>\n  <component name=\"ProjectCodeStyleSettingsMigration\">\n    <option name=\"version\" value=\"2\" />\n  </component>\n  <component name=\"ProjectColorInfo\"><![CDATA[{\n  \"associatedIndex\": 4\n}]]></component>\n  <component name=\"ProjectId\" id=\"2ZZjz7htPlpc0xbkv0Mbm2HOZEf\" />\n  <component name=\"ProjectLevelVcsManager\">\n    <ConfirmationsSetting value=\"2\" id=\"Add\" />\n  </component>\n  <component name=\"ProjectViewState\">\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\n    <option name=\"showLibraryContents\" value=\"true\" />\n  </component>\n  <component name=\"PropertiesComponent\"><![CDATA[{\n  \"keyToString\": {\n    \"RunOnceActivity.OpenProjectViewOnStart\": \"true\",\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\n    \"git-widget-placeholder\": \"main\",\n    \"last_opened_file_path\": \"C:/Users/Fabio Guedes/Documents/CardsAgainstMindera\",\n    \"run.code.analysis.last.selected.profile\": \"pProject Default\"\n  }\n}]]></component>\n  <component name=\"RunManager\" selected=\"Application.ClientLauncher\">\n    <configuration name=\"ClientLauncher\" type=\"Application\" factoryName=\"Application\" temporary=\"true\" nameIsGenerated=\"true\">\n      <option name=\"MAIN_CLASS_NAME\" value=\"Client.ClientLauncher\" />\n      <module name=\"CardsAgainstMindera\" />\n      <extension name=\"coverage\">\n        <pattern>\n          <option name=\"PATTERN\" value=\"Client.*\" />\n          <option name=\"ENABLED\" value=\"true\" />\n        </pattern>\n      </extension>\n      <method v=\"2\">\n        <option name=\"Make\" enabled=\"true\" />\n      </method>\n    </configuration>\n    <configuration name=\"ServerLauncher\" type=\"Application\" factoryName=\"Application\" temporary=\"true\" nameIsGenerated=\"true\">\n      <option name=\"MAIN_CLASS_NAME\" value=\"Server.ServerLauncher\" />\n      <module name=\"CardsAgainstMindera\" />\n      <extension name=\"coverage\">\n        <pattern>\n          <option name=\"PATTERN\" value=\"Server.*\" />\n          <option name=\"ENABLED\" value=\"true\" />\n        </pattern>\n      </extension>\n      <method v=\"2\">\n        <option name=\"Make\" enabled=\"true\" />\n      </method>\n    </configuration>\n    <recent_temporary>\n      <list>\n        <item itemvalue=\"Application.ClientLauncher\" />\n        <item itemvalue=\"Application.ServerLauncher\" />\n      </list>\n    </recent_temporary>\n  </component>\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\n  <component name=\"TaskManager\">\n    <task id=\"LOCAL-00001\" summary=\"first documentation commit\">\n      <option name=\"closed\" value=\"true\" />\n      <created>1702633167212</created>\n      <option name=\"number\" value=\"00001\" />\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1702633167212</updated>\n    </task>\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\n      <changelist id=\"85b0c289-ee1f-4cf4-8864-43a6fb5869c1\" name=\"Changes\" comment=\"first documentation commit\" />\n      <created>1702636754497</created>\n      <option name=\"number\" value=\"Default\" />\n      <option name=\"presentableId\" value=\"Default\" />\n      <updated>1702636754497</updated>\n    </task>\n    <option name=\"localTasksCounter\" value=\"2\" />\n    <servers />\n  </component>\n  <component name=\"VcsManagerConfiguration\">\n    <MESSAGE value=\"first documentation commit\" />\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"first documentation commit\" />\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 7fb42c5619533d2659781257cf8c5785ad0013d3)
++++ b/.idea/workspace.xml	(date 1702641199145)
+@@ -5,21 +5,10 @@
+   </component>
+   <component name="ChangeListManager">
+     <list default="true" id="85b0c289-ee1f-4cf4-8864-43a6fb5869c1" name="Changes" comment="first documentation commit">
+-      <change afterPath="$PROJECT_DIR$/src/Client/ClientLauncher.java" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/Server/ServerLauncher.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_14_12_2023__13_43__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_14_12_2023__13_43__Changes_.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_14_12_2023__13_40__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_14_12_2023__13_40__Changes_.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_14_12_2023__13_40__Changes_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_14_12_2023__13_40__Changes_1.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_14_12_2023__13_54__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_14_12_2023__13_54__Changes_.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_14_12_2023__14_07__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_14_12_2023__14_07__Changes_.xml" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/Client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Client/Client.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/Commands/ChangeNameHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/ChangeNameHandler.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/Commands/CommandNotFoundHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/CommandNotFoundHandler.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/Commands/QuitHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/QuitHandler.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/Commands/WhisperHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/WhisperHandler.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/Messages/Messages.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Messages/Messages.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Server/Server.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Server/Server.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/Client/ClientLauncher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Client/ClientLauncher.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/Server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Server/Server.java" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+@@ -37,7 +26,7 @@
+   <component name="Git.Settings">
+     <option name="RECENT_BRANCH_BY_REPOSITORY">
+       <map>
+-        <entry key="$PROJECT_DIR$" value="main" />
++        <entry key="$PROJECT_DIR$" value="SextaZe" />
+       </map>
+     </option>
+     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+@@ -48,9 +37,9 @@
+   <component name="ProjectCodeStyleSettingsMigration">
+     <option name="version" value="2" />
+   </component>
+-  <component name="ProjectColorInfo"><![CDATA[{
+-  "associatedIndex": 4
+-}]]></component>
++  <component name="ProjectColorInfo">{
++  &quot;associatedIndex&quot;: 4
++}</component>
+   <component name="ProjectId" id="2ZZjz7htPlpc0xbkv0Mbm2HOZEf" />
+   <component name="ProjectLevelVcsManager">
+     <ConfirmationsSetting value="2" id="Add" />
+@@ -61,6 +50,9 @@
+   </component>
+   <component name="PropertiesComponent"><![CDATA[{
+   "keyToString": {
++    "ASKED_ADD_EXTERNAL_FILES": "true",
++    "Application.ClientLauncher.executor": "Run",
++    "Application.ServerLauncher.executor": "Run",
+     "RunOnceActivity.OpenProjectViewOnStart": "true",
+     "RunOnceActivity.ShowReadmeOnStart": "true",
+     "git-widget-placeholder": "main",
+@@ -97,11 +89,20 @@
+     </configuration>
+     <recent_temporary>
+       <list>
++        <item itemvalue="Application.ServerLauncher" />
++        <item itemvalue="Application.ClientLauncher" />
+         <item itemvalue="Application.ClientLauncher" />
+         <item itemvalue="Application.ServerLauncher" />
+       </list>
+     </recent_temporary>
+   </component>
++  <component name="SharedIndexes">
++    <attachedChunks>
++      <set>
++        <option value="jdk-21.0.1-openjdk-21.0.1-8336523bb0d9-55c9c8bc" />
++      </set>
++    </attachedChunks>
++  </component>
+   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+   <component name="TaskManager">
+     <task id="LOCAL-00001" summary="first documentation commit">
+@@ -123,6 +124,7 @@
+     <servers />
+   </component>
+   <component name="VcsManagerConfiguration">
++    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+     <MESSAGE value="first documentation commit" />
+     <option name="LAST_COMMIT_MESSAGE" value="first documentation commit" />
+   </component>
