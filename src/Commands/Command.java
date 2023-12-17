@@ -34,8 +34,6 @@ public enum Command {
     private CommandHandler handler;
 
 
-
-
     Command(String description, CommandHandler handler) {
         this.description = description;
         this.handler = handler;

@@ -39,7 +39,6 @@ public class Client {
 
    private boolean gameState = false;
 
-
     static final String SERVER_HOST = "localhost";
     static final int SERVER_PORT = 8080;
     static int numberOfConnections = 0;

@@ -9,7 +9,7 @@ public class QuitHandler implements CommandHandler{
     @Override
     public void execute(Server server, ClientConnectionHandler clientConnectionHandler) {
         server.removeClient(clientConnectionHandler);
-        server.broadcast(clientConnectionHandler.getName(),
+        Server.broadcast(clientConnectionHandler.getName(),
                 clientConnectionHandler.getName() + Messages.CLIENT_DISCONNECTED);
     }
 }

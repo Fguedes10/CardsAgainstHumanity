@@ -4,18 +4,33 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fc5d77e5-6192-43e9-8b01-6e658d2df62f" name="Changes" comment="" />
+    <list default="true" id="fc5d77e5-6192-43e9-8b01-6e658d2df62f" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Client/Client.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Client/ClientConnectionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Client/ClientConnectionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Client/ClientLauncher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Client/ClientLauncher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Commands/BuildHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/BuildHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Commands/Command.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/Command.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Messages/Messages.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Messages/Messages.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
   </component>
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "git-widget-placeholder": "main"
+    "git-widget-placeholder": "fabioSunday"
   }
 }]]></component>
   <component name="RunManager" selected="Application.ClientLauncher">

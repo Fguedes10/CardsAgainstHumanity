@@ -17,6 +17,16 @@ public abstract class Messages {
     public final static String GAME_STARTING = "The game will start in ";
     public final static String NOT_YOUR_GAME = "This game is not yours to start.";
     public final static String ROUND = "Round Nº";
+    public final static String PLAYERS_CALLED = " players, called ";
+    public final static String MESSAGE_RECEIVED_CARDS = "You have now picked cards.";
+    public final static String PLAYER_HAS_FILLED_HAND = " has picked their hand!";
+    public final static String PLAYER_HAS_PLAY = " has played their card!";
+    public final static String SELECT_A_VALID_CARD = "Please select a valid option from your hand";
+
+
+
+
+
     public final static String COMMANDS_LIST =
              "AVAILABLE COMMANDS\n\n" + RED_BOLD + "/build - > Build a new game \n" + "/available_games - > Check available games \n" + "/join - > join available games \n" + "/start - > Start the game when all players have joined \n" + "/list_players -> List the names of online players \n" + "/change_name " +
                     "-> Change username \n" + "/whisper -> send private message to other player \n" + RESET_COLOR;

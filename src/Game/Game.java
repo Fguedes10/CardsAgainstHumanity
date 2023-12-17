@@ -63,7 +63,11 @@ public class Game {
 
     public static String getRunningGames() throws IOException {
         StringBuffer buffer = new StringBuffer();
-        runningGames.forEach(game -> buffer.append(game.name).append(" - ").append(game.MaxNumOfPlayers).append(" player game with ").append(game.MaxNumOfPlayers - game.players.size()).append(" free spots ").append("started by ").append(game.owner.getName()).append("\n"));
+        runningGames.forEach(game -> buffer.append(game.name)
+                .append(" - ").append(game.MaxNumOfPlayers)
+                .append(" player game with ").append(game.MaxNumOfPlayers - game.players.size())
+                .append(" free spots ").append("started by ")
+                .append(game.owner.getName()).append("\n"));
         return buffer.toString();
     }
 
