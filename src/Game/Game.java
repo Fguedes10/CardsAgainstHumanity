@@ -16,7 +16,7 @@ import Client.Client;
 public class Game {
 
     public String name;
-    public int MaxNumOfPlayers;
+    public int maxNumOfPlayers;
     public ArrayList<ClientConnectionHandler> players = new ArrayList<>();
     public List<String> roundCardsToVote;
     public ClientConnectionHandler owner;
@@ -47,7 +47,7 @@ public class Game {
     public static List<Game> runningGames = new LinkedList<>();
 
     public boolean checkAllPlayersInGame(Game game){
-        if(game.players.size() == game.MaxNumOfPlayers){
+        if(game.players.size() == game.maxNumOfPlayers){
             game.state = true;
             return true;
         }
@@ -57,7 +57,7 @@ public class Game {
     public Game(ClientConnectionHandler owner, int maxNumOfPlayers, String name) throws IOException {
         this.owner = owner;
         this.name = name;
-        this.MaxNumOfPlayers = maxNumOfPlayers;
+        this.maxNumOfPlayers = maxNumOfPlayers;
         runningGames.add(this);
         players.add(this.owner);
         System.out.println(players);
@@ -66,8 +66,8 @@ public class Game {
     public static String getRunningGames() throws IOException {
         StringBuffer buffer = new StringBuffer();
         runningGames.forEach(game -> buffer.append(game.name)
-                .append(" - ").append(game.MaxNumOfPlayers)
-                .append(" player game with ").append(game.MaxNumOfPlayers - game.players.size())
+                .append(" - ").append(game.maxNumOfPlayers)
+                .append(" player game with ").append(game.maxNumOfPlayers - game.players.size())
                 .append(" free spots ").append("started by ")
                 .append(game.owner.getName()).append("\n"));
         return buffer.toString();
@@ -167,7 +167,4 @@ public class Game {
         cardsInGame.add(card);
     }
 
-    public void setNumberOfInGamePlayers(int numberOfInGamePlayers) {
-        this.numberOfInGamePlayers = numberOfInGamePlayers;
-    }
 }

@@ -7,8 +7,6 @@ import Server.Server;
 import java.io.IOException;
 import java.util.List;
 
-import java.util.Objects;
-
 import static java.lang.Integer.parseInt;
 
 public class PlayCardHandler implements CommandHandler {
@@ -36,7 +34,7 @@ public class PlayCardHandler implements CommandHandler {
 
                 System.out.println("Size of roundCardsToVote: " + owner.getPlayingGame().roundCardsToVote.size());
                 System.out.println("numberOfInGamePlayers: " + owner.getPlayingGame().numberOfInGamePlayers);
-                if(owner.getPlayingGame().roundCardsToVote.size() == owner.getPlayingGame().numberOfInGamePlayers){
+                if(owner.getPlayingGame().roundCardsToVote.size() == owner.getPlayingGame().maxNumOfPlayers){
                     int index = 1;
                     for (String card : owner.getPlayingGame().roundCardsToVote) {
                         clientConnectionHandler.writeMessage(index + " - " + card);
