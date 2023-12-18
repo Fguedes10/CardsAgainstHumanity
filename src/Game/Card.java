@@ -52,8 +52,8 @@ public class Card {
         return lines;
     }
 
-    public static List<String> drawBlackCard(String card) {
-        List<String> cardLines = new ArrayList<>();
+    public static String drawBlackCard(String card) {
+        StringBuilder cardBuilder = new StringBuilder();
         String topAndBottom = Messages.WHITE_BOLD + "+--------------------+" + Messages.RESET_COLOR; // Card top/bottom border (22 characters wide including +)
         int cardWidth = 18; // Width of the card content area (excluding borders)
         int totalLines = 6; // Total number of lines to be printed in the card
@@ -62,24 +62,24 @@ public class Card {
         // Splitting the content into multiple lines
         List<String> lines = splitIntoLines(card, cardWidth);
 
-        // Adding the top border and padding line
-        cardLines.add(topAndBottom);
-        cardLines.add(padding);
+        cardBuilder.append(topAndBottom).append("\n");
+        cardBuilder.append(padding).append("\n");
 
-        // Building each content line
+        // Building each line within the card
         for (int i = 0; i < totalLines; i++) {
             String line = i < lines.size() ? lines.get(i) : ""; // Get line from content or empty string
             int paddingLength = cardWidth - line.length();
             String paddedLine = Messages.WHITE_BOLD + "| " + line + " ".repeat(paddingLength) + " |" + Messages.RESET_COLOR;
-            cardLines.add(paddedLine);
+            cardBuilder.append(paddedLine).append("\n");
         }
 
-        // Adding the padding line and bottom border
-        cardLines.add(padding);
-        cardLines.add(topAndBottom);
+        // Re-print the padding line to fit the card width
+        cardBuilder.append(padding).append("\n");
+        cardBuilder.append(topAndBottom);
 
-        return cardLines;
+        return cardBuilder.toString();
     }
+
 
     public static List<String> drawWhiteCard(String card, int cardNumber) {
         List<String> cardLines = new ArrayList<>();
