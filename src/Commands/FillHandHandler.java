@@ -15,16 +15,6 @@ public class FillHandHandler implements CommandHandler {
         ClientConnectionHandler owner = clientConnectionHandler.getPlayingGame().owner;
         clientConnectionHandler.getCorrespondingClient().fillHand();
         clientConnectionHandler.writeMessage("You have now picked cards.");
-       /* List<String> cards = clientConnectionHandler.getCorrespondingClient().getCards();
-        int index = 1;
-        for (String card : cards) {
-            try {
-                clientConnectionHandler.writeMessage(Card.drawWhiteCard(card, index));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            index++;
-        }*/
 
         List<String> cards = clientConnectionHandler.getCorrespondingClient().getCards();
         List<List<String>> cardLinesList = new ArrayList<>();

@@ -133,7 +133,7 @@ public class Game {
 
     public void presentBlackCard(){
             chooseBlackCard();
-            Server.announceInGame("This turn's Black Card is: " + blackCardInGame, this);
+            Server.announceInGame("This turn's Black Card is: \n" + Card.drawBlackCard(blackCardInGame), this);
     }
 
     public List<String> getWhiteDeck() {
