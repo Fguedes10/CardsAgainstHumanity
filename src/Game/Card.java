@@ -57,7 +57,7 @@ public class Card {
         String topAndBottom = Messages.WHITE_BOLD + "+--------------------+" + Messages.RESET_COLOR; // Card top/bottom border (22 characters wide including +)
         int cardWidth = 18; // Width of the card content area (excluding borders)
         int totalLines = 6; // Total number of lines to be printed in the card
-        String padding = Messages.WHITE_BOLD + "| ".repeat(cardWidth - 2) + "  |" + Messages.RESET_COLOR;
+        String padding = Messages.WHITE_BOLD + "|                    |" + Messages.RESET_COLOR;
 
         // Splitting the content into multiple lines
         List<String> lines = splitIntoLines(card, cardWidth);
@@ -137,6 +137,14 @@ public class Card {
         cardLines.add(topAndBottom);
 
         return cardLines;
+    }
+
+    public static void main(String[] args) {
+        List<String> cardRepresentation = Card.drawHand("Sample card text", 1);
+
+        for (String line : cardRepresentation) {
+            System.out.println(line);
+        }
     }
 
     // Additional methods if needed

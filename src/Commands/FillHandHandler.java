@@ -36,8 +36,6 @@ public class FillHandHandler implements CommandHandler {
             clientConnectionHandler.writeMessage(handLine.toString());
         }
 
-
-
         owner.send(clientConnectionHandler.getName() + " has picked their hand!");
     }
 }

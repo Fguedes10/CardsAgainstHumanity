@@ -4,7 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fc5d77e5-6192-43e9-8b01-6e658d2df62f" name="Changes" comment="" />
+    <list default="true" id="fc5d77e5-6192-43e9-8b01-6e658d2df62f" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Game/Card.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Game/Card.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Game/Game.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Game/Game.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Commands/FillHandHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/FillHandHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Game/Card.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game/Card.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -23,18 +29,34 @@
         <entry key="$PROJECT_DIR$" value="a66bed767e1f21c3c5dcbc9d06835900cc05e187" />
       </map>
     </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 7
+}]]></component>
+  <component name="ProjectId" id="2ZiPNNw38sPiJU5uhHcrVsRVanM" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.Card.executor": "Run",
     "Application.ClientLauncher.executor": "Run",
     "Application.ServerLauncher.executor": "Run",
-    "git-widget-placeholder": "SegundaZe2"
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "SegundaZe2",
+    "kotlin-language-version-configured": "true"
   }
 }]]></component>
-  <component name="RunManager" selected="Application.ServerLauncher">
+  <component name="RunManager" selected="Application.ClientLauncher">
     <configuration name="Card" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Game.Card" />
       <module name="CardsAgainstMindera" />
@@ -76,15 +98,30 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.ServerLauncher" />
         <item itemvalue="Application.ClientLauncher" />
+        <item itemvalue="Application.ServerLauncher" />
         <item itemvalue="Application.Card" />
         <item itemvalue="Application.ClientLauncher" />
         <item itemvalue="Application.ServerLauncher" />
       </list>
     </recent_temporary>
   </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-21.0.1-openjdk-21.0.1-8336523bb0d9-55c9c8bc" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="fc5d77e5-6192-43e9-8b01-6e658d2df62f" name="Changes" comment="" />
+      <created>1702901886421</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1702901886421</updated>
+    </task>
     <servers />
   </component>
 </project>
