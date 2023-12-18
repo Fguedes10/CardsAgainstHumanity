@@ -151,7 +151,7 @@ public class Game {
     private void announceStartOfNewRound() throws IOException {
         for (ClientConnectionHandler player : players) {
             player.writeMessage(Messages.ROUND + " " + currentRound + Messages.PLAYERS_CALLED + name);
-            player.writeMessage("This turn's Black Card is: " + blackCardInGame);
+            player.writeMessage("This turn's Black Card is: " + Card.drawBlackCard(blackCardInGame));
         }
     }
 

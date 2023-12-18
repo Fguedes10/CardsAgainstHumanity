@@ -83,7 +83,7 @@ public class Client {
                 new Random().nextInt(correspondingClientConnectionHandlers.getPlayingGame().getWhiteDeck().size());
         cards.add(correspondingClientConnectionHandlers.getPlayingGame().getWhiteDeck().remove(randomCardPosition));
         //return correspondingClientConnectionHandlers.getPlayingGame().getWhiteDeck().get(randomCardPosition);
-   }
+    }
 
    /* public synchronized void fillHand(List<String> newCards) {
         if (cards.size() < 7) {
