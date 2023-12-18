@@ -37,7 +37,7 @@ public class Client {
 
     private ClientConnectionHandler correspondingClientConnectionHandlers;
 
-   private boolean gameState = false;
+    private boolean gameState = false;
 
     static final String SERVER_HOST = "localhost";
     static final int SERVER_PORT = 8500;
@@ -184,7 +184,6 @@ public class Client {
     public void setVoteState(boolean voteState) {
         this.voteState = voteState;
     }
-
 
     public void setCorrespondingClientConnectionHandler(ClientConnectionHandler clientConnectionHandler) {
         this.correspondingClientConnectionHandlers = clientConnectionHandler;
