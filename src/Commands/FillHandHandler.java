@@ -1,17 +1,12 @@
 package Commands;
 
 import Client.ClientConnectionHandler;
-
-import Messages.Messages;
-
 import Game.Card;
-
 import Server.Server;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 
 public class FillHandHandler implements CommandHandler {
 
@@ -19,8 +14,7 @@ public class FillHandHandler implements CommandHandler {
     public void execute(Server server, ClientConnectionHandler clientConnectionHandler) throws IOException {
         ClientConnectionHandler owner = clientConnectionHandler.getPlayingGame().owner;
         clientConnectionHandler.getCorrespondingClient().fillHand();
-
-        clientConnectionHandler.writeMessage(Messages.MESSAGE_RECEIVED_CARDS);
+        clientConnectionHandler.writeMessage("You have now picked cards.");
 
         List<String> cards = clientConnectionHandler.getCorrespondingClient().getCards();
         List<List<String>> cardLinesList = new ArrayList<>();
@@ -33,9 +27,6 @@ public class FillHandHandler implements CommandHandler {
             maxLines = Math.max(maxLines, cardLines.size());
         }
 
-            owner.send(clientConnectionHandler.getName() + Messages.PLAYER_HAS_FILLED_HAND);
-
-
         // Construct each line of the hand
         for (int i = 0; i < maxLines; i++) {
             StringBuilder handLine = new StringBuilder();
@@ -46,6 +37,5 @@ public class FillHandHandler implements CommandHandler {
         }
 
         owner.send(clientConnectionHandler.getName() + " has picked their hand!");
-
     }
 }
