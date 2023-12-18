@@ -6,8 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="1e0154ae-4811-4c5c-8275-c9b45ecb285e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Client/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Commands/FillHandHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/FillHandHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/TurnHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/TurnHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Game/Game.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Game/Game.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Commands/TurnHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/TurnHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Decks/blackDeck.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/Decks/blackDeck.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Decks/whiteDeck.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/Decks/whiteDeck.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Game/Card.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game/Card.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Game/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game/Game.java" afterDir="false" />
     </list>

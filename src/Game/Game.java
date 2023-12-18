@@ -26,11 +26,11 @@ public class Game {
     private int playedCardsCounter = 0;
     private int currentRound = 1;
 
-    public synchronized void incrementPlayedCardsCounter(){
+    public synchronized void incrementPlayedCardsCounter() {
         playedCardsCounter++;
     }
 
-    public synchronized boolean allPlayersPlayedCards(){
+    public synchronized boolean allPlayersPlayedCards() {
         return playedCardsCounter == maxNumOfPlayers;
     }
 
@@ -57,8 +57,8 @@ public class Game {
 
     public static List<Game> runningGames = new LinkedList<>();
 
-    public boolean checkAllPlayersInGame(Game game){
-        if(game.players.size() == game.maxNumOfPlayers){
+    public boolean checkAllPlayersInGame(Game game) {
+        if (game.players.size() == game.maxNumOfPlayers) {
             game.state = true;
             return true;
         }
@@ -116,22 +116,24 @@ public class Game {
 
     public static Game getGameByOwner(ClientConnectionHandler clientConnectionHandler) {
         for (int i = 0; i < runningGames.size(); i++) {
-            if(runningGames.get(i).owner.toString().equalsIgnoreCase(clientConnectionHandler.getName())){
+            if (runningGames.get(i).owner.toString().equalsIgnoreCase(clientConnectionHandler.getName())) {
                 return runningGames.get(i);
             }
-        } return null;
+        }
+        return null;
     }
 
-    public static void askForCard(Client client, String card){
+    public static void askForCard(Client client, String card) {
 
     }
 
     public static Game getGameByName(String name) {
         for (int i = 0; i < runningGames.size(); i++) {
-            if(runningGames.get(i).name.equalsIgnoreCase(name)){
+            if (runningGames.get(i).name.equalsIgnoreCase(name)) {
                 return runningGames.get(i);
             }
-        } return null;
+        }
+        return null;
     }
 
     public void startGame(Game game) throws InterruptedException, IOException {
@@ -139,7 +141,6 @@ public class Game {
         //Inserir lógica do jogo
         clearScreen(game);
         Server.announceInGame(Messages.GAME_BEGINS, game);
-        startNewRound();
     }
 
     private void startNewRound() throws IOException {
@@ -148,10 +149,11 @@ public class Game {
         currentRound++;
     }
 
-    private void announceStartOfNewRound() throws IOException {
+    public void announceStartOfNewRound() throws IOException {
         for (ClientConnectionHandler player : players) {
-            player.writeMessage(Messages.ROUND + " " + currentRound + Messages.PLAYERS_CALLED + name);
-            player.writeMessage("This turn's Black Card is: " + Card.drawBlackCard(blackCardInGame));
+            chooseBlackCard();
+            Server.announceInGame(Messages.ROUND + " " + currentRound + Messages.PLAYERS_CALLED + name, this);
+            Server.announceInGame("This turn's Black Card is:\n " + Card.drawBlackCard(blackCardInGame), this);
         }
     }
 
@@ -186,9 +188,9 @@ public class Game {
         clientConnectionHandler.writeMessage(Messages.JOINED_GAME + this.name);
     }
 
-    public void presentBlackCard(){
+    public void presentBlackCard() {
         chooseBlackCard();
-        Server.announceInGame("This turn's Black Card is: " + Card.drawBlackCard(blackCardInGame), this);
+        Server.announceInGame("This turn's Black Card is:\n " + Card.drawBlackCard(blackCardInGame), this);
     }
 
     public List<String> initializeWhiteDeck() throws IOException {

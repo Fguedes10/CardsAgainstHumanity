@@ -41,11 +41,11 @@ public class Card {
                 lines.add(currentLine.toString());
                 currentLine = new StringBuilder();
             }
-            if (currentLine.length() > 0) currentLine.append(" ");
+            if (!currentLine.isEmpty()) currentLine.append(" ");
             currentLine.append(word);
         }
 
-        if (currentLine.length() > 0) {
+        if (!currentLine.isEmpty()) {
             lines.add(currentLine.toString());
         }
 
