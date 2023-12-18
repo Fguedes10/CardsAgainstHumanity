@@ -4,6 +4,16 @@ public abstract class Messages {
     public static final String RED_BOLD = "\033[1;31m";
     public static final String BLUE_BOLD = "\033[1;34m";
 
+    public static final String BLACK_BACKGROUND = "\u001B[40m";
+
+    public static final String WHITE = "\u001B[37m";
+    public static final String WHITE_BOLD = "\u001B[37m\u001B[1m";
+
+    public static final String WHITE_BACKGROUND = "\u001B[47m";
+
+    public static final String BLACK = "\u001B[30m";
+    public static final String BLACK_BOLD = "\u001B[30m\u001B[1m";
+
     public static final String RESET_COLOR = "\033[0m";
 
 

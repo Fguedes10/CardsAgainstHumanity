@@ -188,7 +188,7 @@ public class Game {
 
     public void presentBlackCard(){
         chooseBlackCard();
-        Server.announceInGame("This turn's Black Card is: " + blackCardInGame, this);
+        Server.announceInGame("This turn's Black Card is: " + Card.drawBlackCard(blackCardInGame), this);
     }
 
     public List<String> initializeWhiteDeck() throws IOException {
