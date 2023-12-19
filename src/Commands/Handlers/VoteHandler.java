@@ -12,13 +12,10 @@ public class  VoteHandler implements CommandHandler {
 
     @Override
     public void execute(Server server, ClientConnectionHandler clientConnectionHandler) throws IOException {
-        //    ClientConnectionHandler owner = clientConnectionHandler.getPlayingGame().owner;
-        if (!clientConnectionHandler.getCorrespondingClient().isVoteState()) {
+        if (clientConnectionHandler.getCorrespondingClient().isVoteState()) {
             clientConnectionHandler.writeMessage(Messages.VOTING_INSTRUCTIONS);
-            return;
-        }
 
-        clientConnectionHandler.writeMessage(Messages.VOTING_PHASE_START);
+        }
 
         int index = 1;
         for (ClientConnectionHandler player : clientConnectionHandler.getPlayingGame().players) {

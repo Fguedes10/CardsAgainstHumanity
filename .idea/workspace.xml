@@ -8,18 +8,16 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Client/Client.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Client/Client.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Client/ClientConnectionHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Client/ClientConnectionHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/Handlers/JoinGameHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/Handlers/JoinGameHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Client/ClientLauncher.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Client/ClientLauncher.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/Handlers/PlayCardHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/Handlers/PlayCardHandler.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/Handlers/TurnHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/Handlers/TurnHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Decks/ToDO" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Decks/ToDO" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/Handlers/VoteHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/Handlers/VoteHandler.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Game/Game.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Game/Game.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Client/Client.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Client/ClientConnectionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Client/ClientConnectionHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Commands/Handlers/JoinGameHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/Handlers/JoinGameHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Commands/Handlers/PlayCardHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/Handlers/PlayCardHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Commands/Handlers/StartHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/Handlers/StartHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Commands/Handlers/TurnHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/Handlers/TurnHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Commands/Handlers/VoteHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/Handlers/VoteHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Decks/ToDO" beforeDir="false" afterPath="$PROJECT_DIR$/src/Decks/ToDO" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Decks/whiteDeck.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/Decks/whiteDeck.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Game/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game/Game.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -60,14 +58,14 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "fabioTuesday",
-    "last_opened_file_path": "C:/Users/Fabio Guedes/Documents/GitHub/BootCampGit/mindswapBootcampAulas"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;fabioTuesday&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Fabio Guedes/Documents/GitHub/BootCampGit/mindswapBootcampAulas&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Application.ServerLauncher">
     <configuration name="ClientLauncher" type="Application" factoryName="Application" singleton="false" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Client.ClientLauncher" />

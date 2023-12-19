@@ -142,8 +142,11 @@ public class ClientConnectionHandler implements Runnable {
                     throw new RuntimeException(e);
                 }
             }
+            if (!isCommand(messageFromClient) && !gameState){
+                sendMessage(name + ": " + messageFromClient);
+            }
+
         }
-        sendMessage(name + ": " + messageFromClient);
 
     }
 

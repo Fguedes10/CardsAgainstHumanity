@@ -38,7 +38,7 @@ public class StartHandler implements CommandHandler {
         game.players.forEach(player -> player.gameState = true);
 
        // clientConnectionHandler.getPlayingGame().sortedPlayersByAge();
-        // Server.announceInGame(clientConnectionHandler.getPlayingGame().players.toString(), clientConnectionHandler.getPlayingGame());
+        //Server.announceInGame(clientConnectionHandler.getPlayingGame().players.toString(), clientConnectionHandler.getPlayingGame());
 
     }
 }

@@ -12,7 +12,6 @@ public class PlayCardHandler implements CommandHandler {
 
     @Override
     public void execute(Server server, ClientConnectionHandler clientConnectionHandler) throws IOException {
-        //  ClientConnectionHandler owner = clientConnectionHandler.getPlayingGame().owner;
         String message = clientConnectionHandler.getMessage();
 
         try {
@@ -52,7 +51,6 @@ public class PlayCardHandler implements CommandHandler {
         int index = 1;
 
         for (ClientConnectionHandler player : clientConnectionHandler.getPlayingGame().players) {
-//            if (!player.equals(owner)) {
             player.writeMessage(Messages.VOTING_INSTRUCTIONS);
             List<String> cardsToVote = clientConnectionHandler.getPlayingGame().getRoundCardsForPlayer(player);
             player.getCorrespondingClient().setVoteState(true);
@@ -62,7 +60,6 @@ public class PlayCardHandler implements CommandHandler {
             }
 
             index = 1;
-            // }
         }
 
         Server.announceInGame(Messages.VOTING_PHASE_START, clientConnectionHandler.getPlayingGame());

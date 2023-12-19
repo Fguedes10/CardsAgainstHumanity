@@ -15,15 +15,29 @@ import java.util.stream.Collectors;
 public class Game {
 
     public String name;
+
     public int maxNumOfPlayers;
+
+
     public ArrayList<ClientConnectionHandler> players = new ArrayList<>();
+
     public List<String> roundCardsToVote;
+
     public ClientConnectionHandler owner;
+
     public int scoreToWin = 7;
+
     public int numberOfInGamePlayers;
+
     public boolean state = false;
+
     private int playedCardsCounter = 0;
+
     private int currentRound = 0;
+
+    private String blackCardInGame;
+
+    public List<String> cardsInGame = initializeCardsInGame();
 
     public synchronized void incrementPlayedCardsCounter() {
         playedCardsCounter++;
@@ -33,20 +47,9 @@ public class Game {
         return playedCardsCounter == maxNumOfPlayers;
     }
 
-    private String blackCardInGame;
-
-    public String getBlackCardInGame() {
-        return blackCardInGame;
-    }
-
-    public List<String> cardsInGame = initializeCardsInGame();
 
     private List<String> initializeCardsInGame() {
         List<String> cardsInGame = new ArrayList<>();
-        return cardsInGame;
-    }
-
-    public List<String> getCardsInGame() {
         return cardsInGame;
     }
 
@@ -75,39 +78,8 @@ public class Game {
 
     }
 
-    /*public void findClientByCard(String playedCard){
-        players.stream().filter(player -> player.getCorrespondingClient())
-    }
-
-     */
-
     public void announceVoteResult() throws IOException {
-        //int votesForCard = 0;
-        Map<ClientConnectionHandler, Integer> votePerCard = new HashMap<>();
-        List<ClientConnectionHandler> players = new ArrayList<>();
-        for (ClientConnectionHandler player : players) {
-            String playerVote = player.getCorrespondingClient().playerVote;
-            if (votePerCard.containsKey(playerVote)) {
-                votePerCard.put(player, votePerCard.get(playerVote).getValue() + 1);
-            } else {
-                votePerCard.put(player, 1);
-            }
-//            if (!player.getCorrespondingClient().equals(owner.getCorrespondingClient()) &&
-//                    player.getCorrespondingClient().playerVote.equalsIgnoreCase(player.getPlayingGame().roundCardsToVote.get(0))) {
-//                votesForCard++;
-//            }
-        }
-        Map.Entry<ClientConnectionHandler, Integer> maxVote = Collections.max(votePerCard.entrySet(), Map.Entry.comparingByValue());
-        if (maxVote.getValue() > players.size() / 2) {
-            // The voted card wins
-            // owner.send("The winning card is: " + roundCardsToVote.get(0));
-            maxVote.getKey().send("The winning card is: " + maxVote.getKey());
-            maxVote.getKey().getCorrespondingClient().setScore(maxVote.getKey().getCorrespondingClient().getScore() + 1);
-        } else {
-            owner.send("No consensus on the winning card.");
-        }
-        resetGameRound();
-        startNewRound(); // TODO start new round
+       announceStartOfNewRound(); // TODO start new round
     }
 
     private void resetGameRound() {
@@ -151,10 +123,6 @@ public class Game {
             }
         }
         return null;
-    }
-
-    public static void askForCard(Client client, String card) {
-
     }
 
     public static Game getGameByName(String name) {
@@ -241,9 +209,7 @@ public class Game {
     }
 
     public void handleVotingResult() throws IOException {
-        if (allPlayersVoted()) {
             announceVoteResult();
-        }
     }
 
     public synchronized void clearPlayedCards() {
@@ -252,7 +218,6 @@ public class Game {
 
     public synchronized List<String> getRoundCardsForPlayer(ClientConnectionHandler player) {
         return roundCardsToVote.stream()
-                //    .filter(card -> !player.getCorrespondingClient().getCards().contains(card))
                 .filter(card -> !card.equals(player.getCorrespondingClient().getPlayedCard()))
                 .collect(Collectors.toList());
     }

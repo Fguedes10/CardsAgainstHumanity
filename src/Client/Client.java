@@ -39,7 +39,7 @@ public class Client {
 
     private boolean gameState = false;
 
-    static final String SERVER_HOST = "cardsmindera.ddns.net";
+    static final String SERVER_HOST = "localhost";
     static final int SERVER_PORT = 8500;
     static int numberOfConnections = 0;
 
