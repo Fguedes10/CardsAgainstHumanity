@@ -9,10 +9,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Game {
 
@@ -76,18 +74,41 @@ public class Game {
 
     }
 
-    public void announceVoteResult(String votedCard) throws IOException {
-        int votesForCard = 0;
+    public void announceVoteResult() throws IOException {
+        //int votesForCard = 0;
+        Map<String, AbstractMap.SimpleEntry<ClientConnectionHandler, Integer>> votePerCard = new HashMap<>();
+
 
         for (ClientConnectionHandler player : players) {
-            if (player.getCorrespondingClient().playerVote.equalsIgnoreCase(votedCard)) {
-                votesForCard++;
+            String playerVote = player.getCorrespondingClient().playerVote;
+            if (votePerCard.containsKey(playerVote)) {
+                AbstractMap.SimpleEntry<ClientConnectionHandler, Integer> votesPerPlayer = new AbstractMap.SimpleEntry<>
+                        (player, votePerCard.get(playerVote).getValue() + 1);
+                votePerCard.put(playerVote, votesPerPlayer);
+            } else {
+                AbstractMap.SimpleEntry<ClientConnectionHandler, Integer> votesPerPlayer = new AbstractMap.SimpleEntry<>
+                        (player, 1);
+                votePerCard.put(playerVote, votesPerPlayer);
+            }
+
+
+//            if (!player.getCorrespondingClient().equals(owner.getCorrespondingClient()) &&
+//                    player.getCorrespondingClient().playerVote.equalsIgnoreCase(player.getPlayingGame().roundCardsToVote.get(0))) {
+//                votesForCard++;
+//            }
+        }
+        Map.Entry<String, AbstractMap.SimpleEntry<ClientConnectionHandler, Integer>> maxVote = null;
+        for (Map.Entry<String, AbstractMap.SimpleEntry<ClientConnectionHandler, Integer>> playerVote : votePerCard.entrySet()) {
+            if (maxVote == null || playerVote.getValue().getValue().compareTo(maxVote.getValue().getValue()) > 0) {
+                maxVote = playerVote;
             }
         }
 
-        if (votesForCard > players.size() / 2) {
+
+        if (maxVote.getValue().getValue() > players.size() / 2) {
             // The voted card wins
-            owner.send("The winning card is: " + votedCard);
+            // owner.send("The winning card is: " + roundCardsToVote.get(0));
+            owner.send("The winning card is: " + maxVote.getKey());
             owner.getCorrespondingClient().setScore(owner.getCorrespondingClient().getScore() + 1);
         } else {
             owner.send("No consensus on the winning card.");
@@ -137,6 +158,7 @@ public class Game {
     }
 
     public void startGame(Game game) throws InterruptedException, IOException {
+        Server.announceInGame(Messages.EXITING_LOBBY, game);
         announceStartOfGame(game);
         //Inserir lógica do jogo
         clearScreen(game);
@@ -202,6 +224,35 @@ public class Game {
         Path path = Paths.get("src/Decks/blackDeck.txt");
         return Files.readAllLines(path);
     }
+
+
+    public synchronized boolean allPlayersVoted() {
+        for (ClientConnectionHandler player : players) {
+            if (player.getCorrespondingClient().isVoteState()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public void handleVotingResult() throws IOException {
+        if (allPlayersVoted()) {
+            announceVoteResult();
+            startNewRound();
+        }
+    }
+
+    public synchronized void clearPlayedCards() {
+        roundCardsToVote.clear();
+    }
+
+    public synchronized List<String> getRoundCardsForPlayer(ClientConnectionHandler player) {
+        return roundCardsToVote.stream()
+                //    .filter(card -> !player.getCorrespondingClient().getCards().contains(card))
+                .filter(card -> !card.equals(player.getCorrespondingClient().getPlayedCard()))
+                .collect(Collectors.toList());
+    }
+
 
     public List<String> getWhiteDeck() {
         return whiteDeck;

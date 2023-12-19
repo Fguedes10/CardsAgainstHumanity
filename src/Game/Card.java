@@ -15,21 +15,6 @@ public class Card {
         this.cardNumber = cardNumber;
     }
 
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public int getCardNumber() {
-        return cardNumber;
-    }
-
-    public void setCardNumber(int cardNumber) {
-        this.cardNumber = cardNumber;
-    }
 
     public static List<String> splitIntoLines(String content, int maxWidth) {
         List<String> lines = new ArrayList<>();
@@ -54,10 +39,10 @@ public class Card {
 
     public static String drawBlackCard(String card) {
         StringBuilder cardBuilder = new StringBuilder();
-        String topAndBottom = Messages.WHITE_BOLD + "+--------------------+" + Messages.RESET_COLOR; // Card top/bottom border (22 characters wide including +)
-        int cardWidth = 18; // Width of the card content area (excluding borders)
-        int totalLines = 6; // Total number of lines to be printed in the card
-        String padding = Messages.WHITE_BOLD + "|                    |" + Messages.RESET_COLOR;
+        String topAndBottom = Messages.WHITE_BOLD + "+------------------------+" + Messages.RESET_COLOR; // Card top/bottom border (22 characters wide including +)
+        int cardWidth = 22; // Width of the card content area (excluding borders)
+        int totalLines = 12; // Total number of lines to be printed in the card
+        String padding = Messages.WHITE_BOLD + "|                        |" + Messages.RESET_COLOR;
 
         // Splitting the content into multiple lines
         List<String> lines = splitIntoLines(card, cardWidth);
@@ -84,8 +69,8 @@ public class Card {
     public static List<String> drawWhiteCard(String card, int cardNumber) {
         List<String> cardLines = new ArrayList<>();
         String topAndBottom = Messages.WHITE_BACKGROUND + Messages.BLACK_BOLD + "+--------------------+" + Messages.RESET_COLOR; // Card top/bottom border (22 characters wide including +)
-        int cardWidth = 18; // Width of the card content area (excluding borders)
-        int totalLines = 6; // Total number of lines to be printed in the card
+        int cardWidth = 22; // Width of the card content area (excluding borders)
+        int totalLines = 12; // Total number of lines to be printed in the card
         String padding = Messages.WHITE_BACKGROUND + Messages.BLACK_BOLD + "| " + cardNumber + " ".repeat(cardWidth - 2 * String.valueOf(cardNumber).length()) + cardNumber + " |" + Messages.RESET_COLOR;
 
         // Splitting the content into multiple lines
@@ -112,9 +97,9 @@ public class Card {
 
     public static List<String> drawHand(String card, int cardNumber) {
         List<String> cardLines = new ArrayList<>();
-        String topAndBottom = Messages.WHITE_BACKGROUND + Messages.BLACK_BOLD + "+--------------------+" + Messages.RESET_COLOR; // Card top/bottom border (22 characters wide including +)
-        int cardWidth = 18; // Width of the card content area (excluding borders)
-        int totalLines = 6; // Total number of lines to be printed in the card
+        String topAndBottom = Messages.WHITE_BACKGROUND + Messages.BLACK_BOLD + "+------------------------+" + Messages.RESET_COLOR; // Card top/bottom border (22 characters wide including +)
+        int cardWidth = 22; // Width of the card content area (excluding borders)
+        int totalLines = 12; // Total number of lines to be printed in the card
         String padding = Messages.WHITE_BACKGROUND + Messages.BLACK_BOLD + "| " + cardNumber + " ".repeat(cardWidth - 2 * String.valueOf(cardNumber).length()) + cardNumber + " |" + Messages.RESET_COLOR;
 
         // Splitting the content into multiple lines
@@ -147,5 +132,21 @@ public class Card {
         }
     }
 
-    // Additional methods if needed
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public int getCardNumber() {
+        return cardNumber;
+    }
+
+    public void setCardNumber(int cardNumber) {
+        this.cardNumber = cardNumber;
+    }
+
+
 }

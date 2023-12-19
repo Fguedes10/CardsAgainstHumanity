@@ -1,6 +1,7 @@
 package Client;
 
-import Commands.Command;
+import Commands.GameCommands;
+import Commands.LobbyCommands;
 import Game.Game;
 import Messages.Messages;
 import Server.Server;
@@ -10,10 +11,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 
 import static Server.Server.clientHandlerList;
@@ -29,30 +26,11 @@ public class ClientConnectionHandler implements Runnable {
     private Game ownedGame;
     private Game playingGame;
 
-
     private Server server;
 
     public boolean gameState = false;
 
-    public Game getPlayingGame() {
-        return playingGame;
-    }
 
-    public void setPlayingGame(Game playingGame) {
-        this.playingGame = playingGame;
-    }
-
-    private void setGameState(Boolean b) {
-        this.gameState = b;
-    }
-
-    public void setServer(Server server) {
-        this.server = server;
-    }
-
-    public void setOwnedGame(Game ownedGame) {
-        this.ownedGame = ownedGame;
-    }
 
     public ClientConnectionHandler(Socket socket) {
         this.socket = socket;
@@ -131,7 +109,6 @@ public class ClientConnectionHandler implements Runnable {
 
     }
 
-
     @Override
     public void run() {
         System.out.println(Messages.CLIENT_CONNECTED);
@@ -154,9 +131,6 @@ public class ClientConnectionHandler implements Runnable {
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
-                    //Aqui, os jogadores que não começam o jogo ainda conseguem enviar uma
-                    // mensagem porque o servidor já está à espera dalguma mensagem deles.
-                    // É preciso descobrir como impedir isso.
                     continue;
                 }
             }
@@ -167,13 +141,11 @@ public class ClientConnectionHandler implements Runnable {
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-                continue;
             }
-            sendMessage(name + ": " + messageFromClient);
         }
+        sendMessage(name + ": " + messageFromClient);
 
     }
-
 
     private boolean isCommand(String message) {
         return message.startsWith("/");
@@ -181,15 +153,15 @@ public class ClientConnectionHandler implements Runnable {
 
     private void dealWithCommand(String message) throws IOException {
         String description = message.split(" ")[0];
-        Command command = Command.getCommandFromDescription(description);
-        command.getHandler().execute(this.server, this);
+        LobbyCommands lobbyCommand = LobbyCommands.getCommandFromDescription(description);
+        lobbyCommand.getHandler().execute(this.server, this);
     }
 
     //Impedir jogador de usar comandos de lobby, quando dentro do jogo.
     private void dealWithGameCommand(String message) throws IOException {
         String description = message.split(" ")[0];
-        Command command = Command.getCommandFromDescription(description);
-        command.getHandler().execute(this.server, this);
+        GameCommands gameCommand = GameCommands.getCommandFromDescription(description);
+        gameCommand.getHandler().execute(this.server, this);
     }
 
     public void send(String message) {
@@ -228,5 +200,24 @@ public class ClientConnectionHandler implements Runnable {
         this.correspondingClient = correspondingClient;
     }
 
+    public Game getPlayingGame() {
+        return playingGame;
+    }
+
+    public void setPlayingGame(Game playingGame) {
+        this.playingGame = playingGame;
+    }
+
+    private void setGameState(Boolean b) {
+        this.gameState = b;
+    }
+
+    public void setServer(Server server) {
+        this.server = server;
+    }
+
+    public void setOwnedGame(Game ownedGame) {
+        this.ownedGame = ownedGame;
+    }
 
 }
