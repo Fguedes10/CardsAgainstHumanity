@@ -9,16 +9,12 @@
       <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Client/Client.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Client/Client.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Client/ClientConnectionHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Client/ClientConnectionHandler.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Client/ClientLauncher.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Client/ClientLauncher.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/Handlers/PlayCardHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/Handlers/PlayCardHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/Handlers/TurnHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/Handlers/TurnHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/Handlers/VoteHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/Handlers/VoteHandler.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Game/Game.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Game/Game.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Server/ServerLauncher.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Server/ServerLauncher.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Client/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Client/ClientConnectionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Client/ClientConnectionHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Commands/Handlers/PlayCardHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/Handlers/PlayCardHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Commands/Handlers/StartHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/Handlers/StartHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Commands/Handlers/VoteHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/Handlers/VoteHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Game/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Messages/Messages.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Messages/Messages.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Server/ServerLauncher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Server/ServerLauncher.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,7 +62,7 @@
     &quot;last_opened_file_path&quot;: &quot;C:/Users/Fabio Guedes/Documents/GitHub/BootCampGit/mindswapBootcampAulas&quot;
   }
 }</component>
-  <component name="RunManager" selected="Application.ServerLauncher">
+  <component name="RunManager" selected="Application.ClientLauncher">
     <configuration name="ClientLauncher" type="Application" factoryName="Application" singleton="false" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Client.ClientLauncher" />
       <module name="CardsAgainstMindera" />
@@ -95,8 +91,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.ServerLauncher" />
         <item itemvalue="Application.ClientLauncher" />
+        <item itemvalue="Application.ServerLauncher" />
       </list>
     </recent_temporary>
   </component>

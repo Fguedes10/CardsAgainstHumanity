@@ -1,7 +1,6 @@
 package Game;
 
 import Client.ClientConnectionHandler;
-import Client.Client;
 import Messages.Messages;
 import Server.Server;
 
@@ -18,7 +17,6 @@ public class Game {
 
     public int maxNumOfPlayers;
 
-
     public ArrayList<ClientConnectionHandler> players = new ArrayList<>();
 
     public List<String> roundCardsToVote;
@@ -26,8 +24,6 @@ public class Game {
     public ClientConnectionHandler owner;
 
     public int scoreToWin = 7;
-
-    public int numberOfInGamePlayers;
 
     public boolean state = false;
 
@@ -97,13 +93,19 @@ public class Game {
           }
       }
       if(counter == maxNumOfPlayers){
-          announceWinner();
       }
     }
 
     private void announceWinner() {
         String winner = players.stream().filter(player -> player.getCorrespondingClient().getScore() >= scoreToWin).map(player -> player.getCorrespondingClient().getName()).findFirst().toString();
         Server.announceInGame("The winner of the cookie is: " + winner,this);
+    }
+
+    private void announceBigWinner(ClientConnectionHandler player) {
+
+        if(player.getCorrespondingClient().getScore() == scoreToWin)       {
+            Server.announceInGame("The game winner is: " + player.getName(),this);
+        }
     }
 
     public static String getRunningGames() throws IOException {
@@ -137,13 +139,14 @@ public class Game {
     public void startGame(Game game) throws InterruptedException, IOException {
         Server.announceInGame(Messages.EXITING_LOBBY, game);
         announceStartOfGame(game);
-        //Inserir lógica do jogo
+        clearScreen(game);
         clearScreen(game);
         Server.announceInGame(Messages.GAME_BEGINS, game);
     }
 
 
     public void announceStartOfNewRound() throws IOException {
+        resetGameRound();
         Server.announceInGame("SCOREBOARD: \n", this);
 
         for (ClientConnectionHandler player : players){

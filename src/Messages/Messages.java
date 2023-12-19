@@ -7,22 +7,54 @@ public abstract class Messages {
     public static final String BLACK_BACKGROUND = "\u001B[40m";
 
     public static final String WHITE = "\u001B[37m";
+
     public static final String WHITE_BOLD = "\u001B[37m\u001B[1m";
 
     public static final String WHITE_BACKGROUND = "\u001B[47m";
 
     public static final String BLACK = "\u001B[30m";
+
     public static final String BLACK_BOLD = "\u001B[30m\u001B[1m";
 
     public static final String RESET_COLOR = "\033[0m";
 
 
 
-    public final static String WELCOME = BLUE_BOLD + "Welcome to Cards Against Humanity \n" + RESET_COLOR;
+    public final static String WELCOME =
+            "        ██╗    ██╗███████╗██╗      ██████╗ ██████╗ ███╗   ███╗███████╗ \n" +
+            "        ██║    ██║██╔════╝██║     ██╔════╝██╔═══██╗████╗ ████║██╔════╝ \n" +
+            "        ██║ █╗ ██║█████╗  ██║     ██║     ██║   ██║██╔████╔██║█████╗   \n" +
+            "        ██║███╗██║██╔══╝  ██║     ██║     ██║   ██║██║╚██╔╝██║██╔══╝   \n" +
+            "        ╚███╔███╔╝███████╗███████╗╚██████╗╚██████╔╝██║ ╚═╝ ██║███████╗ \n" +
+            "         ╚══╝╚══╝ ╚══════╝╚══════╝ ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚══════╝ \n" +
+            "                            ████████╗ ██████╗                          \n" +
+            "                            ╚══██╔══╝██╔═══██╗                         \n" +
+            "                               ██║   ██║   ██║                         \n" +
+            "                               ██║   ██║   ██║                         \n" +
+            "                               ██║   ╚██████╔╝                         \n" +
+            "                               ╚═╝    ╚═════╝                          \n" +
+            "                     ██████╗ █████╗ ██████╗ ██████╗ ███████╗           \n" +
+            "                    ██╔════╝██╔══██╗██╔══██╗██╔══██╗██╔════╝           \n" +
+            "                    ██║     ███████║██████╔╝██║  ██║███████╗           \n" +
+            "                    ██║     ██╔══██║██╔══██╗██║  ██║╚════██║           \n" +
+            "                    ╚██████╗██║  ██║██║  ██║██████╔╝███████║           \n" +
+            "                     ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝ ╚══════╝           \n" +
+            "             █████╗  ██████╗  █████╗ ██╗███╗   ██╗███████╗████████╗    \n" +
+            "            ██╔══██╗██╔════╝ ██╔══██╗██║████╗  ██║██╔════╝╚══██╔══╝    \n" +
+            "            ███████║██║  ███╗███████║██║██╔██╗ ██║███████╗   ██║       \n" +
+            "            ██╔══██║██║   ██║██╔══██║██║██║╚██╗██║╚════██║   ██║       \n" +
+            "            ██║  ██║╚██████╔╝██║  ██║██║██║ ╚████║███████║   ██║       \n" +
+            "            ╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝╚══════╝   ╚═╝       \n" +
+            "    ██╗  ██╗██╗   ██╗███╗   ███╗ █████╗ ███╗   ██╗██╗████████╗██╗   ██╗\n" +
+            "    ██║  ██║██║   ██║████╗ ████║██╔══██╗████╗  ██║██║╚══██╔══╝╚██╗ ██╔╝\n" +
+            "    ███████║██║   ██║██╔████╔██║███████║██╔██╗ ██║██║   ██║    ╚████╔╝ \n" +
+            "    ██╔══██║██║   ██║██║╚██╔╝██║██╔══██║██║╚██╗██║██║   ██║     ╚██╔╝  \n" +
+            "    ██║  ██║╚██████╔╝██║ ╚═╝ ██║██║  ██║██║ ╚████║██║   ██║      ██║   \n" +
+            "    ╚═╝  ╚═╝ ╚═════╝ ╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝   ╚═╝      ╚═╝   \n" +
+            "                                                                       \n\n" ;
     public final static String SERVER_ON = "Server is on, waiting connections";
-    public final static String PLAYER_ENTERED_CHAT = " joins the chat";
     public final static String WINNER = " wins the game!";
-    public final static String CHOOSE_GAME_NAME = "Input game name:";
+    public final static String CHOOSE_GAME_NAME = "Please input a game name:";
     public final static String GAME_BUILT = "New game built with ";
     public final static String GAME_STARTING = "The game will start in ";
     public final static String NOT_YOUR_GAME = "This game is not yours to start.";
@@ -35,9 +67,6 @@ public abstract class Messages {
     public final static String SELECT_A_VALID_CARD = "Please select a valid option from your hand";
 
 
-
-
-
     public final static String COMMANDS_LIST =
             "AVAILABLE COMMANDS\n\n" + BLUE_BOLD + "/build - > Build a new game \n" + "/available_games - > Check available games \n" + "/join - > join available games \n" + "/start - > Start the game when all players have joined \n" + "/list_players -> List the names of online players \n" + "/change_name " +
                     "-> Change username \n" + "/whisper -> send private message to other player \n" + RESET_COLOR;
@@ -47,7 +76,7 @@ public abstract class Messages {
     public final static String START_INSTRUCTIONS = "Invalid start use. Correct use: '/start <GameName>'";
     public final static String JOINED_GAME = "Successfully joined game - ";
     public final static String GAME_READY = "Your game is ready to start!";
-    public final static String INPUT_NAME = "Input your username: ";
+    public final static String INPUT_NAME = RESET_COLOR + "Please input your username: ";
     public final static String NULL_NAME = "Write a valid username";
     public final static String REPEATED_NAME = "Username already taken, please choose another";
     public final static String NO_SUCH_CLIENT = "The client you want to whisper to doesn't exists.";

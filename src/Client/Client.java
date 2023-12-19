@@ -37,11 +37,8 @@ public class Client {
 
     private ClientConnectionHandler correspondingClientConnectionHandlers;
 
-    private boolean gameState = false;
-
     static final String SERVER_HOST = "localhost";
-    static final int SERVER_PORT = 8500;
-    static int numberOfConnections = 0;
+    static final int SERVER_PORT = 8888;
 
 
     public Client() {
