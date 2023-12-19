@@ -124,6 +124,8 @@ public class Card {
         return cardLines;
     }
 
+
+
     public static void main(String[] args) {
         List<String> cardRepresentation = Card.drawHand("Sample card text", 1);
 

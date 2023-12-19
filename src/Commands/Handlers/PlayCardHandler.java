@@ -24,7 +24,7 @@ public class PlayCardHandler implements CommandHandler {
             if (indexToPlay >= 0 && indexToPlay < playerCards.size()) {
                 String playedCard = playerCards.get(indexToPlay);
 
-                clientConnectionHandler.send(clientConnectionHandler.getName() + Messages.PLAYER_HAS_PLAY);
+                Server.announceInGame(clientConnectionHandler.getName() + Messages.PLAYER_HAS_PLAY, clientConnectionHandler.getPlayingGame());
                 clientConnectionHandler.getPlayingGame().setCardsInGame(playedCard);
                 clientConnectionHandler.getPlayingGame().roundCardsToVote.add(playedCard);
                 clientConnectionHandler.getCorrespondingClient().setPlayedCard(playedCard);
@@ -45,15 +45,16 @@ public class PlayCardHandler implements CommandHandler {
         }
     }
 
-    private void startVotingPhase(ClientConnectionHandler owner) throws IOException {
-        Server.announceInGame(Messages.VOTING_PHASE_START, owner.getPlayingGame());
+    private void startVotingPhase(ClientConnectionHandler clientConnectionHandler) throws IOException {
+        clientConnectionHandler.getPlayingGame().setPlayedCardsCounter(0);
+        Server.announceInGame(Messages.VOTING_PHASE_START, clientConnectionHandler.getPlayingGame());
 
         int index = 1;
 
-        for (ClientConnectionHandler player : owner.getPlayingGame().players) {
+        for (ClientConnectionHandler player : clientConnectionHandler.getPlayingGame().players) {
 //            if (!player.equals(owner)) {
             player.writeMessage(Messages.VOTING_INSTRUCTIONS);
-            List<String> cardsToVote = owner.getPlayingGame().getRoundCardsForPlayer(player);
+            List<String> cardsToVote = clientConnectionHandler.getPlayingGame().getRoundCardsForPlayer(player);
             player.getCorrespondingClient().setVoteState(true);
             for (String card : cardsToVote) {
                 player.writeMessage(index + " - " + card);
@@ -64,6 +65,6 @@ public class PlayCardHandler implements CommandHandler {
             // }
         }
 
-        Server.announceInGame(Messages.VOTING_PHASE_START, owner.getPlayingGame());
+        Server.announceInGame(Messages.VOTING_PHASE_START, clientConnectionHandler.getPlayingGame());
     }
 }

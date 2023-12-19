@@ -17,12 +17,13 @@ public class Game {
     public String name;
     public int maxNumOfPlayers;
     public ArrayList<ClientConnectionHandler> players = new ArrayList<>();
+    public int scoreToWin = 10;
     public List<String> roundCardsToVote;
     public ClientConnectionHandler owner;
     public int numberOfInGamePlayers;
     public boolean state = false;
     private int playedCardsCounter = 0;
-    private int currentRound = 1;
+    private int currentRound = 0;
 
     public synchronized void incrementPlayedCardsCounter() {
         playedCardsCounter++;
@@ -108,10 +109,15 @@ public class Game {
         if (maxVote.getValue().getValue() > players.size() / 2) {
             // The voted card wins
             // owner.send("The winning card is: " + roundCardsToVote.get(0));
-            owner.send("The winning card is: " + maxVote.getKey());
-            owner.getCorrespondingClient().setScore(owner.getCorrespondingClient().getScore() + 1);
+            Server.announceInGame("The winning card is: " + maxVote.getKey(), this);
+            for(ClientConnectionHandler player : players){
+                if(player.getCorrespondingClient().getPlayedCard().equals(maxVote.getKey())){
+                    player.getCorrespondingClient().setScore( player.getCorrespondingClient().getScore() + 1);
+                }
+            player.getCorrespondingClient().setScore(owner.getCorrespondingClient().getScore() + 1);
+            }
         } else {
-            owner.send("No consensus on the winning card.");
+            Server.announceInGame("No consensus on the winning card.",this);
         }
 
         resetGameRound();
@@ -167,11 +173,16 @@ public class Game {
 
 
     public void announceStartOfNewRound() throws IOException {
-        for (ClientConnectionHandler player : players) {
+        Server.announceInGame("SCOREBOARD: \n", this);
+
+        for (ClientConnectionHandler player : players){
+            Server.announceInGame(player.getName()  + " - " + player.getCorrespondingClient().getScore(), this);
+        }
+            currentRound++;
             chooseBlackCard();
             Server.announceInGame(Messages.ROUND + currentRound, this);
-            Server.announceInGame("This turn's Black Card is:\n " + Card.drawBlackCard(blackCardInGame), this);
-        }
+            Server.announceInGame("This turn's Black Card is:\n" + blackCardInGame, this);
+
     }
 
     private void chooseBlackCard() {
@@ -205,10 +216,6 @@ public class Game {
         clientConnectionHandler.writeMessage(Messages.JOINED_GAME + this.name);
     }
 
-    public void presentBlackCard() {
-        chooseBlackCard();
-        Server.announceInGame("This turn's Black Card is:\n " + Card.drawBlackCard(blackCardInGame), this);
-    }
 
     public List<String> initializeWhiteDeck() throws IOException {
         Path path = Paths.get("src/Decks/whiteDeck.txt");
@@ -267,4 +274,9 @@ public class Game {
     public void setCardsInGame(String card) {
         cardsInGame.add(card);
     }
+
+    public void setPlayedCardsCounter(int playedCardsCounter) {
+        this.playedCardsCounter = playedCardsCounter;
+    }
+
 }

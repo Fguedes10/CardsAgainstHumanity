@@ -79,8 +79,8 @@ public class Client {
     }
 
     private void chooseWhiteCard() {
-        int randomCardPosition =
-                new Random().nextInt(correspondingClientConnectionHandlers.getPlayingGame().getWhiteDeck().size());
+        int randomCardPosition = 0;
+               // new Random().nextInt(correspondingClientConnectionHandlers.getPlayingGame().getWhiteDeck().size());
         cards.add(correspondingClientConnectionHandlers.getPlayingGame().getWhiteDeck().remove(randomCardPosition));
         //return correspondingClientConnectionHandlers.getPlayingGame().getWhiteDeck().get(randomCardPosition);
     }
@@ -187,5 +187,9 @@ public class Client {
 
     public void setCorrespondingClientConnectionHandler(ClientConnectionHandler clientConnectionHandler) {
         this.correspondingClientConnectionHandlers = clientConnectionHandler;
+    }
+
+    public String getName() {
+        return name;
     }
 }

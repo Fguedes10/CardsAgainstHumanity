@@ -2,23 +2,17 @@ package Commands.Handlers;
 
 import Client.ClientConnectionHandler;
 import Commands.CommandHandler;
-import Game.Card;
 import Server.Server;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
-public class FillHandHandler implements CommandHandler {
-
+public class ShowHandHandler implements CommandHandler {
     @Override
     public void execute(Server server, ClientConnectionHandler clientConnectionHandler) throws IOException {
-        ClientConnectionHandler owner = clientConnectionHandler.getPlayingGame().owner;
-        clientConnectionHandler.getCorrespondingClient().fillHand();
-        clientConnectionHandler.writeMessage("you have picked hand");
-        List<String> cards = clientConnectionHandler.getCorrespondingClient().getCards();
+        List<String> playerHand = clientConnectionHandler.getCorrespondingClient().getCards();
         int index = 1;
-        for (String card : cards) {
+        for (String card : playerHand) {
             try {
                 clientConnectionHandler.writeMessage(index + " - " + card);
             } catch (IOException e) {
@@ -26,6 +20,6 @@ public class FillHandHandler implements CommandHandler {
             }
             index++;
         }
-        owner.send(clientConnectionHandler.getName() + " has picked cards");
+
     }
 }

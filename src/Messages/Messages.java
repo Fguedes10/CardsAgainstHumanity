@@ -39,7 +39,7 @@ public abstract class Messages {
 
 
     public final static String COMMANDS_LIST =
-            "AVAILABLE COMMANDS\n\n" + RED_BOLD + "/build - > Build a new game \n" + "/available_games - > Check available games \n" + "/join - > join available games \n" + "/start - > Start the game when all players have joined \n" + "/list_players -> List the names of online players \n" + "/change_name " +
+            "AVAILABLE COMMANDS\n\n" + BLUE_BOLD + "/build - > Build a new game \n" + "/available_games - > Check available games \n" + "/join - > join available games \n" + "/start - > Start the game when all players have joined \n" + "/list_players -> List the names of online players \n" + "/change_name " +
                     "-> Change username \n" + "/whisper -> send private message to other player \n" + RESET_COLOR;
 
     public final static String WHISPER_INSTRUCTIONS = "Invalid whisper use. Correct use: '/whisper <username> <message>";
