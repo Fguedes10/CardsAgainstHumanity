@@ -5,6 +5,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * The `Client` class represents a client with a name, age, score, cards, and vote state.
@@ -48,7 +49,7 @@ public class Client {
         this.name = null;
         this.age = 0;
         this.score = 0;
-        this.cards = new ArrayList<>();
+        this.cards = new CopyOnWriteArrayList<>();
         this.voteState = false;
     }
 
