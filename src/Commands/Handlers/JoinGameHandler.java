@@ -1,5 +1,6 @@
 package Commands.Handlers;
 
+import Client.Client;
 import Client.ClientConnectionHandler;
 import Commands.CommandHandler;
 import Messages.Messages;
@@ -7,6 +8,9 @@ import Server.Server;
 import Game.Game;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 public class JoinGameHandler implements CommandHandler {
 
@@ -29,4 +33,6 @@ public class JoinGameHandler implements CommandHandler {
         }
 
     }
+
+
 }

@@ -12,7 +12,7 @@ import java.util.Random;
  */
 public class Client {
     private String name;
-    private int age;
+    private Integer age;
     private int score;
     public List<String> cards;
 
@@ -192,4 +192,9 @@ public class Client {
     public String getName() {
         return name;
     }
+
+    public int getAge() {
+        return age;
+    }
+
 }

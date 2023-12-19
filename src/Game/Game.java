@@ -17,9 +17,9 @@ public class Game {
     public String name;
     public int maxNumOfPlayers;
     public ArrayList<ClientConnectionHandler> players = new ArrayList<>();
-    public int scoreToWin = 10;
     public List<String> roundCardsToVote;
     public ClientConnectionHandler owner;
+    public int scoreToWin = 7;
     public int numberOfInGamePlayers;
     public boolean state = false;
     private int playedCardsCounter = 0;
@@ -75,53 +75,39 @@ public class Game {
 
     }
 
+    /*public void findClientByCard(String playedCard){
+        players.stream().filter(player -> player.getCorrespondingClient())
+    }
+
+     */
+
     public void announceVoteResult() throws IOException {
         //int votesForCard = 0;
-        Map<String, AbstractMap.SimpleEntry<ClientConnectionHandler, Integer>> votePerCard = new HashMap<>();
-
-
+        Map<ClientConnectionHandler, Integer> votePerCard = new HashMap<>();
+        List<ClientConnectionHandler> players = new ArrayList<>();
         for (ClientConnectionHandler player : players) {
             String playerVote = player.getCorrespondingClient().playerVote;
             if (votePerCard.containsKey(playerVote)) {
-                AbstractMap.SimpleEntry<ClientConnectionHandler, Integer> votesPerPlayer = new AbstractMap.SimpleEntry<>
-                        (player, votePerCard.get(playerVote).getValue() + 1);
-                votePerCard.put(playerVote, votesPerPlayer);
+                votePerCard.put(player, votePerCard.get(playerVote).getValue() + 1);
             } else {
-                AbstractMap.SimpleEntry<ClientConnectionHandler, Integer> votesPerPlayer = new AbstractMap.SimpleEntry<>
-                        (player, 1);
-                votePerCard.put(playerVote, votesPerPlayer);
+                votePerCard.put(player, 1);
             }
-
-
 //            if (!player.getCorrespondingClient().equals(owner.getCorrespondingClient()) &&
 //                    player.getCorrespondingClient().playerVote.equalsIgnoreCase(player.getPlayingGame().roundCardsToVote.get(0))) {
 //                votesForCard++;
 //            }
         }
-        Map.Entry<String, AbstractMap.SimpleEntry<ClientConnectionHandler, Integer>> maxVote = null;
-        for (Map.Entry<String, AbstractMap.SimpleEntry<ClientConnectionHandler, Integer>> playerVote : votePerCard.entrySet()) {
-            if (maxVote == null || playerVote.getValue().getValue().compareTo(maxVote.getValue().getValue()) > 0) {
-                maxVote = playerVote;
-            }
-        }
-
-
-        if (maxVote.getValue().getValue() > players.size() / 2) {
+        Map.Entry<ClientConnectionHandler, Integer> maxVote = Collections.max(votePerCard.entrySet(), Map.Entry.comparingByValue());
+        if (maxVote.getValue() > players.size() / 2) {
             // The voted card wins
             // owner.send("The winning card is: " + roundCardsToVote.get(0));
-            Server.announceInGame("The winning card is: " + maxVote.getKey(), this);
-            for(ClientConnectionHandler player : players){
-                if(player.getCorrespondingClient().getPlayedCard().equals(maxVote.getKey())){
-                    player.getCorrespondingClient().setScore( player.getCorrespondingClient().getScore() + 1);
-                }
-            player.getCorrespondingClient().setScore(owner.getCorrespondingClient().getScore() + 1);
-            }
+            maxVote.getKey().send("The winning card is: " + maxVote.getKey());
+            maxVote.getKey().getCorrespondingClient().setScore(maxVote.getKey().getCorrespondingClient().getScore() + 1);
         } else {
-            Server.announceInGame("No consensus on the winning card.",this);
+            owner.send("No consensus on the winning card.");
         }
-
         resetGameRound();
-        announceStartOfNewRound(); // TODO start new round
+        startNewRound(); // TODO start new round
     }
 
     private void resetGameRound() {
@@ -129,6 +115,23 @@ public class Game {
         for (ClientConnectionHandler player : players) {
             player.getCorrespondingClient().setVoteState(false);
         }
+    }
+
+    public void checkWinner(){
+        int counter = 0;
+      for(ClientConnectionHandler player : players){
+          if(player.getCorrespondingClient().getCards().isEmpty()){
+              counter++;
+          }
+      }
+      if(counter == maxNumOfPlayers){
+          announceWinner();
+      }
+    }
+
+    private void announceWinner() {
+        String winner = players.stream().filter(player -> player.getCorrespondingClient().getScore() >= scoreToWin).map(player -> player.getCorrespondingClient().getName()).findFirst().toString();
+        Server.announceInGame("The winner of the cookie is: " + winner,this);
     }
 
     public static String getRunningGames() throws IOException {
@@ -254,7 +257,13 @@ public class Game {
                 .collect(Collectors.toList());
     }
 
+    public void sortedPlayersByAge(){
+        Collections.sort(players, (player1, player2) -> Integer.compare(player1.getPlayingGame().getClientAge(player1), player2.getPlayingGame().getClientAge(player2)));
+    }
 
+    public int getClientAge(ClientConnectionHandler client){
+        return client.getCorrespondingClient().getAge();
+    }
     public List<String> getWhiteDeck() {
         return whiteDeck;
     }
