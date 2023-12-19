@@ -115,7 +115,7 @@ public class Game {
         }
 
         resetGameRound();
-        startNewRound(); // TODO start new round
+        announceStartOfNewRound(); // TODO start new round
     }
 
     private void resetGameRound() {
@@ -165,16 +165,11 @@ public class Game {
         Server.announceInGame(Messages.GAME_BEGINS, game);
     }
 
-    private void startNewRound() throws IOException {
-        chooseBlackCard();
-        announceStartOfNewRound();
-        currentRound++;
-    }
 
     public void announceStartOfNewRound() throws IOException {
         for (ClientConnectionHandler player : players) {
             chooseBlackCard();
-            Server.announceInGame(Messages.ROUND + " " + currentRound + Messages.PLAYERS_CALLED + name, this);
+            Server.announceInGame(Messages.ROUND + currentRound, this);
             Server.announceInGame("This turn's Black Card is:\n " + Card.drawBlackCard(blackCardInGame), this);
         }
     }
@@ -238,7 +233,6 @@ public class Game {
     public void handleVotingResult() throws IOException {
         if (allPlayersVoted()) {
             announceVoteResult();
-            startNewRound();
         }
     }
 
