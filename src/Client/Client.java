@@ -187,6 +187,10 @@ public class Client {
         this.correspondingClientConnectionHandlers = clientConnectionHandler;
     }
 
+    public ClientConnectionHandler getCorrespondingClientConnectionHandlers() {
+        return correspondingClientConnectionHandlers;
+    }
+
     public void incrementScore(){
         this.score = this.score + 1;
     }
@@ -198,4 +202,7 @@ public class Client {
         return age;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
 }

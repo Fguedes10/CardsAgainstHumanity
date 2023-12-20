@@ -5,21 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3eb10cd-d257-4dff-94ea-65c5aabaf6fd" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Commands/Handlers/VoteStartHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/GameCommands.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/GameCommands.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/Handlers/FillHandHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/Handlers/FillHandHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/Handlers/PlayCardHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/Handlers/PlayCardHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/Handlers/ShowHandHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/Handlers/ShowHandHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/Handlers/VoteHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Commands/Handlers/VoteHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Decks/blackDeck.txt" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Decks/blackDeck.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Game/Game.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Game/Game.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Client/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Commands/GameCommands.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/GameCommands.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Commands/Handlers/FillHandHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/Handlers/FillHandHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Client/ClientConnectionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Client/ClientConnectionHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Commands/Handlers/PlayCardHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/Handlers/PlayCardHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Commands/Handlers/ShowHandHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/Handlers/ShowHandHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Commands/Handlers/VoteHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/Handlers/VoteHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Decks/blackDeck.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/Decks/blackDeck.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Game/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game/Game.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -44,14 +34,14 @@
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.ClientLauncher.executor": "Run",
-    "Application.ServerLauncher.executor": "Run",
-    "git-widget-placeholder": "QuartaZe"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.ClientLauncher.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ServerLauncher.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;QuartaZe&quot;
   }
-}]]></component>
-  <component name="RunManager">
+}</component>
+  <component name="RunManager" selected="Application.ClientLauncher">
     <configuration name="ClientLauncher" type="Application" factoryName="Application" singleton="false" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Client.ClientLauncher" />
       <module name="CardsAgainstMindera" />
@@ -65,9 +55,23 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="ServerLauncher" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Server.ServerLauncher" />
+      <module name="CardsAgainstMindera" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Server.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Application.ClientLauncher" />
+        <item itemvalue="Application.ServerLauncher" />
       </list>
     </recent_temporary>
   </component>
