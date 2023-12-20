@@ -31,14 +31,11 @@ public class VoteHandler implements CommandHandler {
         try {
             int votedCardIndex = Integer.parseInt(voteCommand.split(" ")[1]) - 1;
             List<String> cardsToVote = clientConnectionHandler.getPlayingGame().cardSubmissions.keySet().stream().toList();
-            System.out.println(cardsToVote);
             if (votedCardIndex >= 0 && votedCardIndex <= cardsToVote.size()) {
                 String votedCard = cardsToVote.get(votedCardIndex);
                 clientConnectionHandler.getCorrespondingClient().playerVote = votedCard;
                 ClientConnectionHandler votedClient = clientConnectionHandler.getPlayingGame().players.stream().filter(player -> player.getCorrespondingClient().getPlayedCard().equals(votedCard)).findFirst().get();
-                System.out.println(votedClient.getName() + " one vote");
                 votedClient.getCorrespondingClient().setRoundCardScore(votedClient.getCorrespondingClient().getRoundCardScore() + 1);
-                System.out.println(votedClient.getCorrespondingClient().getRoundCardScore());
             } else {
                 clientConnectionHandler.writeMessage(Messages.INVALID_VOTE);
             }

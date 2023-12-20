@@ -345,7 +345,6 @@ public class Game {
      */
     public void join(ClientConnectionHandler clientConnectionHandler) throws IOException {
         players.add(clientConnectionHandler);
-        System.out.println(players);
         clientConnectionHandler.writeMessage(Messages.JOINED_GAME + this.name);
     }
 
@@ -459,7 +458,6 @@ public class Game {
         for (ClientConnectionHandler player : clientConnectionHandler.getPlayingGame().players) {
             Map<String, ClientConnectionHandler> cardsMap = clientConnectionHandler.getPlayingGame().cardSubmissions;
             List<String> cards = cardsMap.keySet().stream().filter(card -> !card.equalsIgnoreCase(player.getCorrespondingClient().getPlayedCard())).toList();
-            System.out.println(cards);
             for (String card : cards) {
                 List<String> cardLines = Card.drawHand(card, cardsInGame.indexOf(card) + 1);
                 cardLinesList.add(cardLines);
