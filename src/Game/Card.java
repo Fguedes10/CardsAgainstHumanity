@@ -183,7 +183,6 @@ public class Card {
      * Prints the string representation of a card for testing purposes.
      *
      * @param card       the content of the card
-     * @param cardNumber the unique number assigned to the card
      */
     public static void cardStringTester(String card) {
         drawHand(card, 1);
