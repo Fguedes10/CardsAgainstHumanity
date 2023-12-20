@@ -22,6 +22,7 @@ public class ClientConnectionHandler implements Runnable {
     private final BufferedReader in;
     private final PrintWriter out;
     private String name = "";
+    private Integer age = 0;
     private String messageFromClient;
     private Game ownedGame;
     private Game playingGame;
@@ -29,7 +30,6 @@ public class ClientConnectionHandler implements Runnable {
     private Server server;
 
     public boolean gameState = false;
-
 
 
     public ClientConnectionHandler(Socket socket) {
@@ -78,7 +78,6 @@ public class ClientConnectionHandler implements Runnable {
 
     private void askClientUserName() throws IOException {
         writeMessage(Messages.INPUT_NAME);
-        //setName(readMessage());
         String checkName = readMessage();
         if (checkName == null) {
             writeMessage(Messages.NULL_NAME);
@@ -105,8 +104,8 @@ public class ClientConnectionHandler implements Runnable {
                 writeMessage(Messages.NOT_A_NUMBER);
                 askClientAge();
             }
+            age = Integer.parseInt(answerAge);
         }
-
     }
 
     @Override
@@ -142,8 +141,11 @@ public class ClientConnectionHandler implements Runnable {
                     throw new RuntimeException(e);
                 }
             }
+            if (!isCommand(messageFromClient) && !gameState){
+                sendMessage(name + ": " + messageFromClient);
+            }
+
         }
-        sendMessage(name + ": " + messageFromClient);
 
     }
 

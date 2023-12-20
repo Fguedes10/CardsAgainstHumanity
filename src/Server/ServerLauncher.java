@@ -8,7 +8,7 @@ public class ServerLauncher {
         Server server = new Server();
 
         try {
-            server.start(8500);
+            server.start(8888);
         } catch (IOException e) {
             System.out.println(e.getMessage());
             throw new RuntimeException(e.getMessage());

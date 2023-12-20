@@ -13,7 +13,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class Client {
     private String name;
-    private int age;
+    private Integer age;
     private int score;
     public List<String> cards;
 
@@ -38,11 +38,8 @@ public class Client {
 
     private ClientConnectionHandler correspondingClientConnectionHandlers;
 
-    private boolean gameState = false;
-
     static final String SERVER_HOST = "localhost";
-    static final int SERVER_PORT = 8500;
-    static int numberOfConnections = 0;
+    static final int SERVER_PORT = 8888;
 
 
     public Client() {
@@ -80,25 +77,16 @@ public class Client {
     }
 
     private void chooseWhiteCard() {
-        int randomCardPosition =
-                new Random().nextInt(correspondingClientConnectionHandlers.getPlayingGame().getWhiteDeck().size());
+        int randomCardPosition = 0;
+               // new Random().nextInt(correspondingClientConnectionHandlers.getPlayingGame().getWhiteDeck().size());
         cards.add(correspondingClientConnectionHandlers.getPlayingGame().getWhiteDeck().remove(randomCardPosition));
         //return correspondingClientConnectionHandlers.getPlayingGame().getWhiteDeck().get(randomCardPosition);
     }
-
-   /* public synchronized void fillHand(List<String> newCards) {
-        if (cards.size() < 7) {
-            int cardsNeeded = 7 - cards.size();
-            List<String> cardsToAdd = newCards.subList(0, Math.min(cardsNeeded, newCards.size()));
-            cards.addAll(cardsToAdd);
-        }
-    }*/
 
     public void fillHand(){
         for (int i = 1; i <= maxHandSize; i++) {
             chooseWhiteCard();
         }
-        //correspondingClientConnectionHandlers.getPlayingGame().chooseBlackCard();
     }
 
 
@@ -189,4 +177,13 @@ public class Client {
     public void setCorrespondingClientConnectionHandler(ClientConnectionHandler clientConnectionHandler) {
         this.correspondingClientConnectionHandlers = clientConnectionHandler;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
 }

@@ -5,6 +5,13 @@ import Messages.Messages;
 import java.util.ArrayList;
 import java.util.List;
 
+import Client.ClientConnectionHandler;
+import Messages.Messages;
+
+import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
+
 public class Card {
 
     private String content;
@@ -22,20 +29,29 @@ public class Card {
         StringBuilder currentLine = new StringBuilder();
 
         for (String word : words) {
-            if (currentLine.length() + word.length() > maxWidth) {
+            // Check if adding this word exceeds the maxWidth
+            if (currentLine.length() + word.length() + (!currentLine.isEmpty() ? 1 : 0) > maxWidth) {
+                // Add the current line to lines and start a new line
                 lines.add(currentLine.toString());
                 currentLine = new StringBuilder();
             }
-            if (!currentLine.isEmpty()) currentLine.append(" ");
+            // Add a space before the word if it's not the first word in the line
+            if (!currentLine.isEmpty()) {
+                currentLine.append(" ");
+            }
+            // Add the word to the current line
             currentLine.append(word);
         }
 
+        // Add the last line if it's not empty
         if (!currentLine.isEmpty()) {
             lines.add(currentLine.toString());
         }
 
         return lines;
     }
+
+
 
     public static String drawBlackCard(String card) {
         StringBuilder cardBuilder = new StringBuilder();
@@ -71,7 +87,9 @@ public class Card {
         String topAndBottom = Messages.WHITE_BACKGROUND + Messages.BLACK_BOLD + "+--------------------+" + Messages.RESET_COLOR; // Card top/bottom border (22 characters wide including +)
         int cardWidth = 22; // Width of the card content area (excluding borders)
         int totalLines = 12; // Total number of lines to be printed in the card
-        String padding = Messages.WHITE_BACKGROUND + Messages.BLACK_BOLD + "| " + cardNumber + " ".repeat(cardWidth - 2 * String.valueOf(cardNumber).length()) + cardNumber + " |" + Messages.RESET_COLOR;
+        int repeatCount = Math.max(0, cardWidth - 2 * String.valueOf(cardNumber).length());
+        String padding = Messages.WHITE_BACKGROUND + Messages.BLACK_BOLD + "| " + cardNumber + " ".repeat(repeatCount) + cardNumber + " |" + Messages.RESET_COLOR;
+
 
         // Splitting the content into multiple lines
         List<String> lines = splitIntoLines(card, cardWidth);
@@ -100,7 +118,9 @@ public class Card {
         String topAndBottom = Messages.WHITE_BACKGROUND + Messages.BLACK_BOLD + "+------------------------+" + Messages.RESET_COLOR; // Card top/bottom border (22 characters wide including +)
         int cardWidth = 22; // Width of the card content area (excluding borders)
         int totalLines = 12; // Total number of lines to be printed in the card
-        String padding = Messages.WHITE_BACKGROUND + Messages.BLACK_BOLD + "| " + cardNumber + " ".repeat(cardWidth - 2 * String.valueOf(cardNumber).length()) + cardNumber + " |" + Messages.RESET_COLOR;
+        int repeatCount = Math.max(0, cardWidth - 2 * String.valueOf(cardNumber).length());
+        String padding = Messages.WHITE_BACKGROUND + Messages.BLACK_BOLD + "| " + cardNumber + " ".repeat(repeatCount) + cardNumber + " |" + Messages.RESET_COLOR;
+
 
         // Splitting the content into multiple lines
         List<String> lines = splitIntoLines(card, cardWidth);
@@ -124,12 +144,9 @@ public class Card {
         return cardLines;
     }
 
-    public static void main(String[] args) {
-        List<String> cardRepresentation = Card.drawHand("Sample card text", 1);
 
-        for (String line : cardRepresentation) {
-            System.out.println(line);
-        }
+    public static void cardStringTester(String card){
+        drawHand(card, 1);
     }
 
     public String getContent() {
@@ -147,6 +164,8 @@ public class Card {
     public void setCardNumber(int cardNumber) {
         this.cardNumber = cardNumber;
     }
+
+
 
 
 }

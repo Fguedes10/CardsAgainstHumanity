@@ -8,6 +8,7 @@ public enum GameCommands {
     FILL_HAND("/fill_hand", new FillHandHandler()),
     START_TURN("/start_turn", new TurnHandler()),
     VOTE("/vote", new VoteHandler()),
+    SHOW_HAND("/show_hand", new ShowHandHandler()),
     NOT_FOUND("Command not found", new CommandNotFoundHandler());
 
     private String description;
