@@ -19,7 +19,7 @@ public class ShowHandHandler implements CommandHandler {
         // Get lines for each card and find the max number of lines
         for (String card : cards) {
             List<String> cardLines = Card.drawHand(card, index++);
-            System.out.println(card);
+
             cardLinesList.add(cardLines);
             maxLines = Math.max(maxLines, cardLines.size());
         }

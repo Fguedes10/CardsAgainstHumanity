@@ -88,6 +88,7 @@ public class ClientConnectionHandler implements Runnable {
             askClientUserName();
         }
         setName(checkName);
+        correspondingClient.setName(checkName);
     }
 
     private void askClientAge() throws IOException {
@@ -221,5 +222,6 @@ public class ClientConnectionHandler implements Runnable {
     public void setOwnedGame(Game ownedGame) {
         this.ownedGame = ownedGame;
     }
+
 
 }

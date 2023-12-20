@@ -2,50 +2,38 @@ package Commands.Handlers;
 
 import Client.ClientConnectionHandler;
 import Commands.CommandHandler;
+import Game.Card;
 import Messages.Messages;
 import Server.Server;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class  VoteHandler implements CommandHandler {
 
     @Override
     public void execute(Server server, ClientConnectionHandler clientConnectionHandler) throws IOException {
-        if (clientConnectionHandler.getCorrespondingClient().isVoteState()) {
-            clientConnectionHandler.writeMessage(Messages.VOTING_INSTRUCTIONS);
-        }
-
-        int index = 1;
-        for (ClientConnectionHandler player : clientConnectionHandler.getPlayingGame().players) {
-            if (!player.equals(clientConnectionHandler)) {
-                List<String> cards = clientConnectionHandler.getPlayingGame().getRoundCardsForPlayer(player);
-                for (String card : cards) {
-                    clientConnectionHandler.writeMessage(index + " - " + card);
-                    index++;
-                }
-            }
-        }
-
         String voteCommand = clientConnectionHandler.getMessage();
         clientConnectionHandler.getCorrespondingClient().setVoteState(false);
         try {
             int votedCardIndex = Integer.parseInt(voteCommand.split(" ")[1]) - 1;
-
-            List<String> cardsToVote = clientConnectionHandler.getPlayingGame().getRoundCardsForPlayer(clientConnectionHandler);
-
-            if (votedCardIndex >= 0 && votedCardIndex < cardsToVote.size()) {
+            List<String> cardsToVote = clientConnectionHandler.getPlayingGame().cardSubmissions.keySet().stream().toList();
+            System.out.println(cardsToVote);
+            if (votedCardIndex >= 0 && votedCardIndex <= cardsToVote.size()) {
                 String votedCard = cardsToVote.get(votedCardIndex);
                 clientConnectionHandler.getCorrespondingClient().playerVote = votedCard;
-
-                if (clientConnectionHandler.getPlayingGame().allPlayersVoted()) {
-                    clientConnectionHandler.getPlayingGame().handleVotingResult();
-                }
+                ClientConnectionHandler votedClient = clientConnectionHandler.getPlayingGame().players.stream().filter(player -> player.getCorrespondingClient().getPlayedCard().equals(votedCard)).findFirst().get();
+                System.out.println(votedClient.getName() + " one vote");
+                votedClient.getCorrespondingClient().setRoundCardScore(votedClient.getCorrespondingClient().getRoundCardScore() + 1);
+                System.out.println(votedClient.getCorrespondingClient().getRoundCardScore());
             } else {
                 clientConnectionHandler.writeMessage(Messages.INVALID_VOTE);
             }
         } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
             clientConnectionHandler.writeMessage(Messages.INVALID_VOTE);
         }
-    }
-}
+        if (clientConnectionHandler.getPlayingGame().allPlayersVoted()) {
+            clientConnectionHandler.getPlayingGame().handleVotingResult();
+        }
+    }}

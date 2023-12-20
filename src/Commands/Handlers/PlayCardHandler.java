@@ -4,7 +4,6 @@ import Client.ClientConnectionHandler;
 import Commands.CommandHandler;
 import Messages.Messages;
 import Server.Server;
-
 import java.io.IOException;
 import java.util.List;
 
@@ -25,15 +24,12 @@ public class PlayCardHandler implements CommandHandler {
 
                 Server.announceInGame(clientConnectionHandler.getName() + Messages.PLAYER_HAS_PLAY, clientConnectionHandler.getPlayingGame());
                 clientConnectionHandler.getPlayingGame().setCardsInGame(playedCard);
-                clientConnectionHandler.getPlayingGame().roundCardsToVote.add(playedCard);
+                clientConnectionHandler.getPlayingGame().cardsInGame.stream().sorted();
                 clientConnectionHandler.getCorrespondingClient().setPlayedCard(playedCard);
+                clientConnectionHandler.getPlayingGame().submitCard(playedCard, clientConnectionHandler);
+                clientConnectionHandler.getPlayingGame().roundCardsToVote.add(playedCard);
                 playerCards.remove(playedCard);
-
                 clientConnectionHandler.getPlayingGame().incrementPlayedCardsCounter();
-
-                if (clientConnectionHandler.getPlayingGame().allPlayersPlayedCards()) {
-                    startVotingPhase(clientConnectionHandler);
-                }
             } else {
                 clientConnectionHandler.writeMessage(Messages.SELECT_A_VALID_CARD);
             }
@@ -42,26 +38,8 @@ public class PlayCardHandler implements CommandHandler {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        clientConnectionHandler.getCorrespondingClient().setVoteState(true);
     }
 
-    private void startVotingPhase(ClientConnectionHandler clientConnectionHandler) throws IOException {
-        clientConnectionHandler.getPlayingGame().setPlayedCardsCounter(0);
-        Server.announceInGame(Messages.VOTING_PHASE_START, clientConnectionHandler.getPlayingGame());
-
-        int index = 1;
-
-        for (ClientConnectionHandler player : clientConnectionHandler.getPlayingGame().players) {
-            player.writeMessage(Messages.VOTING_INSTRUCTIONS);
-            List<String> cardsToVote = clientConnectionHandler.getPlayingGame().getRoundCardsForPlayer(player);
-            player.getCorrespondingClient().setVoteState(true);
-            for (String card : cardsToVote) {
-                player.writeMessage(index + " - " + card);
-                index++;
-            }
-
-            index = 1;
-        }
-
-        Server.announceInGame(Messages.VOTING_PHASE_START, clientConnectionHandler.getPlayingGame());
-    }
 }
+

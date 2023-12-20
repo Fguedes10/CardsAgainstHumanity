@@ -3,6 +3,7 @@ package Game;
 import Client.ClientConnectionHandler;
 import Messages.Messages;
 import Server.Server;
+import Client.Client;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -31,6 +32,8 @@ public class Game {
 
     private int currentRound = 0;
 
+    private boolean isGameOver = false;
+
     private String blackCardInGame;
 
     public List<String> cardsInGame = initializeCardsInGame();
@@ -54,6 +57,8 @@ public class Game {
 
     private List<String> blackDeck = initializeBlackDeck();
 
+    public Map<String, ClientConnectionHandler> cardSubmissions = new HashMap<>();
+
     public static List<Game> runningGames = new LinkedList<>();
 
     public boolean checkAllPlayersInGame(Game game) {
@@ -75,43 +80,47 @@ public class Game {
 
     }
 
-    public void announceVoteResult() throws IOException {
-
-
-
-
-
-       announceStartOfNewRound(); // TODO start new round
-
+    public void announceVoteResult(String card, String name) throws IOException {
+        Server.announceInGame(name + " won this round with the card: " + card, this);
     }
 
+    public void submitCard(String card, ClientConnectionHandler player) {
+        cardSubmissions.put(card, player);
+    }
+
+    public ClientConnectionHandler getSubmittingPlayer(String card) {
+        return cardSubmissions.get(card);
+    }
+
+
     private void resetGameRound() {
+        playedCardsCounter = 0;
+        cardSubmissions.clear();
+        cardsInGame.clear();
         roundCardsToVote.clear();
         for (ClientConnectionHandler player : players) {
             player.getCorrespondingClient().setVoteState(false);
+            player.getCorrespondingClient().setRoundCardScore(0);
         }
     }
 
-    public void checkWinner(){
+    public void checkWinner() {
         int counter = 0;
-      for(ClientConnectionHandler player : players){
-          if(player.getCorrespondingClient().getCards().isEmpty()){
-              counter++;
-          }
-      }
-      if(counter == maxNumOfPlayers){
-      }
+        for (ClientConnectionHandler player : players) {
+            if (player.getCorrespondingClient().getCards().isEmpty()) {
+                counter++;
+            }
+        }
+        if (counter == maxNumOfPlayers) {
+        }
     }
 
-    private void announceWinner() {
-        String winner = players.stream().filter(player -> player.getCorrespondingClient().getScore() >= scoreToWin).map(player -> player.getCorrespondingClient().getName()).findFirst().toString();
-        Server.announceInGame("The winner of the cookie is: " + winner,this);
-    }
-
-    private void announceBigWinner(ClientConnectionHandler player) {
-
-        if(player.getCorrespondingClient().getScore() == scoreToWin)       {
-            Server.announceInGame("The game winner is: " + player.getName(),this);
+    public void announceBigWinner() {
+        for (ClientConnectionHandler player : players) {
+            if (player.getCorrespondingClient().getScore() == scoreToWin) {
+                Server.announceInGame("The game winner is: " + player.getName(), this);
+                isGameOver = true;
+            }
         }
     }
 
@@ -153,16 +162,17 @@ public class Game {
 
 
     public void announceStartOfNewRound() throws IOException {
+
         resetGameRound();
         Server.announceInGame("SCOREBOARD: \n", this);
 
-        for (ClientConnectionHandler player : players){
-            Server.announceInGame(player.getName()  + " - " + player.getCorrespondingClient().getScore(), this);
+        for (ClientConnectionHandler player : players) {
+            Server.announceInGame(player.getName() + " - " + player.getCorrespondingClient().getScore(), this);
         }
-            currentRound++;
-            chooseBlackCard();
-            Server.announceInGame(Messages.ROUND + currentRound, this);
-            Server.announceInGame("This turn's Black Card is:\n" + Card.drawBlackCard(blackCardInGame), this);
+        currentRound++;
+        chooseBlackCard();
+        Server.announceInGame(Messages.ROUND + currentRound, this);
+        Server.announceInGame("This turn's Black Card is:\n" + Card.drawBlackCard(blackCardInGame), this);
 
     }
 
@@ -218,8 +228,77 @@ public class Game {
         return true;
     }
 
+    public Map<String, Integer> tallyVotes(Game game) {
+        Map<String, Integer> voteCounts = new HashMap<>();
+
+        for (ClientConnectionHandler player : game.players) {
+            String votedCard = player.getCorrespondingClient().playerVote;
+            voteCounts.put(votedCard, voteCounts.getOrDefault(votedCard, 0) + 1);
+        }
+
+        return voteCounts;
+    }
+
+    public String findWinningCard(Map<String, Integer> voteCounts) {
+        String winningCard = null;
+        int maxVotes = 0;
+
+        for (Map.Entry<String, Integer> entry : voteCounts.entrySet()) {
+            if (entry.getValue() > maxVotes) {
+                maxVotes = entry.getValue();
+                winningCard = entry.getKey();
+            }
+        }
+
+        return winningCard;
+    }
+
     public void handleVotingResult() throws IOException {
-            announceVoteResult();
+        List<Client> clientList = new ArrayList<>();
+        for (ClientConnectionHandler player : players) {
+            clientList.add(player.getCorrespondingClient());
+        }
+
+        List<Client> playerScoresSorted = clientList.stream()
+                .sorted(Comparator.comparingInt(Client::getScore).reversed())
+                .toList();
+
+        List<Client> winners = new ArrayList<>();
+        int highestScore = playerScoresSorted.get(0).getScore();
+
+        for (Client player : playerScoresSorted) {
+            if (player.getScore() == highestScore) {
+                winners.add(player);
+            } else {
+                break;
+            }
+        }
+
+
+        Client winningPlayer = getRandomWinner(winners);
+
+        if (winningPlayer != null) {
+
+            winningPlayer.incrementScore();
+
+            announceVoteResult(winningPlayer.getPlayedCard(), winningPlayer.getName());
+
+        }
+        announceBigWinner();
+        if(isGameOver){
+            Server.announceInGame(Messages.WELCOME, this);
+            return;
+        }
+        announceStartOfNewRound();
+    }
+
+
+    private Client getRandomWinner(List<Client> players) {
+        if (!players.isEmpty()) {
+            Random random = new Random();
+            return players.get(random.nextInt(players.size()));
+        }
+        return null;
     }
 
     public synchronized void clearPlayedCards() {
@@ -232,13 +311,42 @@ public class Game {
                 .collect(Collectors.toList());
     }
 
-    public void sortedPlayersByAge(){
+    public void startVotingPhase(ClientConnectionHandler clientConnectionHandler) throws IOException {
+        clientConnectionHandler.getPlayingGame().setPlayedCardsCounter(0);
+        Server.announceInGame(Messages.VOTING_PHASE_START, clientConnectionHandler.getPlayingGame());
+        Server.announceInGame(Messages.VOTING_INSTRUCTIONS, clientConnectionHandler.getPlayingGame());
+        int maxLines = 0;
+        List<List<String>> cardLinesList = new ArrayList<>();
+        for (ClientConnectionHandler player : clientConnectionHandler.getPlayingGame().players) {
+            Map<String, ClientConnectionHandler> cardsMap = clientConnectionHandler.getPlayingGame().cardSubmissions;
+            List<String> cards = cardsMap.keySet().stream().filter(card -> !card.equalsIgnoreCase(player.getCorrespondingClient().getPlayedCard())).toList();
+            System.out.println(cards);
+            for (String card : cards) {
+                List<String> cardLines = Card.drawHand(card, cardsInGame.indexOf(card) + 1);
+                cardLinesList.add(cardLines);
+                maxLines = Math.max(maxLines, cardLines.size());
+            }
+
+            // Construct each line of the hand
+            for (int i = 0; i < maxLines; i++) {
+                StringBuilder handLine = new StringBuilder();
+                for (List<String> cardLines : cardLinesList) {
+                    handLine.append(cardLines.size() > i ? cardLines.get(i) : " ".repeat(22)); // 22 is the card width
+                }
+                player.writeMessage(handLine.toString());
+            }
+            cardLinesList.clear();
+        }
+    }
+
+    public void sortedPlayersByAge() {
         Collections.sort(players, (player1, player2) -> Integer.compare(player1.getPlayingGame().getClientAge(player1), player2.getPlayingGame().getClientAge(player2)));
     }
 
-    public int getClientAge(ClientConnectionHandler client){
+    public int getClientAge(ClientConnectionHandler client) {
         return client.getCorrespondingClient().getAge();
     }
+
     public List<String> getWhiteDeck() {
         return whiteDeck;
     }

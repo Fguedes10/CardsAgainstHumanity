@@ -15,6 +15,17 @@ public class Client {
     private String name;
     private Integer age;
     private int score;
+
+    private int roundCardScore = 0;
+
+    public int getRoundCardScore() {
+        return roundCardScore;
+    }
+
+    public void setRoundCardScore(int roundCardScore) {
+        this.roundCardScore = roundCardScore;
+    }
+
     public List<String> cards;
 
     public List<String> getCards() {
@@ -176,6 +187,13 @@ public class Client {
         this.correspondingClientConnectionHandlers = clientConnectionHandler;
     }
 
+    public ClientConnectionHandler getCorrespondingClientConnectionHandlers() {
+        return correspondingClientConnectionHandlers;
+    }
+
+    public void incrementScore(){
+        this.score = this.score + 1;
+    }
     public String getName() {
         return name;
     }
@@ -184,4 +202,7 @@ public class Client {
         return age;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
 }
