@@ -82,19 +82,10 @@ public class Client {
         //return correspondingClientConnectionHandlers.getPlayingGame().getWhiteDeck().get(randomCardPosition);
     }
 
-   /* public synchronized void fillHand(List<String> newCards) {
-        if (cards.size() < 7) {
-            int cardsNeeded = 7 - cards.size();
-            List<String> cardsToAdd = newCards.subList(0, Math.min(cardsNeeded, newCards.size()));
-            cards.addAll(cardsToAdd);
-        }
-    }*/
-
     public void fillHand(){
         for (int i = 1; i <= maxHandSize; i++) {
             chooseWhiteCard();
         }
-        //correspondingClientConnectionHandlers.getPlayingGame().chooseBlackCard();
     }
 
 

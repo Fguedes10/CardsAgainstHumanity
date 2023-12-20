@@ -51,6 +51,7 @@ public class Game {
 
     private List<String> whiteDeck = initializeWhiteDeck();
 
+
     private List<String> blackDeck = initializeBlackDeck();
 
     public static List<Game> runningGames = new LinkedList<>();
@@ -75,7 +76,13 @@ public class Game {
     }
 
     public void announceVoteResult() throws IOException {
+
+
+
+
+
        announceStartOfNewRound(); // TODO start new round
+
     }
 
     private void resetGameRound() {
@@ -155,7 +162,7 @@ public class Game {
             currentRound++;
             chooseBlackCard();
             Server.announceInGame(Messages.ROUND + currentRound, this);
-            Server.announceInGame("This turn's Black Card is:\n" + blackCardInGame, this);
+            Server.announceInGame("This turn's Black Card is:\n" + Card.drawBlackCard(blackCardInGame), this);
 
     }
 

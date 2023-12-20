@@ -78,7 +78,6 @@ public class ClientConnectionHandler implements Runnable {
 
     private void askClientUserName() throws IOException {
         writeMessage(Messages.INPUT_NAME);
-        //setName(readMessage());
         String checkName = readMessage();
         if (checkName == null) {
             writeMessage(Messages.NULL_NAME);

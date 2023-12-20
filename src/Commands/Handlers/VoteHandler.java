@@ -29,6 +29,7 @@ public class  VoteHandler implements CommandHandler {
         }
 
         String voteCommand = clientConnectionHandler.getMessage();
+        clientConnectionHandler.getCorrespondingClient().setVoteState(false);
         try {
             int votedCardIndex = Integer.parseInt(voteCommand.split(" ")[1]) - 1;
 
@@ -37,7 +38,6 @@ public class  VoteHandler implements CommandHandler {
             if (votedCardIndex >= 0 && votedCardIndex < cardsToVote.size()) {
                 String votedCard = cardsToVote.get(votedCardIndex);
                 clientConnectionHandler.getCorrespondingClient().playerVote = votedCard;
-                clientConnectionHandler.getCorrespondingClient().setVoteState(false);
 
                 if (clientConnectionHandler.getPlayingGame().allPlayersVoted()) {
                     clientConnectionHandler.getPlayingGame().handleVotingResult();
