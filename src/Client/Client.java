@@ -15,6 +15,17 @@ public class Client {
     private String name;
     private Integer age;
     private int score;
+
+    private int roundCardScore = 0;
+
+    public int getRoundCardScore() {
+        return roundCardScore;
+    }
+
+    public void setRoundCardScore(int roundCardScore) {
+        this.roundCardScore = roundCardScore;
+    }
+
     public List<String> cards;
 
     public List<String> getCards() {
@@ -77,10 +88,8 @@ public class Client {
     }
 
     private void chooseWhiteCard() {
-        int randomCardPosition = 0;
-               // new Random().nextInt(correspondingClientConnectionHandlers.getPlayingGame().getWhiteDeck().size());
+        int randomCardPosition = new Random().nextInt(correspondingClientConnectionHandlers.getPlayingGame().getWhiteDeck().size());
         cards.add(correspondingClientConnectionHandlers.getPlayingGame().getWhiteDeck().remove(randomCardPosition));
-        //return correspondingClientConnectionHandlers.getPlayingGame().getWhiteDeck().get(randomCardPosition);
     }
 
     public void fillHand(){
@@ -178,6 +187,9 @@ public class Client {
         this.correspondingClientConnectionHandlers = clientConnectionHandler;
     }
 
+    public void incrementScore(){
+        this.score = this.score + 1;
+    }
     public String getName() {
         return name;
     }
