@@ -4,11 +4,25 @@ import Client.ClientConnectionHandler;
 import Commands.CommandHandler;
 import Messages.Messages;
 import Server.Server;
+
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * The `PlayCardHandler` class implements the `CommandHandler` interface and represents the handler for playing a card in the game.
+ * It processes the player's input to play a card, updates the game state accordingly, and handles exceptions.
+ */
+
 public class PlayCardHandler implements CommandHandler {
 
+
+    /**
+     * Executes the command for playing a card. It validates the player's input and updates the game state accordingly.
+     *
+     * @param server                  The server instance.
+     * @param clientConnectionHandler The client connection handler associated with the command.
+     * @throws IOException If an I/O error occurs while communicating with the client.
+     */
     @Override
     public void execute(Server server, ClientConnectionHandler clientConnectionHandler) throws IOException {
         String message = clientConnectionHandler.getMessage();

@@ -19,11 +19,25 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
+/**
+ * The `Server` class represents the main server for the Cards Against Mindera game.
+ * It handles client connections, broadcasts messages, and manages the list of connected clients.
+ */
+
 public class Server {
 
+    /**
+     * The list of client connection handlers representing connected clients.
+     */
     public static List<ClientConnectionHandler> clientHandlerList;
 
-
+    /**
+     * Starts the server on the specified port, accepts client connections, and handles them using
+     * a thread pool of client connection handlers.
+     *
+     * @param port the port on which the server will listen for incoming connections
+     * @throws IOException if an I/O error occurs while setting up the server
+     */
     void start(int port) throws IOException {
         clientHandlerList = new LinkedList<>();
         ServerSocket serverSocket = new ServerSocket(port);
@@ -40,36 +54,66 @@ public class Server {
 
     }
 
-    public static void broadcast(String name, String message){
+    /**
+     * Broadcasts a message to a specific client with the given name.
+     *
+     * @param name    the name of the client to receive the message
+     * @param message the message to broadcast
+     */
+    public static void broadcast(String name, String message) {
         clientHandlerList.stream()
                 .filter(handler -> handler.getName().equals(name))
                 .forEach(handler -> handler.send(name + ": " + message));
     }
 
-    public static void announceInGame(String message, Game game){
+    /**
+     * Announces a message to all players in a specific game.
+     *
+     * @param message the message to announce
+     * @param game    the game in which the announcement is made
+     */
+    public static void announceInGame(String message, Game game) {
         game.players.forEach(handler -> handler.send(message));
     }
 
 
+    /**
+     * Retrieves a client connection handler by name.
+     *
+     * @param name the name of the client to retrieve
+     * @return an optional containing the client connection handler if found, otherwise empty
+     */
+    public Optional<ClientConnectionHandler> getClientByName(String name) {
+        return clientHandlerList.stream()
+                .filter(clientConnectionHandler -> clientConnectionHandler.getName().equalsIgnoreCase(name))
+                .findFirst();
+    }
 
-public Optional<ClientConnectionHandler> getClientByName(String name) {
-    return clientHandlerList.stream()
-            .filter(clientConnectionHandler -> clientConnectionHandler.getName().equalsIgnoreCase(name))
-            .findFirst();
-}
-public void removeClient(ClientConnectionHandler clientConnectionHandler){
-    clientHandlerList.remove(clientConnectionHandler);
-}
+    /**
+     * Removes a client connection handler from the list of connected clients.
+     *
+     * @param clientConnectionHandler the client connection handler to remove
+     */
+    public void removeClient(ClientConnectionHandler clientConnectionHandler) {
+        clientHandlerList.remove(clientConnectionHandler);
+    }
 
-public static void sendClientsMessage(ClientConnectionHandler sender, String message) {
-    clientHandlerList.stream().filter(clientHandler -> !clientHandler.equals(sender)).forEach(
-            clientHandler -> {
-                try {
-                    clientHandler.writeMessage(message);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
+    /**
+     * Sends a message to all connected clients except the sender.
+     *
+     * @param sender  the client connection handler sending the message
+     * @param message the message to send
+     */
+
+    public static void sendClientsMessage(ClientConnectionHandler sender, String message) {
+        clientHandlerList.stream().filter(clientHandler -> !clientHandler.equals(sender)).forEach(
+                clientHandler -> {
+                    try {
+                        clientHandler.writeMessage(message);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
-        }
         );
     }
 

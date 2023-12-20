@@ -9,7 +9,19 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The `ShowHandHandler` class implements the `CommandHandler` interface and represents the handler for showing the
+ * hand of a player. It displays the cards in the player's hand on the server console.
+ */
 public class ShowHandHandler implements CommandHandler {
+
+    /**
+     * Executes the function by drawing and displaying a hand of cards for each client.
+     *
+     * @param server                  the server object
+     * @param clientConnectionHandler the client connection handler object
+     * @throws IOException if an I/O error occurs
+     */
     @Override
     public void execute(Server server, ClientConnectionHandler clientConnectionHandler) throws IOException {
         List<String> cards = clientConnectionHandler.getCorrespondingClient().getCards();

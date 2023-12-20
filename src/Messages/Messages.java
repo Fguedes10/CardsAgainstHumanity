@@ -1,5 +1,10 @@
 package Messages;
 
+
+/**
+ * The `Messages` class provides static constants representing various messages used in the program.
+ * It includes messages for formatting, game instructions, and communication between the server and clients.
+ */
 public abstract class Messages {
     public static final String RED_BOLD = "\033[1;31m";
     public static final String BLUE_BOLD = "\033[1;34m";

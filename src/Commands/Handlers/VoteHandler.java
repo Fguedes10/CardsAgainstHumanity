@@ -10,8 +10,20 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class  VoteHandler implements CommandHandler {
+/**
+ * The `VoteHandler` class implements the `CommandHandler` interface and represents the handler for processing player votes
+ * during the voting phase of the game.
+ * It allows players to cast their votes for the submitted cards and updates the scores accordingly.
+ */
+public class VoteHandler implements CommandHandler {
 
+    /**
+     * Executes the command for processing player votes during the voting phase.
+     *
+     * @param server                  The server instance.
+     * @param clientConnectionHandler The client connection handler associated with the command.
+     * @throws IOException If an I/O error occurs during vote processing or handling of the voting results.
+     */
     @Override
     public void execute(Server server, ClientConnectionHandler clientConnectionHandler) throws IOException {
         String voteCommand = clientConnectionHandler.getMessage();
@@ -36,4 +48,5 @@ public class  VoteHandler implements CommandHandler {
         if (clientConnectionHandler.getPlayingGame().allPlayersVoted()) {
             clientConnectionHandler.getPlayingGame().handleVotingResult();
         }
-    }}
+    }
+}

@@ -12,17 +12,33 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The `Card` class represents a game card used in Cards Against Mindera.
+ * It can be either a black card (prompt) or a white card (answer).
+ */
 public class Card {
 
     private String content;
     private int cardNumber;
 
+    /**
+     * Creates a new card with the specified content and card number.
+     *
+     * @param content    the content of the card
+     * @param cardNumber the unique number assigned to the card
+     */
     public Card(String content, int cardNumber) {
         this.content = content;
         this.cardNumber = cardNumber;
     }
 
-
+    /**
+     * Splits the content of a card into lines to fit within the specified maximum width.
+     *
+     * @param content  the content of the card
+     * @param maxWidth the maximum width of each line
+     * @return a list of lines after splitting the content
+     */
     public static List<String> splitIntoLines(String content, int maxWidth) {
         List<String> lines = new ArrayList<>();
         String[] words = content.split(" ");
@@ -52,6 +68,12 @@ public class Card {
     }
 
 
+    /**
+     * Draws a black card with a border and formatted content.
+     *
+     * @param card the content of the black card
+     * @return a string representation of the drawn black card
+     */
 
     public static String drawBlackCard(String card) {
         StringBuilder cardBuilder = new StringBuilder();
@@ -81,7 +103,13 @@ public class Card {
         return cardBuilder.toString();
     }
 
-
+    /**
+     * Draws a white card with a border, card number, and formatted content.
+     *
+     * @param card       the content of the white card
+     * @param cardNumber the unique number assigned to the card
+     * @return a list of strings representing the drawn white card
+     */
     public static List<String> drawWhiteCard(String card, int cardNumber) {
         List<String> cardLines = new ArrayList<>();
         String topAndBottom = Messages.WHITE_BACKGROUND + Messages.BLACK_BOLD + "+--------------------+" + Messages.RESET_COLOR; // Card top/bottom border (22 characters wide including +)
@@ -113,6 +141,13 @@ public class Card {
         return cardLines;
     }
 
+    /**
+     * Draws a hand card with a border, card number, and formatted content.
+     *
+     * @param card       the content of the hand card
+     * @param cardNumber the unique number assigned to the card
+     * @return a list of strings representing the drawn hand card
+     */
     public static List<String> drawHand(String card, int cardNumber) {
         List<String> cardLines = new ArrayList<>();
         String topAndBottom = Messages.WHITE_BACKGROUND + Messages.BLACK_BOLD + "+------------------------+" + Messages.RESET_COLOR; // Card top/bottom border (22 characters wide including +)
@@ -144,28 +179,51 @@ public class Card {
         return cardLines;
     }
 
-
-    public static void cardStringTester(String card){
+    /**
+     * Prints the string representation of a card for testing purposes.
+     *
+     * @param card       the content of the card
+     * @param cardNumber the unique number assigned to the card
+     */
+    public static void cardStringTester(String card) {
         drawHand(card, 1);
     }
 
+    /**
+     * Gets the content of the card.
+     *
+     * @return the content of the card
+     */
     public String getContent() {
         return content;
     }
 
+    /**
+     * Sets the content of the card.
+     *
+     * @param content the new content of the card
+     */
     public void setContent(String content) {
         this.content = content;
     }
 
+    /**
+     * Gets the unique number assigned to the card.
+     *
+     * @return the card number
+     */
     public int getCardNumber() {
         return cardNumber;
     }
 
+    /**
+     * Sets the unique number assigned to the card.
+     *
+     * @param cardNumber the new card number
+     */
     public void setCardNumber(int cardNumber) {
         this.cardNumber = cardNumber;
     }
-
-
 
 
 }
