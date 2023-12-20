@@ -65,8 +65,6 @@ public abstract class Messages {
     public final static String NOT_YOUR_GAME = "This game is not yours to start.";
     public final static String ROUND = "Round Nº ";
     public final static String PLAYERS_CALLED = " players, called ";
-    public final static String MESSAGE_RECEIVED_CARDS = "You have now picked cards.";
-    public final static String PLAYER_HAS_FILLED_HAND = " has picked their hand!";
     public final static String PLAYER_HAS_PLAY = " has played their card!";
     public final static String EXITING_LOBBY = "\n Lobby has been close.\n";
     public final static String SELECT_A_VALID_CARD = "Please select a valid option from your hand";
@@ -91,7 +89,6 @@ public abstract class Messages {
     public final static String INPUT_AGE = "What is your age: ";
     public final static String NULL_AGE = "Please insert a valid number";
     public final static String NOT_A_NUMBER = "That isn't a valid number";
-    public final static String PLAYER_SCORE = "Player points: ";
     public final static String CLIENT_DISCONNECTED = " has disconnected";
     public final static String LOBBY = "\n --> You are in chat lobby now <-- \n";
     public final static String CLIENT_CONNECTED = "Client connected";
@@ -115,6 +112,21 @@ public abstract class Messages {
             + "The player whose card gets the more votes, wins a point. \n"
             + "The game ends at 10 points, at which time a winner will be declared.";
 
+
+    public final static String GAME_OVER =
+            " ██████╗  █████╗ ███╗   ███╗███████╗     \n" +
+            "██╔════╝ ██╔══██╗████╗ ████║██╔════╝     \n" +
+            "██║  ███╗███████║██╔████╔██║█████╗       \n" +
+            "██║   ██║██╔══██║██║╚██╔╝██║██╔══╝       \n" +
+            "╚██████╔╝██║  ██║██║ ╚═╝ ██║███████╗     \n" +
+            " ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝╚══════╝     \n" +
+            "                                         \n" +
+            " ██████╗ ██╗   ██╗███████╗██████╗     ██╗\n" +
+            "██╔═══██╗██║   ██║██╔════╝██╔══██╗    ██║\n" +
+            "██║   ██║██║   ██║█████╗  ██████╔╝    ██║\n" +
+            "██║   ██║╚██╗ ██╔╝██╔══╝  ██╔══██╗    ╚═╝\n" +
+            "╚██████╔╝ ╚████╔╝ ███████╗██║  ██║    ██╗\n" +
+            " ╚═════╝   ╚═══╝  ╚══════╝╚═╝  ╚═╝    ╚═╝";
 
 
 }

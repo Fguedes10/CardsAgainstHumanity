@@ -477,7 +477,7 @@ public class Game {
         }
         announceBigWinner();
         if (isGameOver) {
-            Server.announceInGame(Messages.WELCOME, this);
+            Server.announceInGame(Messages.GAME_OVER, this);
             return;
         }
         announceStartOfNewRound();
