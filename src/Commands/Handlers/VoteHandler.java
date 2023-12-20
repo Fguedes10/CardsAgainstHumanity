@@ -14,7 +14,6 @@ public class  VoteHandler implements CommandHandler {
     public void execute(Server server, ClientConnectionHandler clientConnectionHandler) throws IOException {
         if (clientConnectionHandler.getCorrespondingClient().isVoteState()) {
             clientConnectionHandler.writeMessage(Messages.VOTING_INSTRUCTIONS);
-
         }
 
         int index = 1;
