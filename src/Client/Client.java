@@ -77,10 +77,8 @@ public class Client {
     }
 
     private void chooseWhiteCard() {
-        int randomCardPosition = 0;
-               // new Random().nextInt(correspondingClientConnectionHandlers.getPlayingGame().getWhiteDeck().size());
+        int randomCardPosition = new Random().nextInt(correspondingClientConnectionHandlers.getPlayingGame().getWhiteDeck().size());
         cards.add(correspondingClientConnectionHandlers.getPlayingGame().getWhiteDeck().remove(randomCardPosition));
-        //return correspondingClientConnectionHandlers.getPlayingGame().getWhiteDeck().get(randomCardPosition);
     }
 
     public void fillHand(){
