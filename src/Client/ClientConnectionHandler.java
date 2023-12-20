@@ -86,7 +86,6 @@ public class ClientConnectionHandler implements Runnable {
      */
     public void writeMessage(String message) throws IOException {
         out.println(message);
-        System.out.println(Messages.SERVER_MESSAGE_SENT);
     }
 
     /**

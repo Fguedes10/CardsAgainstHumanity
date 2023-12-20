@@ -4,13 +4,12 @@ import Client.ClientConnectionHandler;
 import Messages.Messages;
 import Server.Server;
 import Client.Client;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
-import java.util.stream.Collectors;
+
 
 /**
  * The `Game` class represents a game of Cards Against Mindera.
@@ -158,7 +157,7 @@ public class Game {
      */
 
     public void announceVoteResult(String card, String name) throws IOException {
-        Server.announceInGame(name + " won this round with the card: " + card, this);
+        Server.announceInGame(Messages.WHITE_BOLD +"\n" + name + Messages.ROUND_WINNER + card + "\n" + Messages.RESET_COLOR, this);
     }
 
     /**
@@ -220,7 +219,7 @@ public class Game {
     public void announceBigWinner() {
         for (ClientConnectionHandler player : players) {
             if (player.getCorrespondingClient().getScore() == scoreToWin) {
-                Server.announceInGame("The game winner is: " + player.getName(), this);
+                Server.announceInGame(Messages.BLUE_BOLD + Messages.GAME_WINNER + player.getName() + Messages.RESET_COLOR, this);
                 isGameOver = true;
             }
         }
@@ -245,20 +244,6 @@ public class Game {
         return buffer.toString();
     }
 
-    /**
-     * Retrieves a game based on the owner's connection handler.
-     *
-     * @param clientConnectionHandler The connection handler of the owner.
-     * @return The game associated with the provided owner's connection handler, or null if not found.
-     */
-    public static Game getGameByOwner(ClientConnectionHandler clientConnectionHandler) {
-        for (int i = 0; i < runningGames.size(); i++) {
-            if (runningGames.get(i).owner.toString().equalsIgnoreCase(clientConnectionHandler.getName())) {
-                return runningGames.get(i);
-            }
-        }
-        return null;
-    }
 
     /**
      * Retrieves a game based on its name.
@@ -300,10 +285,10 @@ public class Game {
     public void announceStartOfNewRound() throws IOException {
 
         resetGameRound();
-        Server.announceInGame("SCOREBOARD: \n", this);
+        Server.announceInGame(Messages.YELLOW_BOLD + "SCOREBOARD: \n", this);
 
         for (ClientConnectionHandler player : players) {
-            Server.announceInGame(player.getName() + " - " + player.getCorrespondingClient().getScore(), this);
+            Server.announceInGame(Messages.YELLOW_BOLD + player.getName() + " - " + player.getCorrespondingClient().getScore(), this);
         }
         currentRound++;
         chooseBlackCard();
@@ -335,7 +320,7 @@ public class Game {
                     throw new RuntimeException(e);
                 }
             }
-            //Thread.sleep(1000);
+            Thread.sleep(1000);
         }
     }
 
@@ -402,44 +387,6 @@ public class Game {
 
 
     /**
-     * Tallies the votes from all players in the game.
-     *
-     * @param game The game in which votes are tallied.
-     * @return A map containing each voted card and the corresponding vote count.
-     */
-    public Map<String, Integer> tallyVotes(Game game) {
-        Map<String, Integer> voteCounts = new HashMap<>();
-
-        for (ClientConnectionHandler player : game.players) {
-            String votedCard = player.getCorrespondingClient().playerVote;
-            voteCounts.put(votedCard, voteCounts.getOrDefault(votedCard, 0) + 1);
-        }
-
-        return voteCounts;
-    }
-
-
-    /**
-     * Finds the winning card based on the tallied votes.
-     *
-     * @param voteCounts A map containing each voted card and the corresponding vote count.
-     * @return The winning card.
-     */
-    public String findWinningCard(Map<String, Integer> voteCounts) {
-        String winningCard = null;
-        int maxVotes = 0;
-
-        for (Map.Entry<String, Integer> entry : voteCounts.entrySet()) {
-            if (entry.getValue() > maxVotes) {
-                maxVotes = entry.getValue();
-                winningCard = entry.getKey();
-            }
-        }
-
-        return winningCard;
-    }
-
-    /**
      * Handles the result of the voting phase, determines the winner, and initiates the next round.
      *
      * @throws IOException If an I/O error occurs during result announcement.
@@ -498,25 +445,6 @@ public class Game {
     }
 
     /**
-     * Clears the list of played cards for the current round.
-     */
-    public synchronized void clearPlayedCards() {
-        roundCardsToVote.clear();
-    }
-
-    /**
-     * Retrieves the list of round cards for a specific player, excluding their own played card.
-     *
-     * @param player The player for whom round cards are retrieved.
-     * @return The list of round cards for the specified player.
-     */
-    public synchronized List<String> getRoundCardsForPlayer(ClientConnectionHandler player) {
-        return roundCardsToVote.stream()
-                .filter(card -> !card.equals(player.getCorrespondingClient().getPlayedCard()))
-                .collect(Collectors.toList());
-    }
-
-    /**
      * Initiates the voting phase by sending relevant instructions and card information to players.
      *
      * @param clientConnectionHandler The connection handler of the player initiating the voting phase.
@@ -550,23 +478,6 @@ public class Game {
         }
     }
 
-    /**
-     * Sorts players in the game based on their ages in ascending order.
-     */
-
-    public void sortedPlayersByAge() {
-        Collections.sort(players, (player1, player2) -> Integer.compare(player1.getPlayingGame().getClientAge(player1), player2.getPlayingGame().getClientAge(player2)));
-    }
-
-    /**
-     * Retrieves the age of a player in the game.
-     *
-     * @param client The connection handler of the player.
-     * @return The age of the specified player.
-     */
-    public int getClientAge(ClientConnectionHandler client) {
-        return client.getCorrespondingClient().getAge();
-    }
 
     /**
      * Retrieves the white deck of cards.
@@ -577,33 +488,6 @@ public class Game {
         return whiteDeck;
     }
 
-    /**
-     * Sets the white deck of cards.
-     *
-     * @param whiteDeck The new white deck of cards.
-     */
-    public void setWhiteDeck(List<String> whiteDeck) {
-        this.whiteDeck = whiteDeck;
-    }
-
-    /**
-     * Retrieves the black deck of cards.
-     *
-     * @return The black deck of cards.
-     */
-
-    public List<String> getBlackDeck() {
-        return blackDeck;
-    }
-
-    /**
-     * Sets the black deck of cards.
-     *
-     * @param blackDeck The new black deck of cards.
-     */
-    public void setBlackDeck(List<String> blackDeck) {
-        this.blackDeck = blackDeck;
-    }
 
     /**
      * Adds a card to the list of cards in the current game.

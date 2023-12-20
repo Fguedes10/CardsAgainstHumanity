@@ -8,6 +8,7 @@ package Messages;
 public abstract class Messages {
     public static final String RED_BOLD = "\033[1;31m";
     public static final String BLUE_BOLD = "\033[1;34m";
+    public static final String YELLOW_BOLD = "\033[1;33m";
 
     public static final String BLACK_BACKGROUND = "\u001B[40m";
 
@@ -92,8 +93,11 @@ public abstract class Messages {
     public final static String CLIENT_DISCONNECTED = " has disconnected";
     public final static String LOBBY = "\n --> You are in chat lobby now <-- \n";
     public final static String CLIENT_CONNECTED = "Client connected";
+    public final static String PLAYER_HAS_HAND = " has picked their hand!";
     public final static String WAITING_MESSAGE = "Waiting for ";
     public final static String CHOOSE_N_PLAYERS = "Please choose number of players";
+    public final static String GAME_WINNER = "The game winner is: ";
+    public final static String ROUND_WINNER = " won this round with the card: ";
     public final static String SERVER_MESSAGE_SENT = "Message sent to client";
 
     public final static String VOTING_PHASE_START = "VOTING PHASE START";

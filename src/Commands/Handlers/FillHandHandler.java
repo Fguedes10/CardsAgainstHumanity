@@ -3,6 +3,7 @@ package Commands.Handlers;
 import Client.ClientConnectionHandler;
 import Commands.CommandHandler;
 import Game.Card;
+import Messages.Messages;
 import Server.Server;
 
 import java.io.IOException;
@@ -50,6 +51,6 @@ public class FillHandHandler implements CommandHandler {
             clientConnectionHandler.writeMessage(handLine.toString());
         }
 
-        owner.send(clientConnectionHandler.getName() + " has picked their hand!");
+        owner.send(clientConnectionHandler.getName() + Messages.PLAYER_HAS_HAND);
     }
 }

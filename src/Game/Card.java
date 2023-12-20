@@ -179,14 +179,6 @@ public class Card {
         return cardLines;
     }
 
-    /**
-     * Prints the string representation of a card for testing purposes.
-     *
-     * @param card       the content of the card
-     */
-    public static void cardStringTester(String card) {
-        drawHand(card, 1);
-    }
 
     /**
      * Gets the content of the card.
@@ -206,23 +198,7 @@ public class Card {
         this.content = content;
     }
 
-    /**
-     * Gets the unique number assigned to the card.
-     *
-     * @return the card number
-     */
-    public int getCardNumber() {
-        return cardNumber;
-    }
 
-    /**
-     * Sets the unique number assigned to the card.
-     *
-     * @param cardNumber the new card number
-     */
-    public void setCardNumber(int cardNumber) {
-        this.cardNumber = cardNumber;
-    }
 
 
 }

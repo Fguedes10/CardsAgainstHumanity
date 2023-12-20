@@ -115,48 +115,6 @@ public class Client {
     }
 
 
-    /**
-     * Asks the player to vote for the winning hand.
-     *
-     * @throws IOException if an I/O error occurs when reading input from the player
-     */
-    public synchronized void voteWinningHand() throws IOException {
-        if (voteState) {
-            int numberOfPlayers = 4; //TODO fetch number of players
-            int[] votes = new int[numberOfPlayers];
-
-            for (int i = 0; i < numberOfPlayers; i++) {
-                int playerNumber = i + 1;
-                System.out.println("Player " + playerNumber + ", enter the number of the card from another player that " +
-                        "you think should win: ");
-
-                BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-                int vote = Integer.parseInt(reader.readLine());
-
-                if (vote < 1 || vote > numberOfPlayers || vote == playerNumber) {
-                    System.out.println("Invalid vote! Please enter a valid player number.");
-                    i--;
-                    continue;
-                }
-                votes[vote - 1]++;
-            }
-
-            int winningVote = -1;
-            int winningVoteCount = 0;
-            for (int i = 0; i < numberOfPlayers; i++) {
-                if (votes[i] > winningVoteCount) {
-                    winningVote = i + 1;
-                    winningVoteCount = votes[i];
-                }
-            }
-
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out));
-            writer.write("The winning vote is for player " + winningVote);
-            writer.newLine();
-            writer.flush();
-        }
-    }
-
 
     /**
      * Retrieves the score.
@@ -203,16 +161,6 @@ public class Client {
      */
     public void setCorrespondingClientConnectionHandler(ClientConnectionHandler clientConnectionHandler) {
         this.correspondingClientConnectionHandlers = clientConnectionHandler;
-    }
-
-
-    /**
-     * Retrieves the corresponding client connection handler.
-     *
-     * @return the corresponding client connection handler
-     */
-    public ClientConnectionHandler getCorrespondingClientConnectionHandlers() {
-        return correspondingClientConnectionHandlers;
     }
 
 
