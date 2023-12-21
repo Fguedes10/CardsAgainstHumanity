@@ -143,7 +143,6 @@ public class Game {
         this.maxNumOfPlayers = maxNumOfPlayers;
         runningGames.add(this);
         players.add(this.owner);
-        System.out.println(players);
         this.roundCardsToVote = new ArrayList<>();
 
     }

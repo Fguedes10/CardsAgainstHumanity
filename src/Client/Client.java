@@ -49,7 +49,7 @@ public class Client {
 
     private ClientConnectionHandler correspondingClientConnectionHandlers;
 
-    static final String SERVER_HOST = "localhost";
+    static final String SERVER_HOST = "10.10.226.165";
     static final int SERVER_PORT = 8500;
 
 
