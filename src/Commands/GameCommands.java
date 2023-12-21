@@ -15,6 +15,8 @@ public enum GameCommands {
     VOTE("/vote", new VoteHandler()),
     VOTE_START("/vote_start", new VoteStartHandler()),
     SHOW_HAND("/show_hand", new ShowHandHandler()),
+
+    GAME_COMMANDS_LIST ("/show_game_commands", new ShowGameCommandHandler()),
     NOT_FOUND("Command not found", new CommandNotFoundHandler());
 
     private String description;

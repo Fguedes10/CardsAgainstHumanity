@@ -99,6 +99,11 @@ public abstract class Messages {
     public final static String GAME_WINNER = "The game winner is: ";
     public final static String ROUND_WINNER = " won this round with the card: ";
     public final static String SERVER_MESSAGE_SENT = "Message sent to client";
+    public final static String SHOW_GAME_COMMANDS = BLUE_BOLD + "/fill_hand - Get cards from White Deck\n" +
+        "/play_card " +
+        "<number " +
+            "of card>\n" +
+            "/vote <number of card>\n" + RESET_COLOR;
 
     public final static String VOTING_PHASE_START = "VOTING PHASE START";
     public final static String INVALID_VOTE = "INVALID VOTE";
@@ -114,7 +119,8 @@ public abstract class Messages {
             + "A Black Card is a prompt, which you will answer using one of the White Cards in your hand. \n"
             + "Once everyone chooses their answer, you will be required to vote in your favourite (other than your own) \n"
             + "The player whose card gets the more votes, wins a point. \n"
-            + "The game ends at 10 points, at which time a winner will be declared.";
+            + "The game ends at 7 points, at which time a winner will be declared.\n"
+            + "At any time use /show_game_commands to show available commands.";
 
 
     public final static String GAME_OVER =
