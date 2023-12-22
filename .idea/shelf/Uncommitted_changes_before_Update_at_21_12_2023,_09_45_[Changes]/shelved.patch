@@ -1,0 +1,80 @@
+Index: src/Client/Client.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package Client;\n\nimport java.io.*;\nimport java.net.Socket;\nimport java.util.ArrayList;\nimport java.util.List;\nimport java.util.Random;\nimport java.util.concurrent.CopyOnWriteArrayList;\n\n/**\n * The `Client` class represents a client with a name, age, score, cards, and vote state.\n * It also includes static fields for the server host, server port, and number of connections.\n */\npublic class Client {\n    private String name;\n    private Integer age;\n    private int score;\n\n    private int roundCardScore = 0;\n\n    public int getRoundCardScore() {\n        return roundCardScore;\n    }\n\n    public void setRoundCardScore(int roundCardScore) {\n        this.roundCardScore = roundCardScore;\n    }\n\n    public List<String> cards;\n\n    public List<String> getCards() {\n        return cards;\n    }\n\n    private int maxHandSize = 7;\n    private boolean voteState;\n\n    public String playerVote = \"\";\n\n    private String playedCard;\n\n    public String getPlayedCard() {\n        return playedCard;\n    }\n\n    public void setPlayedCard(String playedCard) {\n        this.playedCard = playedCard;\n    }\n\n    private ClientConnectionHandler correspondingClientConnectionHandlers;\n\n    static final String SERVER_HOST = \"localhost\";\n    static final int SERVER_PORT = 8500;\n\n\n    public Client() {\n        this.name = null;\n        this.age = 0;\n        this.score = 0;\n        this.cards = new CopyOnWriteArrayList<>();\n        this.voteState = false;\n    }\n\n    /**\n     * Starts the socket connection and initializes the input and output streams.\n     *\n     * @param socket the socket connection to start\n     * @throws IOException if an I/O error occurs when creating the input and output streams\n     */\n    public void start(Socket socket) throws IOException {\n        BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));\n        PrintWriter out = new PrintWriter(socket.getOutputStream(), true);\n        BufferedReader consoleIn = new BufferedReader(new InputStreamReader(System.in));\n        new Thread(() -> {\n            String messageFromServer = null;\n            try {\n                while ((messageFromServer = in.readLine()) != null) {\n                    System.out.println(messageFromServer);\n                }\n            } catch (IOException e) {\n                throw new RuntimeException(e);\n            }\n        }).start();\n        String messageToServer = null;\n        while ((messageToServer = consoleIn.readLine()) != null) {\n            out.println(messageToServer);\n        }\n    }\n\n    /**\n     * Chooses a white card from the deck and adds it to the player's hand.\n     */\n    private void chooseWhiteCard() {\n        int randomCardPosition = new Random().nextInt(correspondingClientConnectionHandlers.getPlayingGame().getWhiteDeck().size());\n        cards.add(correspondingClientConnectionHandlers.getPlayingGame().getWhiteDeck().remove(randomCardPosition));\n    }\n\n    /**\n     * Fills the player's hand with white cards.\n     */\n    public void fillHand() {\n        for (int i = 1; i <= maxHandSize; i++) {\n            chooseWhiteCard();\n        }\n    }\n\n    /**\n     * Removes a card from the player's hand and returns it.\n     *\n     * @param cardPosition the position of the card to remove\n     * @return the removed card\n     */\n    public synchronized String pickCard(int cardPosition) {\n        return cards.remove(cardPosition);\n    }\n\n\n\n    /**\n     * Retrieves the score.\n     *\n     * @return the score value\n     */\n    public int getScore() {\n        return score;\n    }\n\n\n    /**\n     * Sets the score.\n     *\n     * @param score the new score\n     */\n    public void setScore(int score) {\n        this.score = score;\n    }\n\n    /**\n     * Retrieves the current vote state.\n     *\n     * @return true if the vote state is active, false otherwise\n     */\n    public boolean isVoteState() {\n        return voteState;\n    }\n\n    /**\n     * Sets the vote state of the object.\n     *\n     * @param voteState the new vote state to be set\n     */\n    public void setVoteState(boolean voteState) {\n        this.voteState = voteState;\n    }\n\n\n    /**\n     * Sets the corresponding client connection handler.\n     *\n     * @param clientConnectionHandler the new corresponding client connection handler\n     */\n    public void setCorrespondingClientConnectionHandler(ClientConnectionHandler clientConnectionHandler) {\n        this.correspondingClientConnectionHandlers = clientConnectionHandler;\n    }\n\n\n    /**\n     * Increments the score.\n     */\n    public void incrementScore() {\n        this.score = this.score + 1;\n    }\n\n\n    /**\n     * Retrieves the name.\n     *\n     * @return the name\n     */\n    public String getName() {\n        return name;\n    }\n\n    /**\n     * Retrieves the age.\n     *\n     * @return the age\n     */\n    public int getAge() {\n        return age;\n    }\n\n    /**\n     * Sets the name.\n     *\n     * @param name the new name\n     */\n    public void setName(String name) {\n        this.name = name;\n    }\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/Client/Client.java b/src/Client/Client.java
+--- a/src/Client/Client.java	(revision e7f2fb85eef33e333680c2994cf9881586782615)
++++ b/src/Client/Client.java	(date 1703151606069)
+@@ -49,7 +49,7 @@
+ 
+     private ClientConnectionHandler correspondingClientConnectionHandlers;
+ 
+-    static final String SERVER_HOST = "localhost";
++    static final String SERVER_HOST = "10.10.226.165";
+     static final int SERVER_PORT = 8500;
+ 
+ 
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"AutoImportSettings\">\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\n  </component>\n  <component name=\"ChangeListManager\">\n    <list default=\"true\" id=\"e3eb10cd-d257-4dff-94ea-65c5aabaf6fd\" name=\"Changes\" comment=\"commit final com documentação 4\" />\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\n  </component>\n  <component name=\"FileTemplateManagerImpl\">\n    <option name=\"RECENT_TEMPLATES\">\n      <list>\n        <option value=\"Class\" />\n      </list>\n    </option>\n  </component>\n  <component name=\"Git.Settings\">\n    <option name=\"RECENT_BRANCH_BY_REPOSITORY\">\n      <map>\n        <entry key=\"$PROJECT_DIR$\" value=\"joaoFinal\" />\n      </map>\n    </option>\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\n  </component>\n  <component name=\"MarkdownSettingsMigration\">\n    <option name=\"stateVersion\" value=\"1\" />\n  </component>\n  <component name=\"ProjectColorInfo\">{\n  &quot;associatedIndex&quot;: 8\n}</component>\n  <component name=\"ProjectId\" id=\"2ZoYuaJ2TdABV2LpMpXU0JoPWP3\" />\n  <component name=\"ProjectLevelVcsManager\">\n    <ConfirmationsSetting value=\"2\" id=\"Add\" />\n  </component>\n  <component name=\"ProjectViewState\">\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\n    <option name=\"showLibraryContents\" value=\"true\" />\n  </component>\n  <component name=\"PropertiesComponent\">{\n  &quot;keyToString&quot;: {\n    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,\n    &quot;Application.ClientLauncher.executor&quot;: &quot;Run&quot;,\n    &quot;Application.ServerLauncher.executor&quot;: &quot;Run&quot;,\n    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,\n    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,\n    &quot;git-widget-placeholder&quot;: &quot;main&quot;,\n    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,\n    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;\n  }\n}</component>\n  <component name=\"RunManager\" selected=\"Application.ClientLauncher\">\n    <configuration name=\"ClientLauncher\" type=\"Application\" factoryName=\"Application\" singleton=\"false\" temporary=\"true\" nameIsGenerated=\"true\">\n      <option name=\"MAIN_CLASS_NAME\" value=\"Client.ClientLauncher\" />\n      <module name=\"CardsAgainstMindera\" />\n      <extension name=\"coverage\">\n        <pattern>\n          <option name=\"PATTERN\" value=\"Client.*\" />\n          <option name=\"ENABLED\" value=\"true\" />\n        </pattern>\n      </extension>\n      <method v=\"2\">\n        <option name=\"Make\" enabled=\"true\" />\n      </method>\n    </configuration>\n    <configuration name=\"ServerLauncher\" type=\"Application\" factoryName=\"Application\" temporary=\"true\" nameIsGenerated=\"true\">\n      <option name=\"MAIN_CLASS_NAME\" value=\"Server.ServerLauncher\" />\n      <module name=\"CardsAgainstMindera\" />\n      <extension name=\"coverage\">\n        <pattern>\n          <option name=\"PATTERN\" value=\"Server.*\" />\n          <option name=\"ENABLED\" value=\"true\" />\n        </pattern>\n      </extension>\n      <method v=\"2\">\n        <option name=\"Make\" enabled=\"true\" />\n      </method>\n    </configuration>\n    <recent_temporary>\n      <list>\n        <item itemvalue=\"Application.ClientLauncher\" />\n        <item itemvalue=\"Application.ServerLauncher\" />\n        <item itemvalue=\"Application.ServerLauncher\" />\n        <item itemvalue=\"Application.ClientLauncher\" />\n        <item itemvalue=\"Application.ClientLauncher\" />\n      </list>\n    </recent_temporary>\n  </component>\n  <component name=\"SharedIndexes\">\n    <attachedChunks>\n      <set>\n        <option value=\"jdk-21.0.1-openjdk-21.0.1-8336523bb0d9-55c9c8bc\" />\n      </set>\n    </attachedChunks>\n  </component>\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\n  <component name=\"TaskManager\">\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\n      <changelist id=\"e3eb10cd-d257-4dff-94ea-65c5aabaf6fd\" name=\"Changes\" comment=\"update\" />\n      <created>1703090123378</created>\n      <option name=\"number\" value=\"Default\" />\n      <option name=\"presentableId\" value=\"Default\" />\n      <updated>1703090123378</updated>\n    </task>\n    <task id=\"LOCAL-00001\" summary=\"commit final com documentação\">\n      <option name=\"closed\" value=\"true\" />\n      <created>1703095989265</created>\n      <option name=\"number\" value=\"00001\" />\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1703095989265</updated>\n    </task>\n    <task id=\"LOCAL-00002\" summary=\"commit final com documentação 4\">\n      <option name=\"closed\" value=\"true\" />\n      <created>1703099533675</created>\n      <option name=\"number\" value=\"00002\" />\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1703099533675</updated>\n    </task>\n    <option name=\"localTasksCounter\" value=\"3\" />\n    <servers />\n  </component>\n  <component name=\"Vcs.Log.Tabs.Properties\">\n    <option name=\"TAB_STATES\">\n      <map>\n        <entry key=\"MAIN\">\n          <value>\n            <State />\n          </value>\n        </entry>\n      </map>\n    </option>\n  </component>\n  <component name=\"VcsManagerConfiguration\">\n    <option name=\"ADD_EXTERNAL_FILES_SILENTLY\" value=\"true\" />\n    <MESSAGE value=\"commit final com documentação\" />\n    <MESSAGE value=\"commit final com documentação 4\" />\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"commit final com documentação 4\" />\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision e7f2fb85eef33e333680c2994cf9881586782615)
++++ b/.idea/workspace.xml	(date 1703151898260)
+@@ -4,7 +4,13 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="e3eb10cd-d257-4dff-94ea-65c5aabaf6fd" name="Changes" comment="commit final com documentação 4" />
++    <list default="true" id="e3eb10cd-d257-4dff-94ea-65c5aabaf6fd" name="Changes" comment="commit final final com javadoc depois de limpeza">
++      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Client/Client.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Client/Client.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Game/Game.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Game/Game.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Messages/Messages.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Messages/Messages.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/Client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Client/Client.java" afterDir="false" />
++    </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+@@ -20,7 +26,7 @@
+   <component name="Git.Settings">
+     <option name="RECENT_BRANCH_BY_REPOSITORY">
+       <map>
+-        <entry key="$PROJECT_DIR$" value="joaoFinal" />
++        <entry key="$PROJECT_DIR$" value="JoaoFinalBranch" />
+       </map>
+     </option>
+     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+@@ -120,7 +126,15 @@
+       <option name="project" value="LOCAL" />
+       <updated>1703099533675</updated>
+     </task>
+-    <option name="localTasksCounter" value="3" />
++    <task id="LOCAL-00003" summary="commit final final com javadoc depois de limpeza">
++      <option name="closed" value="true" />
++      <created>1703148692103</created>
++      <option name="number" value="00003" />
++      <option name="presentableId" value="LOCAL-00003" />
++      <option name="project" value="LOCAL" />
++      <updated>1703148692105</updated>
++    </task>
++    <option name="localTasksCounter" value="4" />
+     <servers />
+   </component>
+   <component name="Vcs.Log.Tabs.Properties">
+@@ -138,6 +152,7 @@
+     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+     <MESSAGE value="commit final com documentação" />
+     <MESSAGE value="commit final com documentação 4" />
+-    <option name="LAST_COMMIT_MESSAGE" value="commit final com documentação 4" />
++    <MESSAGE value="commit final final com javadoc depois de limpeza" />
++    <option name="LAST_COMMIT_MESSAGE" value="commit final final com javadoc depois de limpeza" />
+   </component>
+ </project>
+\ No newline at end of file

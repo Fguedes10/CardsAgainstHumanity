@@ -1,0 +1,19 @@
+<changelist name="Uncommitted_changes_before_Update_at_21_12_2023,_09_45_[Changes]" date="1703151901693" recycled="false" toDelete="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_12_2023,_09_45_[Changes]/shelved.patch" />
+  <option name="DESCRIPTION" value="Uncommitted changes before Update at 21/12/2023, 09:45 [Changes]" />
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/CardsAgainstMindera/Client/Client.class" />
+    <option name="AFTER_PATH" value="out/production/CardsAgainstMindera/Client/Client.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_12_2023,_09_45_[Changes]/Client.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/CardsAgainstMindera/Messages/Messages.class" />
+    <option name="AFTER_PATH" value="out/production/CardsAgainstMindera/Messages/Messages.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_12_2023,_09_45_[Changes]/Messages.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/CardsAgainstMindera/Game/Game.class" />
+    <option name="AFTER_PATH" value="out/production/CardsAgainstMindera/Game/Game.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_12_2023,_09_45_[Changes]/Game.class" />
+  </binary>
+</changelist>

@@ -5,11 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3eb10cd-d257-4dff-94ea-65c5aabaf6fd" name="Changes" comment="commit final com documentação 4">
-      <change afterPath="$PROJECT_DIR$/src/Commands/Handlers/ShowGameCommandHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Game/Game.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CardsAgainstMindera/Game/Game.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Commands/GameCommands.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/GameCommands.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Messages/Messages.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Messages/Messages.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
